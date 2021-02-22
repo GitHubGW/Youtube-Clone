@@ -1,0 +1,19 @@
+{
+  "name": "youtube-clone",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GitHubGW/Youtube-Clone.git"
+  },
+  "author": "GW",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GitHubGW/Youtube-Clone/issues"
+  },
+  "homepage": "https://github.com/GitHubGW/Youtube-Clone#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
