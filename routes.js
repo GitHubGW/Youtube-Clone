@@ -10,8 +10,8 @@ const SEARCH = "/search";
 // Users Route
 const USERS = "/users";
 const USER_DETAIL = "/:id"  // express에서는 url에 콜론(:)을 넣어주면 해당 부분에 변하는 값이 들어간다는 것을 앎(id에는 어떠한 값도 들어갈 수 있음) ex)/users/1, /users/2 etc..
-const EDIT_PROFILE = "/edit-profile";
-const CHANGE_PASSWORD = "/change-password";
+const EDIT_PROFILE = "/:id/edit-profile";
+const CHANGE_PASSWORD = "/:id/change-password";
 
 // Videos Route
 const VIDEOS="/videos";
