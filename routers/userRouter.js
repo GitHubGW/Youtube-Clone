@@ -1,11 +1,12 @@
 import express from "express";
+import routes from "../routes";
 
 // express.Router(): router객체 생성
-export const userRouter = express.Router(); 
+const userRouter = express.Router(); 
 
-// express.Router()를 통해 router객체를 생성한 후 그 router객체에게 각각의 라우트들을 준 것이다
-// userRouter.get("/", (req,res) => res.send(`User home`));
-// userRouter.get("/edit", (req,res) => res.send(`User edit`));
-// userRouter.get("/password", (req,res) => res.send(`User password`));
+userRouter.get(routes.users, (req, res) => res.send("User page"));
+userRouter.get(routes.userDetail, (req, res) => res.send("UserDetail page"));
+userRouter.get(routes.editProfile, (req, res) => res.send("EditProfile page"));
+userRouter.get(routes.changePassword, (req, res) => res.send("ChangePassword page"));
 
 export default userRouter;

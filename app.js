@@ -8,6 +8,7 @@ import bodyParser from "body-parser";
 import userRouter from "./routers/userRouter";
 import videoRouter from './routers/videoRouter';
 import globalRouter from './routers/globalRouter';
+import routes from './routes';
 
 const app = express(); // 가져온 express를 실행해서 서버를 만듬
 
@@ -18,8 +19,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(helmet());
 app.use(morgan("dev"));
 
-app.use('/', globalRouter);
-app.use("/users", userRouter); // user 라우트에 들어오면 userRouter라는 router를 사용함
-app.use('/videos', videoRouter);
+app.use(routes.home, globalRouter);
+app.use(routes.users, userRouter); // users라우트에 들어와서 request했을 때 userRouter라는 미들웨어 함수를 실행함
+app.use(routes.videos, videoRouter);
 // export default를 쓰면 app전체를 export한다는 의미이고, 변수 앞에 export를 붙여서 const export app를 쓰면 해당 변수만 export한다는 의미이다.
 export default app; //app.js를 다른 곳에서 불러와서 쓸 수 있도록 export함
