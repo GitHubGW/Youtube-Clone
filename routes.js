@@ -9,18 +9,18 @@ const SEARCH = "/search";
 
 // Users Route
 const USERS = "/users";
-const USER_DETAIL = "/:id"  // express에서는 url에 콜론(:)을 넣어주면 해당 부분에 변하는 값이 들어간다는 것을 앎(id에는 어떠한 값도 들어갈 수 있음) ex)/users/1, /users/2 etc..
-const EDIT_PROFILE = "/:id/edit-profile";
-const CHANGE_PASSWORD = "/:id/change-password";
+const USER_DETAIL = "/:id"; // express에서는 url에 콜론(:)을 넣어주면 해당 부분에 변하는 값이 들어간다는 것을 앎(id에는 어떠한 값도 들어갈 수 있음) ex)/users/1, /users/2 etc..
+const EDIT_PROFILE = "/edit-profile";
+const CHANGE_PASSWORD = "/change-password";
 
 // Videos Route
-const VIDEOS="/videos";
-const UPLOAD="/upload";
-const VIDEOS_DETAIL="/:id";
-const EDIT_VIDEO="/:id/edit"; 
-const DELETE_VIDEO="/:id/delete";
+export const VIDEOS = "/videos";
+const UPLOAD = "/upload";
+const VIDEOS_DETAIL = "/:id";
+const EDIT_VIDEO = "/:id/edit";
+const DELETE_VIDEO = "/:id/delete";
 
-// Route Object(라우터들을 모아놓은 객체)
+// Routes Object(라우터들을 모아놓은 객체)
 const routes = {
   home: HOME,
   join: JOIN,
@@ -35,7 +35,7 @@ const routes = {
   upload: UPLOAD,
   videoDetail: VIDEOS_DETAIL,
   editVideo: EDIT_VIDEO,
-  deleteVideo: DELETE_VIDEO
-}
+  deleteVideo: DELETE_VIDEO,
+};
 
 export default routes;

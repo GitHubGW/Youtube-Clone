@@ -1,10 +1,10 @@
 // Global Controller
-export const join = (req,res) => res.send("Join page");
-export const login = (req,res) => res.send("Login page");
-export const logout = (req,res) => res.send("Logout page");
+export const join = (req,res) => res.render("join");
+export const login = (req,res) => res.render("login");
+export const logout = (req,res) => res.render("logout");
 
 // User Controller
-export const users = (req,res) => res.send("User page");
-export const userDetail = (req,res) => res.send("UserDetail page");
-export const editProfile = (req,res) => res.send("EditProfile page");
-export const changePassword = (req,res) => res.send("ChangePassword page");
+export const users = (req,res) => res.render("users");
+export const userDetail = (req,res) => res.render("userDetail");
+export const editProfile = (req,res) => res.render("editProfile");
+export const changePassword = (req,res) => res.render("changePassword");
