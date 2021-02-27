@@ -3,7 +3,6 @@
 Cloning Youtube
 
 ## pages:
-
 - [ ] Home
 - [ ] Join
 - [ ] Login
