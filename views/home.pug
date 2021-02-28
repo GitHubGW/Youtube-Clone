@@ -1,4 +1,12 @@
 extends layouts/main.pug
+include mixins/videoBlock.pug
 
 block content
-  h1 home pug
+  .videos 
+    each item in videos
+      //- h1 #{item.id}과 h1=item.id는 같은 의미이다.(자바스크립트 코드를 가져옴) 
+      +videoBlock({
+        title: item.title,
+        views: item.views,
+        videoFile: item.videoFile,
+        })

@@ -1,7 +1,11 @@
 header.header
+  //- div.header__column에서 div는 생략하고 .header__column만 사용가능(div태그만 생략가능)
   div.header__column
     a(href=routes.home)
       i.fab.fa-youtube
+  div.header__column
+    form(action=routes.search, method="get")
+      input(type="text", name="term", placeholder="Search for Term.")
   div.header__column
     ul
       li
