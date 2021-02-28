@@ -21,7 +21,10 @@ app.set("view engine", "pug");
 app.set("views", "./views");
 
 // 미들웨어 실행
-app.use(helmet());
+// app.use(helmet());
+// 외부에서 가져온 비디오가 재생되지 않는 문제가 발생했는데 원인은 helmet의 미들웨어 중에 helmet.contentSecurityPolicy()라는 CSP설정을 해주는 함수가 원인이었다.
+// 과거에는 app.use(helmet())을 사용할 경우 기본적인 보안설정만 해주었는데 현재는 CSP설정도 포함되어 이러한 문제가 발생한다. (추후에는 contentSecurityPolicy: false를 다시 없애줘야 함)
+app.use(helmet({ contentSecurityPolicy: false }));
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
