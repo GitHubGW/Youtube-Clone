@@ -1,4 +1,3 @@
-import { videos } from "../db";
 import routes from "../routes";
 
 // Global Controller
