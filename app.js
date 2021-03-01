@@ -26,6 +26,8 @@ app.set("views", "./views");
 // 과거에는 app.use(helmet())을 사용할 경우 기본적인 보안설정만 해주었는데 현재는 CSP설정도 포함되어 이러한 문제가 발생한다. (추후에는 contentSecurityPolicy: false를 다시 없애줘야 함)
 app.use(helmet({ contentSecurityPolicy: false }));
 app.use(cookieParser());
+// bodyParser미들웨어는 클라이언트가 서버에 request(req)했을 때 request객체안에 있는 정보를 가져와준다.
+// 만약 bodyParser가 없으면 req객체에 대한 정보를 가져오지 못한다. (즉, req.body를 통해 사용자가 입력한 form아나 여러 request한 정보들을 가져오지 못하고 undefined로 가져온다)
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan("dev"));

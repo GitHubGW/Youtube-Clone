@@ -8,7 +8,18 @@ header.header
       input(type="text", name="term", placeholder="Search for Term.")
   div.header__column
     ul
-      li
-        a(href=routes.join) Join
-      li 
-        a(href=routes.login) Login
+      //- 로그인이 안 됐을 때
+      if !user.isAuthenticated 
+        li
+          a(href=routes.join) Join
+        li 
+          a(href=routes.login) Login
+      //- 로그인이 됐을 때
+      else 
+        li 
+          a(href=`${routes.videos}${routes.upload}`) Upload 
+        li 
+          a(href=routes.userDetail(user.id)) Profile
+        li 
+          a(href=routes.logout) Logout
+          

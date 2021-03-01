@@ -1,5 +1,8 @@
+//- mixin은 일종의 pug함수라고 보면 된다
+//- videoBlock이라는 함수를 생성후 필요한 곳에서 +videoBlock을 통해 함수를 호출해 사용할 수 있다
 mixin videoBlock(video)
   .videoBlock
-    video.videoBlock__thumbnail(src=video.videoFile, controls=true)
-    h4.videoBlock__title=video.title
-    h6.videoBlock__views=video.views
+    a(href=routes.videoDetail(video.id))
+      video.videoBlock__thumbnail(src=video.videoFile, controls=true)
+      h4.videoBlock__title=video.title
+      h6.videoBlock__views=video.views
