@@ -27,10 +27,10 @@ app.set("views", "./views");
 app.use(helmet({ contentSecurityPolicy: false }));
 app.use(cookieParser());
 // bodyParser미들웨어는 클라이언트가 서버에 request(req)했을 때 request객체안에 있는 정보를 가져와준다.
-// 만약 bodyParser가 없으면 req객체에 대한 정보를 가져오지 못한다. (즉, req.body를 통해 사용자가 입력한 form아나 여러 request한 정보들을 가져오지 못하고 undefined로 가져온다)
+// 만약 bodyParser가 없으면 req객체에 대한 정보를 가져오지 못한다. (즉, req.body를 통해 사용자가 입력한 form이나 여러 request한 정보들을 가져오지 못하고 undefined로 가져온다)
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(morgan("dev"));
+app.use(morgan("dev")); // morgan은 nodeJS에서 로그 관리를 하기 위한 미들웨어이다.
 app.use(localsMiddleware);
 
 // app.use()를 통해 기본 라우팅 설정
@@ -40,5 +40,5 @@ app.use(routes.home, globalRouter);
 app.use(routes.users, userRouter);
 app.use(routes.videos, videoRouter);
 
-// export default를 쓰면 app전체를 export한다는 의미이고, 변수 앞에 export를 붙여서 const export app를 쓰면 해당 변수만 export한다는 의미이다.
-export default app; //app.js를 다른 곳에서 불러와서 쓸 수 있도록 export함
+// export default를 쓰면 app을 기본적으로 export한다는 의미이고, 변수 앞에 export를 붙여서 const export app를 쓰면 해당 변수만 export한다는 의미이다.
+export default app; // const app을 다른 곳에서 불러와서 쓸 수 있도록 export함
