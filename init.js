@@ -1,12 +1,14 @@
-// db.js에서 export하지 않고도 import해올 수 있는 이유는 파일 내부의 함수가 아니라 db 파일 자체를 가져왔기 때문이다.
-// db.js파일을 가져오면 그 파일안에 내용들이 실행되기 때문에 DB가 실행되는 것이다.
+// db.js에서 export하지 않고도 import해올 수 있는 이유는 파일 내부의 함수나 변수를 가져온 것이 아니라 그냥 db파일 자체를 가져왔기 때문이다.
+// db.js파일을 가져오면 그 파일안에 내용들이 자동으로 실행되기 때문에 DB가 실행되는 것이다.
 import "./db";
 import app from "./app";
 import dotenv from "dotenv";
 import "./models/Video"; // models/Video모델을 사용하기 위해 import해왔다. import해오게 되면 mongoose는 해당 모델을 인지해서 등록한다.
 
+// dotenv.config();를 통해 .env파일안에 있는 환경 변수를 불러온다.
 dotenv.config();
 
+// process.env안에 PORT변수를 가져와서 넣고 만약 값이 없으면 ||(or)로 4000을 넣는다
 const PORT = process.env.PORT || 4000;
 
 const handleListening = () => {
