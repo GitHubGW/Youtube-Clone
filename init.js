@@ -4,6 +4,7 @@ import "./db";
 import app from "./app";
 import dotenv from "dotenv";
 import "./models/Video"; // models/Video모델을 사용하기 위해 import해왔다. import해오게 되면 mongoose는 해당 모델을 인지해서 등록한다.
+import "./models/Comment";
 
 // dotenv.config();를 통해 .env파일안에 있는 환경 변수를 불러온다.
 dotenv.config();
