@@ -15,7 +15,9 @@ export const home = async (req, res) => {
     throw Error("Error 발생"); // throw 문은 사용자 정의 예외를 던질 수 있다. 현재 함수의 실행이 중지되고 (throw 이후의 명령문은 실행되지 않습니다.), 컨트롤은 콜 스택의 첫 번째 catch 블록으로 전달됩니다.
     res.render("home", { pageTitle: "Home", videos }); // home.pug대신 그냥 home만 써도 됨.
   } catch (error) {
-    console.log("throw문에서 던진 Error: ", error); // 위에 try문에 에러가 있다면 throw문을 통해 에러를 던질 수 있고 그 던진 에러는 밑에 catch문에 error파라미터로 받아서 보여줄 수 있다.
+    // console.log("throw문에서 던진 Error: ", error); // 위에 try문에 에러가 있다면 throw문을 통해 에러를 던질 수 있고 그 던진 에러는 밑에 catch문에 error파라미터로 받아서 보여줄 수 있다.
+
+    // find()메소드는 데이터베이스에서 데이터를 조회 할 때 사용한다. query를 파라미터 값으로 전달 할 수 있으며, 파라미터가 없을 시, 모든 데이터를 조회합니다. 데이터베이스에 오류가 발생하면 HTTP Status 500과 함께 에러를 출력합니다.
     const videos = await Video.find({});
     res.render("home", { pageTitle: "Home", videos });
   }
@@ -36,12 +38,37 @@ export const video = (req, res) => res.render("video", { pageTitle: "Video" });
 export const getUpload = (req, res) => {
   res.render("upload", { pageTitle: "Upload" });
 };
-export const postUpload = (req, res) => {
-  // console.log("req.body", req.body);
+export const postUpload = async (req, res) => {
+  // req객체안에서 body프로퍼티 안에 있는 프로퍼티들, file프로퍼티 안에 있는 path를 가져옴
+  // 밑의 코드는 ES6방식으로 객체 안에 있는 프로퍼티를 불러오는 것으로 const videoTitle = req.body.videoTitle, const path = req.file.path와 같은 의미이다. 그래서 바로 videoTitle과 path를 변수로 꺼내 쓸 수 있다.
   const {
-    body: { videoFile, videoTitle, description },
+    body: { videoTitle, description },
+    file: { path },
   } = req;
-  res.redirect(routes.videoDetail(1));
+
+  console.log("req.file:", req.file);
+
+  // Video.create()은 비디오 도큐먼트에 새로운 도큐먼트를 생성한다는 의미이다.
+  // 중요! 도큐먼트를 생성하게 되면 Video.js에서 스키마를 생성할 때 만든 형태로 도큐먼트를 만들게 되는데 거기에는 fileUrl, title, description, createdAt, views, comments등이 있다.
+  // 거기 안에 있는 fileUrl, title, descriptoin의 값을 여기서 넘겨준 것이다.
+  // 그런데 스키마를 생성할 때 선언해 준 fileUrl등의 프로퍼티 외에도 _id라는 고유의 id값도 만들어서 넘겨주게 되는데 이 id값을 통해 각각의 비디오를 구분할 수 있고 비디오를 클릭했을 때 비디오 고유의 아이디 값을 가진 라우터로 이동할 수 있다.
+  const newVideo = await Video.create({
+    fileUrl: path,
+    title: videoTitle,
+    description: description,
+  });
+  console.log(newVideo);
+  console.log(newVideo.id);
+
+  // 파일을 업로드하게 되면 multer가 req.file 안에 그 파일에 대한 정보들을 보여준다. (ex: 오리지널 파일 이름, 위치, multer가 저장하는 파일 이름, *path(위치) 등등)
+  // console.log("body: ", body, "file: ", file);
+
+  // 중요! 비디오를 업로드하고 나서 우리가 필요한 것은 비디오 파일의 이름이 아니라 파일의 위치이다.
+  // 그 이유는 비디오 파일 자체는 서버에 있고 우리는 서버로부터 비디오 파일의 URL이나 위치 정보를 통해 비디오를 가져오기 때문이다.
+  // res.redirect(routes.videoDetail(1));
+
+  // res.redirect()를 통해 위에서 비디오 도큐먼트를 생성하면서 할당받은 고유의 id값을 넘겨준다.
+  res.redirect(routes.videoDetail(newVideo.id));
 };
 
 export const videoDetail = (req, res) => res.render("videoDetail", { pageTitle: "videoDetail" });
