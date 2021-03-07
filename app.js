@@ -32,6 +32,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan("dev")); // morgan은 nodeJS에서 로그 관리를 하기 위한 미들웨어이다.
 app.use(localsMiddleware);
+// /uploads 라우터로 들어오면 express.static("uploads")를 통해 express의 기본 static파일 경로를 uploads폴더로 설정한다
+// 설정하게 되면 uploads폴더 안에 있는 파일을 보내주게 된다
+app.use("/uploads", express.static("uploads"));
 
 // app.use()를 통해 기본 라우팅 설정
 // 해당 라우트 경로에 request했을 때(첫 번째 값) 해당 라우터를 미들웨어로 실행함(두 번째 값)

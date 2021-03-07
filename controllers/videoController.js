@@ -12,6 +12,7 @@ export const home = async (req, res) => {
   // try는 우리가 처리 해야 할 부분이고 catch는 try 부분이 실패했을 때 해당 error를 반환한다.
   try {
     const videos = await Video.find({}); // Video모델에 find()메소드를 써서 Video 데이터베이스에 있는 모든 비디오를 가져온다.
+    // console.log("videos:", videos);
     throw Error("Error 발생"); // throw 문은 사용자 정의 예외를 던질 수 있다. 현재 함수의 실행이 중지되고 (throw 이후의 명령문은 실행되지 않습니다.), 컨트롤은 콜 스택의 첫 번째 catch 블록으로 전달됩니다.
     res.render("home", { pageTitle: "Home", videos }); // home.pug대신 그냥 home만 써도 됨.
   } catch (error) {
@@ -51,7 +52,7 @@ export const postUpload = async (req, res) => {
   // Video.create()은 비디오 도큐먼트에 새로운 도큐먼트를 생성한다는 의미이다.
   // 중요! 도큐먼트를 생성하게 되면 Video.js에서 스키마를 생성할 때 만든 형태로 도큐먼트를 만들게 되는데 거기에는 fileUrl, title, description, createdAt, views, comments등이 있다.
   // 거기 안에 있는 fileUrl, title, descriptoin의 값을 여기서 넘겨준 것이다.
-  // 그런데 스키마를 생성할 때 선언해 준 fileUrl등의 프로퍼티 외에도 _id라는 고유의 id값도 만들어서 넘겨주게 되는데 이 id값을 통해 각각의 비디오를 구분할 수 있고 비디오를 클릭했을 때 비디오 고유의 아이디 값을 가진 라우터로 이동할 수 있다.
+  // 그런데 스키마를 생성할 때 선언해 준 fileUrl등의 프로퍼티 외에도 _id라는 고유의 id값도 자동으로 만들어서 넘겨주게 되는데 이 id값을 통해 각각의 비디오를 구분할 수 있고 비디오를 클릭했을 때 비디오 고유의 아이디 값을 가진 라우터로 이동할 수 있다.
   const newVideo = await Video.create({
     fileUrl: path,
     title: videoTitle,
@@ -71,6 +72,59 @@ export const postUpload = async (req, res) => {
   res.redirect(routes.videoDetail(newVideo.id));
 };
 
-export const videoDetail = (req, res) => res.render("videoDetail", { pageTitle: "videoDetail" });
-export const editVideo = (req, res) => res.render("editVideo", { pageTitle: "editVideo" });
+export const videoDetail = async (req, res) => {
+  // req객체안에는 params라는 프로퍼티가 있고 params안에는 { id: '6044bf41158be23628e15dfe' } 이런식으로 객체를 가지고 있다
+  // 이 값은 우리가 라우터를 설정할 때 /:id 이렇게 설정했던 id부분에 들어가는 값을 의미한다.
+  // req.params를 통해 우리는 URL로부터 정보를 가져올 수 있다
+  // console.log(req.params);
+
+  const {
+    params: { id },
+  } = req;
+
+  // try catch문을 통해 존재하는 비디오 파일 URL경로에 들어왔을 때는 비디오를 보여주고 잘못된 URL경로로 들어왔을 때는 다시 home라우터로 리다이렉트 시켜준다.
+  try {
+    // Video모델에서 findById()메소드를 통해 req.parms.id값과 매칭하는 파일을 찾는다. 찾은 값을 통해 해당 비디오 파일을 찾을 수 있다.
+    // Video모델의 스키마 안에서는 id값을 선언하지 않았지만 비디오가 업로드되는 시점에 각각의 비디오에게 MongoDB가 자동으로 고유의 id값을 주게 되고 그 id값을 통해 여기서 req.params.id와 일치하는 비디오를 가져올 수 있는 것이다.
+    const video = await Video.findById(id);
+    console.log("✅ video:", video);
+    res.render("videoDetail", { pageTitle: "videoDetail", video });
+  } catch (error) {
+    console.log(error);
+    res.redirect(routes.home);
+  }
+};
+
+export const getEditVideo = async (req, res) => {
+  const {
+    params: { id },
+  } = req;
+
+  try {
+    const video = await Video.findById(id);
+    console.log("✅ video: ", video);
+    res.render("editVideo", { pageTitle: `Edit: ${video.title}`, video });
+  } catch (error) {
+    res.redirect(routes.home);
+  }
+};
+
+export const postEditVideo = async (req, res) => {
+  const {
+    params: { id },
+    body: { title, description },
+  } = req;
+
+  try {
+    // findOneAndUpdate()메소드를 통해 비디오 모델에서 해당 조건에 해당되는 비디오를 찾아서 업데이트 시켜주는 메소드이다.
+    // findOneAndUpdate(조건, 업데이트, 옵션, 콜백)는 여러 인자들을 받을 수 있다. 첫 번째 인자는 조건에 해당 되는 값을 찾고, 두 번쨰 인자는 업데이트 할 값을 넣는다.
+    // _id라고 한 이유는 우리가 비디오를 업로드하면 MongoDB가 고유의 id값을 할당해주는데 그 때 id가 아니라 정확하게는 _id라는 이름으로 할당해준다. (이건 그냥 콘솔로그 찍어보면 나옴)
+    // 그래서 해당 모델이 가지고 있는 _id 값과 req.params.id 값이 일치하는 조건의 비디오를 찾아서 그 비디오의 title과 descripption의 값을 req.body.title, req.body.description의 값으로 업데이트 하라는 의미이다.
+    await Video.findOneAndUpdate({ _id: id }, { title, description });
+    res.redirect(routes.videoDetail(id));
+  } catch (error) {
+    res.redirect(routes.home);
+  }
+};
+
 export const deleteVideo = (req, res) => res.render("deleteVideo", { pageTitle: "deleteVideo" });
