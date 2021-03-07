@@ -33,3 +33,17 @@ db.once("open", handleOpen);
 
 // on()은 db를 실시간으로 듣고 있음. 그러다가 에러가 발생하면 handleError함수를 통해 error를 보여줌.
 db.on("error", handleError);
+
+/*
+MongoDB 명령어들
+MongoDB의 명령어들을 통해 데이터베이스를 컨트롤 할 수 있다.
+
+mongo: 서버접속
+help: 명령어들 확인
+db: 현재 사용중인 데이터베이스 확인
+show dbs: 데이터베이스 리스트 확인
+db.stats(): 데이터베이스 상태 확인
+use DB명: 해당 DB를 사용함(존재하지 않을 경우 데이터베이스를 생성함)
+show collections: 컬렉션(모델) 리스트를 확인
+db.컬렉션명.remove: 해당 컬렉션(모델)을 삭제 ( ex: db.videos.remove({}) )
+*/
