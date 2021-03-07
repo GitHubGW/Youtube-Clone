@@ -39,6 +39,7 @@ export const video = (req, res) => res.render("video", { pageTitle: "Video" });
 export const getUpload = (req, res) => {
   res.render("upload", { pageTitle: "Upload" });
 };
+
 export const postUpload = async (req, res) => {
   // req객체안에서 body프로퍼티 안에 있는 프로퍼티들, file프로퍼티 안에 있는 path를 가져옴
   // 밑의 코드는 ES6방식으로 객체 안에 있는 프로퍼티를 불러오는 것으로 const videoTitle = req.body.videoTitle, const path = req.file.path와 같은 의미이다. 그래서 바로 videoTitle과 path를 변수로 꺼내 쓸 수 있다.
@@ -88,7 +89,7 @@ export const videoDetail = async (req, res) => {
     // Video모델의 스키마 안에서는 id값을 선언하지 않았지만 비디오가 업로드되는 시점에 각각의 비디오에게 MongoDB가 자동으로 고유의 id값을 주게 되고 그 id값을 통해 여기서 req.params.id와 일치하는 비디오를 가져올 수 있는 것이다.
     const video = await Video.findById(id);
     console.log("✅ video:", video);
-    res.render("videoDetail", { pageTitle: "videoDetail", video });
+    res.render("videoDetail", { pageTitle: video.title, video });
   } catch (error) {
     console.log(error);
     res.redirect(routes.home);
@@ -127,4 +128,19 @@ export const postEditVideo = async (req, res) => {
   }
 };
 
-export const deleteVideo = (req, res) => res.render("deleteVideo", { pageTitle: "deleteVideo" });
+export const deleteVideo = async (req, res) => {
+  const {
+    params: { id },
+  } = req;
+
+  try {
+    // findOneAndRemove()메소드는 조건에 해당하는 데이터를 찾은 후 삭제한다 (자세한 설명은 mongoose 공식 홈페이지 Queries란에서 볼 수 있다)
+    // findOneAndRemove()를 통해 모델의 _id값이 req.params.id값인 비디오를 찾아서 완전히 DB에서까지도 삭제한다.
+    // await앞에 꼭 어떤 변수를 선언해서 값을 할당받을 필요는 없다. 그냥 일회성 처리기 때문에 변수가 필요없다.
+    await Video.findOneAndRemove({ _id: id });
+    // res.render("deleteVideo", { pageTitle: "deleteVideo" });
+  } catch (error) {
+    console.log(error);
+  }
+  res.redirect(routes.home);
+};
