@@ -11,16 +11,24 @@ export const home = async (req, res) => {
   // await은 성공의 여부랑은 상관이 없다. 해당 부분이 끝날 때까지 자바스크립트에게 다음 코드를 실행하지말고 기다리라는 의미이다 (에러가 생겨도 처리가 끝났다면 다음 부분을 실행함)
   // try는 우리가 처리 해야 할 부분이고 catch는 try 부분이 실패했을 때 해당 error를 반환한다.
   try {
-    const videos = await Video.find({}); // Video모델에 find()메소드를 써서 Video 데이터베이스에 있는 모든 비디오를 가져온다.
+    // Video모델에 find()메소드를 써서 Video 데이터베이스에 있는 모든 비디오를 가져온다.
+    // 가져온 비디오들을 정렬하기 위해 sort()메소드를 사용했다.
+    // sort({_id:-1}) 는 _id를 기준으로 정렬한다는 의미이고 뒤에 -1을 붙여서 나중에 올린 비디오가 맨 앞에 오도록 역순으로 정렬했다. (1은 순서대로, -1은 역순을 의미함)
+    // sort()를 이용해서 _id가 아닌 title이나 다른 여러 요소들을 기준으로 정렬할 수도 있다.
+    const videos = await Video.find({}).sort({ _id: -1 });
     // console.log("videos:", videos);
-    throw Error("Error 발생"); // throw 문은 사용자 정의 예외를 던질 수 있다. 현재 함수의 실행이 중지되고 (throw 이후의 명령문은 실행되지 않습니다.), 컨트롤은 콜 스택의 첫 번째 catch 블록으로 전달됩니다.
+
+    // throw 문은 사용자 정의 예외를 던질 수 있다. throw문을 만나면 현재 함수의 실행이 중지되고 (throw 이후의 명령문은 실행되지 않습니다.) 여기서 에러를 던져서 catch문에 error 파라미터로 에러를 받게 된다.
+    // throw Error("Error 발생");
+
     res.render("home", { pageTitle: "Home", videos }); // home.pug대신 그냥 home만 써도 됨.
   } catch (error) {
-    // console.log("throw문에서 던진 Error: ", error); // 위에 try문에 에러가 있다면 throw문을 통해 에러를 던질 수 있고 그 던진 에러는 밑에 catch문에 error파라미터로 받아서 보여줄 수 있다.
+    // 위에 try문에 에러가 있다면 throw문을 통해 에러를 던질 수 있고 그 던진 에러는 밑에 catch문에 error파라미터로 받아서 보여줄 수 있다.
+    // console.log("throw문에서 던진 Error: ", error);
 
     // find()메소드는 데이터베이스에서 데이터를 조회 할 때 사용한다. query를 파라미터 값으로 전달 할 수 있으며, 파라미터가 없을 시, 모든 데이터를 조회합니다. 데이터베이스에 오류가 발생하면 HTTP Status 500과 함께 에러를 출력합니다.
-    const videos = await Video.find({});
-    res.render("home", { pageTitle: "Home", videos });
+    // const videos = await Video.find({});
+    res.render("home", { pageTitle: "Home", videos: [] });
   }
 };
 export const search = (req, res) => {
