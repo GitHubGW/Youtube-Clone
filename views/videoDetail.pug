@@ -11,3 +11,10 @@ block content
     h5.video__title=video.title
     p.video__description=video.description
     span.video__views=video.views
+  .video__comments 
+    if video.comments.length === 1
+      span.video__comment-number 1 comment
+    else
+      //- #{video.comments.length}에서 #{}은 pug에서 넘겨받은 변수를 가져올 떄 사용한다. (보통 =나 #{}을 주로 쓴다.)
+      //- ex) h1=name,   h1 #{name}  둘 다 가능하지만 뒤에 텍스트를 써줘야할 때는 #{}로 쓰는게 좋다.
+      span.video__comment-number #{video.comments.length} comments
