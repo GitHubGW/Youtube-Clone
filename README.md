@@ -8,17 +8,17 @@
 * Vanilla JS
 
 ## 🌈 Goals
-- [x] Practice Vanilla JS <br>
-- [x] Understanding Local Storage <br>
-- [x] Using API <br>
-- [x] Cloning Momentum
+- [x] 
+- [x] 
+- [x] 
+- [x] 
 
 ## ✨ Features
-- [x] Real-Time Clock <br>
-- [x] Save User Information <br>
-- [x] To Do List <br>
-- [x] Random Background Images <br>
-- [x] Location based Weather
+- [x] 
+- [x] 
+- [x] 
+- [x] 
+- [x] 
 
 ## Pages:
 - [x] Home
