@@ -8,19 +8,38 @@
 * Vanilla JS
 
 ## 🌈 Goals
-- [x] 
-- [x] 
-- [x] 
-- [x] 
+- [x] Full Stack Theory
+- [x] Routing
+- [x] Templates
+- [x] MVC Pattern
+- [x] WebPack Configuration (Babel, Sass)
+- [x] Databases & Models
+- [x] Database Queries
+- [x] Model Relationships
+- [ ] Database Hooks
+- [ ] WebPack Module Building
+- [ ] REST API Development
+- [ ] Server and Database Deployment
+- [ ] AJAX & AWS
 
 ## ✨ Features
-- [x] 
-- [x] 
-- [x] 
-- [x] 
-- [x] 
+- [x] Video Playing
+- [x] Video Uploading
+- [ ] Video Recording
+- [x] Search Video
+- [x] AJAX Comments
+- [x] View Count
+- [ ] User Authentication
+- [ ] Facebook Login & Github Login
+- [ ] User Profile
+- [ ] Log In & Log Out
 
-## Pages:
+## 🚀 Deployment
+- [ ] Heroku
+- [ ] S3 Upload
+- [ ] Mongo Atlas
+
+## 📑 Pages
 - [x] Home
 - [x] Join
 - [x] Login
