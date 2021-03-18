@@ -1,3 +1,8 @@
+// .babelrc 파일은 babel을 설정하는 파일이다. 
+// babel이 실행되기 전에 이 파일을 읽고 이 파일에서 설정한 것에 따라 컴파일 해준다. 
+// preset은 설정 옵션중 하나로 React, Typescript등등 다양한 preset이 있다. (ex: preset-react, preset-typescript)
+// babel은 설정해 둔 preset에 따라 자바스크립트 코드를 변환하게 된다.
+// env preset은 가장 기본적이고 무난한 preset이다. 
 {
   "presets": ["@babel/preset-env"]
 }
