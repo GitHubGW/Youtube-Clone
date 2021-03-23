@@ -37,8 +37,10 @@ app.use(localsMiddleware);
 app.use("/uploads", express.static("uploads"));
 
 // app.use()를 통해 기본 라우팅 설정
+// 중요! app.get()은 HTTP GET요청에 대해서만 처리하지만 app.use()는 GET, POST등등 모든 요청에 대해서 처리한다.
 // 해당 라우트 경로에 request했을 때(첫 번째 값) 해당 라우터를 미들웨어로 실행함(두 번째 값)
 // routes.home(/)라우트에 들어와서 request했을 때 globalRouter라는 미들웨어 함수를 실행함
+// 여기서 라우트들도 미들웨어에 속하며 next를 호출하지 않지만 res객체를 통해 연결을 끝내는 역할을 한다.
 app.use(routes.home, globalRouter);
 app.use(routes.users, userRouter);
 app.use(routes.videos, videoRouter);
