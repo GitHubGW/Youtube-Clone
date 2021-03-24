@@ -7,7 +7,7 @@
   form{
     width: 100%;
     max-width: 320px;
-    margin-bottom: 25px;
+    margin-bottom: 50px;
     input{
       display: block;
       width: 100%;
@@ -22,5 +22,14 @@
       background-color: $red;
       color: white;
     }
+    textarea{
+      box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+      margin-bottom: 25px;
+    }
+    a{
+      max-width: 320px;
+      width: 100%;
+    }
   }
+  
 }

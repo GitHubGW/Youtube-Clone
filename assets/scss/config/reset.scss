@@ -45,15 +45,13 @@ a {
   all: unset;
   cursor: pointer;
 }
-*,
-input {
+*, input {
   box-sizing: border-box;
 }
 input {
   border: none;
   box-sizing: border-box;
-  &:focus,
-  &:active {
+  &:focus, &:active {
     outline: none;
   }
 }

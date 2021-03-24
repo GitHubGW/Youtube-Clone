@@ -45,8 +45,7 @@ a {
   all: unset;
   cursor: pointer; }
 
-*,
-input {
+*, input {
   -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
           box-sizing: border-box; }
@@ -71,12 +70,13 @@ body {
 
 main {
   width: 100%;
-  max-width: 1400px;
+  max-width: 1200px;
   margin: 0 auto;
   min-height: 70vh; }
 
 button,
-input {
+input,
+textarea {
   width: 100%;
   padding: 7px 10px;
   -webkit-border-radius: 5px;
@@ -85,37 +85,51 @@ input {
   font-size: 14px;
   color: #444444;
   font-weight: 600;
+  background-color: #fff;
   max-width: 320px;
-  border: none; }
-  button::-webkit-input-placeholder, input::-webkit-input-placeholder {
+  border: none;
+  resize: none;
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+     -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); }
+  button::-webkit-input-placeholder, input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
     font-weight: 300;
     color: rgba(0, 0, 0, 0.7); }
-  button:-moz-placeholder, input:-moz-placeholder {
+  button:-moz-placeholder, input:-moz-placeholder, textarea:-moz-placeholder {
     font-weight: 300;
     color: rgba(0, 0, 0, 0.7); }
-  button::-moz-placeholder, input::-moz-placeholder {
+  button::-moz-placeholder, input::-moz-placeholder, textarea::-moz-placeholder {
     font-weight: 300;
     color: rgba(0, 0, 0, 0.7); }
-  button:-ms-input-placeholder, input:-ms-input-placeholder {
+  button:-ms-input-placeholder, input:-ms-input-placeholder, textarea:-ms-input-placeholder {
     font-weight: 300;
     color: rgba(0, 0, 0, 0.7); }
-  button::-ms-input-placeholder, input::-ms-input-placeholder {
+  button::-ms-input-placeholder, input::-ms-input-placeholder, textarea::-ms-input-placeholder {
     font-weight: 300;
     color: rgba(0, 0, 0, 0.7); }
   button::placeholder,
-  input::placeholder {
+  input::placeholder,
+  textarea::placeholder {
     font-weight: 300;
     color: rgba(0, 0, 0, 0.7); }
 
 button {
+  border: none;
   background-color: #3498db;
-  color: white;
-  border: none; }
+  color: white; }
+
+button.delete {
+  background-color: #bb2f2a; }
+
+button,
+input[type="submit"] {
+  cursor: pointer; }
 
 .header {
   background-color: #ea232c;
   margin-bottom: 50px; }
   .header .header__wrapper {
+    padding: 5px 0px;
     width: 100%;
     margin: 0 auto;
     max-width: 1200px;
@@ -125,11 +139,10 @@ button {
     -webkit-align-items: center;
        -moz-box-align: center;
         -ms-flex-align: center;
-            align-items: center;
-    padding: 5px 0px; }
+            align-items: center; }
     .header .header__wrapper .header__column i {
       color: white;
-      font-size: 40px; }
+      font-size: 30px; }
     .header .header__wrapper .header__column:nth-child(2) {
       width: 100%;
       justify-self: center; }
@@ -144,21 +157,20 @@ button {
       color: white;
       font-weight: 600;
       text-transform: uppercase; }
-      .header .header__wrapper .header__column ul li {
+      .header .header__wrapper .header__column ul li:not(:last-child) {
         margin-right: 15px; }
-        .header .header__wrapper .header__column ul li:last-child {
-          margin-right: 0; }
     .header .header__wrapper .header__column form {
       width: 100%; }
       .header .header__wrapper .header__column form input {
-        width: 100%;
         padding: 7px 10px;
+        width: 100%;
         -webkit-border-radius: 5px;
            -moz-border-radius: 5px;
                 border-radius: 5px;
         font-size: 14px;
         color: #444444;
-        font-weight: 600; }
+        font-weight: 600;
+        max-width: none; }
         .header .header__wrapper .header__column form input::-webkit-input-placeholder {
           font-weight: 300;
           color: rgba(0, 0, 0, 0.7); }
@@ -177,37 +189,6 @@ button {
         .header .header__wrapper .header__column form input::placeholder {
           font-weight: 300;
           color: rgba(0, 0, 0, 0.7); }
-
-.footer {
-  margin: 50px 0;
-  padding-top: 50px;
-  border: 3px solid rgba(0, 0, 0, 0.1);
-  width: 100%;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-     -moz-box-orient: vertical;
-     -moz-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-     -moz-box-align: center;
-      -ms-flex-align: center;
-          align-items: center; }
-  .footer .footer__icon {
-    color: rgba(0, 0, 0, 0.5);
-    font-size: 40px;
-    margin-bottom: 20px; }
-  .footer .footer_text {
-    color: rgba(0, 0, 0, 0.2);
-    font-weight: 800;
-    text-transform: uppercase; }
 
 .form-container {
   width: 100%;
@@ -231,7 +212,57 @@ button {
   .form-container form {
     width: 100%;
     max-width: 320px;
-    margin-bottom: 25px; }
+    margin-bottom: 50px; }
+    .form-container form input:not([type="file"]),
+    .form-container form .fileUpload {
+      display: block;
+      width: 100%;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+         -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+              box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); }
+      .form-container form input:not([type="file"]):not(:last-child),
+      .form-container form .fileUpload:not(:last-child) {
+        margin-bottom: 25px; }
+    .form-container form textarea {
+      -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+         -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+              box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+      margin-bottom: 25px; }
+    .form-container form input[type="submit"] {
+      background-color: #3498db;
+      color: white; }
+  .form-container a {
+    max-width: 320px;
+    width: 100%; }
+  .form-container .fileUpload label {
+    font-weight: 300;
+    margin-right: 10px; }
+
+.form-container {
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+     -moz-box-orient: vertical;
+     -moz-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+     -moz-box-align: center;
+      -ms-flex-align: center;
+          align-items: center; }
+  .form-container form {
+    width: 100%;
+    max-width: 320px;
+    margin-bottom: 50px; }
     .form-container form input {
       display: block;
       width: 100%;
@@ -245,6 +276,14 @@ button {
     .form-container form input[type="submit"] {
       background-color: #ea232c;
       color: white; }
+    .form-container form textarea {
+      -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+         -moz-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+              box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+      margin-bottom: 25px; }
+    .form-container form a {
+      max-width: 320px;
+      width: 100%; }
 
 .social-login {
   display: -webkit-box;
@@ -268,7 +307,6 @@ button {
   .social-login button {
     width: 100%;
     max-width: 320px;
-    margin-bottom: 5px;
     display: -webkit-box;
     display: -webkit-flex;
     display: -moz-box;
@@ -283,10 +321,9 @@ button {
     -webkit-align-items: center;
        -moz-box-align: center;
         -ms-flex-align: center;
-            align-items: center;
-    outline: none; }
-    .social-login button:last-child {
-      margin-bottom: 0; }
+            align-items: center; }
+    .social-login button:not(:last-child) {
+      margin-bottom: 15px; }
     .social-login button span {
       margin-right: 10px;
       font-size: 20px; }
@@ -296,6 +333,29 @@ button {
   .social-login .social-login--facebook {
     background-color: #3a5998;
     color: white; }
+
+.videoBlock video {
+  margin-bottom: 10px;
+  max-width: 100%;
+  width: 100%;
+  overflow: hidden; }
+
+.videoBlock .videoBlock__title {
+  font-size: 18px;
+  font-weight: 300;
+  margin-bottom: 10px; }
+
+.home-videos {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(150px, 1fr));
+  grid-gap: 18px; }
+  .home-videos .videoBlock:first-child,
+  .home-videos .videoBlock:nth-child(2) {
+    grid-column: span 3; }
+  .home-videos .videoBlock:nth-child(3),
+  .home-videos .videoBlock:nth-child(4),
+  .home-videos .videoBlock:nth-child(5) {
+    grid-column: span 2; }
 
 .video-detail__container {
   display: -webkit-box;
@@ -317,11 +377,13 @@ button {
           align-items: center; }
   .video-detail__container .video__info {
     width: 100%;
-    max-width: 850px;
+    max-width: 640px;
     margin-top: 25px; }
     .video-detail__container .video__info button {
       width: 100px;
       margin-bottom: 25px; }
+    .video-detail__container .video__info .video__author a {
+      color: #3498db; }
     .video-detail__container .video__info .video__title,
     .video-detail__container .video__info .video__views,
     .video-detail__container .video__info .video__description {
@@ -335,7 +397,27 @@ button {
     .video-detail__container .video__info .video__description {
       font-size: 16px; }
   .video-detail__container .video__comments {
-    margin-top: 25px; }
+    margin-top: 25px;
+    text-align: center; }
     .video-detail__container .video__comments .video__comment-number {
       font-size: 18px; }
+    .video-detail__container .video__comments .add__comment {
+      margin-top: 25px;
+      width: 100%; }
+      .video-detail__container .video__comments .add__comment input {
+        width: 100%; }
+    .video-detail__container .video__comments .video__comments-list {
+      margin-top: 50px; }
+      .video-detail__container .video__comments .video__comments-list li {
+        background-color: #3498db;
+        color: white;
+        padding: 15px;
+        -webkit-border-radius: 20px;
+           -moz-border-radius: 20px;
+                border-radius: 20px;
+        -webkit-border-bottom-left-radius: 0px;
+           -moz-border-radius-bottomleft: 0px;
+                border-bottom-left-radius: 0px; }
+        .video-detail__container .video__comments .video__comments-list li:not(:last-child) {
+          margin-bottom: 15px; }
 
