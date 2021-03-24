@@ -11,7 +11,7 @@ export const localsMiddleware = (req, res, next) => {
   res.locals.siteName = "Youtube";
   res.locals.routes = routes; // routes.js를 템플릿 엔진(pug)에서 사용하기 위해 로컬 변수를 전역 변수로 만들어주는 미들웨어에서 가져와서 선언해줌
   res.locals.user = {
-    isAuthenticated: true,
+    isAuthenticated: false,
     id: 1,
   };
   // next()는 다음 미들웨어를 호출하는 메소드이다.

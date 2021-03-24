@@ -85,7 +85,9 @@ const config = {
             loader: "postcss-loader",
             options: {
               postcssOptions: {
-                plugins: [["autoprefixer", { browsers: "cover 99.5%" }]],
+                // plugins: [["autoprefixer", { browsers: "cover 99.5%" }]]에서 browsers는 오래된 옵션이기 때문에 에러가 발생할 수 있다고 경고 하고 있다.
+                // 그래서 browser대신 overrideBrowserslist옵션으로 대체했다. (강의에서는 browser로 함)
+                plugins: [["autoprefixer", { overrideBrowserslist: "cover 99.5%" }]],
               },
             },
           },

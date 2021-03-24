@@ -1,25 +1,26 @@
 header.header
-  //- div.header__column에서 div는 생략하고 .header__column만 사용가능(div태그만 생략가능)
-  div.header__column
-    a(href=routes.home)
-      i.fab.fa-youtube
-  div.header__column
-    form(action=routes.search, method="get")
-      input(type="text", name="term", placeholder="Search for Term.")
-  div.header__column
-    ul
-      //- 로그인이 안 됐을 때
-      if !user.isAuthenticated 
-        li
-          a(href=routes.join) Join
-        li 
-          a(href=routes.login) Login
-      //- 로그인이 됐을 때
-      else 
-        li 
-          a(href=`${routes.videos}${routes.upload}`) Upload 
-        li 
-          a(href=routes.userDetail(user.id)) Profile
-        li 
-          a(href=routes.logout) Logout
+  .header__wrapper
+    //- div.header__column에서 div는 생략하고 .header__column만 사용가능(div태그만 생략가능)
+    div.header__column
+      a(href=routes.home)
+        i.fab.fa-youtube
+    div.header__column
+      form(action=routes.search, method="get")
+        input(type="text", name="term", placeholder="Search for Term.")
+    div.header__column
+      ul
+        //- 로그인이 안 됐을 때
+        if !user.isAuthenticated 
+          li
+            a(href=routes.join) Join
+          li 
+            a(href=routes.login) Login
+        //- 로그인이 됐을 때
+        else 
+          li 
+            a(href=`${routes.videos}${routes.upload}`) Upload 
+          li 
+            a(href=routes.userDetail(user.id)) Profile
+          li 
+            a(href=routes.logout) Logout
           

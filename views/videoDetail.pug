@@ -1,20 +1,26 @@
 extends layouts/main.pug
 
 block content
-  h1 videoDetail pug
-  .video__player
-    //- video src에는 videoDetail함수로부터 받은 video객체 안에 있는 fileUrl의 값을 할당한다. video.fileUrl은 Video모델에 있는 fileUrl의 값을 가져온 것이다.
-    //- 앞에 video.fileUrl앞에 /를 하나 더 붙인 이유는 가져오는 비디오 파일들이 서버로부터 가져온 파일이기 때문이다. (맨 앞에 /가 붙었다면 루트 경로를 의미함. 붙지 않았다면 현재 페이지를 의미함.)
-    video(src=`/${video.fileUrl}`, controls="true")  
-  .video__info
-    a(href=routes.editVideo(video._id)) Edit Video
-    h5.video__title=video.title
-    p.video__description=video.description
-    span.video__views=video.views
-  .video__comments 
-    if video.comments.length === 1
-      span.video__comment-number 1 comment
-    else
-      //- #{video.comments.length}에서 #{}은 pug에서 넘겨받은 변수를 가져올 떄 사용한다. (보통 =나 #{}을 주로 쓴다.)
-      //- ex) h1=name,   h1 #{name}  둘 다 가능하지만 뒤에 텍스트를 써줘야할 때는 #{}로 쓰는게 좋다.
-      span.video__comment-number #{video.comments.length} comments
+  .video-detail__container
+    h1 videoDetail pug
+    .video__player
+      //- video src에는 videoDetail함수로부터 받은 video객체 안에 있는 fileUrl의 값을 할당한다. video.fileUrl은 Video모델에 있는 fileUrl의 값을 가져온 것이다.
+      //- 앞에 video.fileUrl앞에 /를 하나 더 붙인 이유는 가져오는 비디오 파일들이 서버로부터 가져온 파일이기 때문이다. (맨 앞에 /가 붙었다면 루트 경로를 의미함. 붙지 않았다면 현재 페이지를 의미함.)
+      video(src=`/${video.fileUrl}`, controls="true")  
+    .video__info
+      a(href=routes.editVideo(video._id)) 
+        button Edit Video
+      h5.video__title=video.title
+      p.video__description=video.description
+      //- pug안에서 if문을 사용해서 view값을 다르게 출력하게 했다. 
+      if video.views === 1
+        span.video__views 1 view
+      else 
+        span.video__views #{video.views} views
+    .video__comments 
+      if video.comments.length === 1
+        span.video__comment-number 1 comment
+      else
+        //- #{video.comments.length}에서 #{}은 pug에서 넘겨받은 변수를 가져올 떄 사용한다. (보통 =나 #{}을 주로 쓴다.)
+        //- ex) h1=name,   h1 #{name}  둘 다 가능하지만 뒤에 텍스트를 써줘야할 때는 #{}로 쓰는게 좋다.
+        span.video__comment-number #{video.comments.length} comments
