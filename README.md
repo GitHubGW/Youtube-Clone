@@ -15,7 +15,22 @@
 <img height="30" src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=Node.js&logoColor=white"/> <img height="30" src="https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=Express&logoColor=white"/>
 <img height="30" src="https://img.shields.io/badge/Mongodb-47A248?style=for-the-badge&logo=Mongodb&logoColor=white"/>
 
-## 🌈 Goals
+## ✅ Packages
+- [x] ES6
+- [x] NodeJS
+- [x] Express
+- [x] Babel
+- [x] Pug
+- [x] SCSS
+- [x] Webpack
+- [x] Passport
+- [x] AJAX
+- [x] MongoDB
+- [x] Mongoose
+- [x] Multer
+- [x] ESLint
+
+## 📖 Theory
 - [x] Full Stack Theory
 - [x] Routing
 - [x] Templates
@@ -30,17 +45,19 @@
 - [ ] Server and Database Deployment
 - [ ] AJAX & AWS
 
-## ✨ Features
-- [x] Video Playing
-- [x] Video Uploading
-- [ ] Video Recording
+## ⚙ Features
+### 🙎‍♂️ Users
+- [x] User Authentication
+- [x] Facebook Login / Github Login
+- [x] User Profile
+- [x] Log In / Log Out
+
+### 📺 Videos
+- [x] Video Upload
+- [x] Video Recording
 - [x] Search Video
-- [x] AJAX Comments
 - [x] View Count
-- [ ] User Authentication
-- [ ] Facebook Login & Github Login
-- [ ] User Profile
-- [ ] Log In & Log Out
+- [x] AJAX Comments
 
 ## 🚀 Deployment
 - [ ] Heroku
