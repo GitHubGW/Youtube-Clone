@@ -1,7 +1,8 @@
-import mongoose, { Mongoose } from "mongoose";
-const { Schema } = mongoose;
+import mongoose from "mongoose";
 
-const CommentSchema = new Schema({
+// const { Schema } = mongoose;
+
+const CommentSchema = new mongoose.Schema({
   text: {
     type: String,
     required: "Text is required",

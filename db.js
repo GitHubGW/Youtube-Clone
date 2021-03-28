@@ -35,15 +35,18 @@ db.once("open", handleOpen);
 db.on("error", handleError);
 
 /*
+
 MongoDB 명령어들
 MongoDB의 명령어들을 통해 데이터베이스를 컨트롤 할 수 있다.
 
-mongo: 서버접속
+mongo: 데이터베이스 서버접속
 help: 명령어들 확인
 db: 현재 사용중인 데이터베이스 확인
 show dbs: 데이터베이스 리스트 확인
 db.stats(): 데이터베이스 상태 확인
-use DB명: 해당 DB를 사용함(존재하지 않을 경우 데이터베이스를 생성함)
+use DB명: 해당 DB를 사용함 (존재하지 않을 경우 데이터베이스를 생성함)
 show collections: 컬렉션(모델) 리스트를 확인
-db.컬렉션명.remove: 해당 컬렉션(모델)을 삭제 ( ex: db.videos.remove({}) )
+db.컬렉션명.remove({}): 해당 컬렉션(모델)을 삭제 ( ex: db.videos.remove({}) )
+db.컬렉션명.find({}): 해당 컬렉션(모델)이 가지고 있는 데이터들을 찾아서 보여줌 ( ex: db.users.find({}) )
+
 */

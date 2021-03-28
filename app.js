@@ -10,6 +10,7 @@ import videoRouter from "./routers/videoRouter";
 import globalRouter from "./routers/globalRouter";
 import routes from "./routes"; // routes.js에서 export default(내보내기 기본값)를 routes라는 상수로 지정했기 때문에 import해오는 기본적인 값은 routes라는 상수안에 있는 값이 됨.
 import { localsMiddleware } from "./middlewares";
+import passport from "passport";
 
 const app = express(); // 가져온 express를 실행해서 서버를 만듬
 
@@ -39,6 +40,18 @@ app.use("/uploads", express.static("uploads"));
 // static라우트를 만들고 static라우트로 들어오려 하면 static폴더를 보여주게 된다.
 app.use("/static", express.static("static"));
 
+// passport관련 함수들은 라우트들을 정의한 곳보다 위쪽에 먼저 선언되 있어야 한다.
+// 또한 cookieParser()보다는 뒤에 위치해야 한다.
+
+// 위에서 실행된 cookieParser로부터 쿠키가 쭉 여기까지 내려와서
+// passport를 초기화시켜준다.
+// passport는 쿠키를 들여다봐서 그 쿠키 정보에 해당되는 사용자를 찾아준다.
+// 찾은 사용자에 대한 정보를 req객체에 user프로퍼티에 전달해준다.
+app.use(passport.initialize());
+
+// passport가 session이라는 것을 저장해준다.
+app.use(passport.session());
+
 // app.use()를 통해 기본 라우팅 설정
 // 중요! app.get()은 HTTP GET요청에 대해서만 처리하지만 app.use()는 GET, POST등등 모든 요청에 대해서 처리한다.
 // 해당 라우트 경로에 request했을 때(첫 번째 값) 해당 라우터를 미들웨어로 실행함(두 번째 값)
@@ -50,3 +63,8 @@ app.use(routes.videos, videoRouter);
 
 // export default를 쓰면 app을 기본적으로 export한다는 의미이고, 변수 앞에 export를 붙여서 const export app를 쓰면 해당 변수만 export한다는 의미이다.
 export default app; // const app을 다른 곳에서 불러와서 쓸 수 있도록 export함
+
+// MVC패턴
+// M(Model): 실제 데이터를 담당하는 부분이다.
+// V(View): template(템플릿. ex: pug, ejs등)를 말하며 데이터가 화면에 보여지는 것을 담당하는 부분이다.
+// C(Controller): 데이터의 로직, 처리 등을 담당하는 부분이다.

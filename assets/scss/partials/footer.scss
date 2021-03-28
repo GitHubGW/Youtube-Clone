@@ -1,40 +1,19 @@
-.form-container {
+.footer {
+  margin: 50px 0;
+  padding-top: 50px;
+  border-top: 3px solid rgba(0, 0, 0, 0.1);
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  form {
-    width: 100%;
-    max-width: 320px;
-    margin-bottom: 50px;
-    input:not([type="file"]),
-    .fileUpload {
-      display: block;
-      width: 100%;
-      padding-top: 10px;
-      padding-bottom: 10px;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-      &:not(:last-child) {
-        margin-bottom: 25px;
-      }
-    }
-    textarea {
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-      margin-bottom: 25px;
-    }
-    input[type="submit"] {
-      background-color: #3498db;
-      color: white;
-    }
+  .footer__icon {
+    color: rgba(0, 0, 0, 0.2);
+    font-size: 40px;
+    margin-bottom: 20px;
   }
-  a {
-    max-width: 320px;
-    width: 100%;
-  }
-  .fileUpload {
-    label {
-      font-weight: 300;
-      margin-right: 10px;
-    }
+  .footer__text {
+    color: rgba(0, 0, 0, 0.2);
+    font-weight: 800;
+    text-transform: uppercase;
   }
 }
