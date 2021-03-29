@@ -17,6 +17,9 @@ import { localsMiddleware } from "./middlewares";
 // app.use(passport)를 실행하면 passport.js에 있는 모든 전략을 자동으로 찾는다.
 import "./passport";
 
+// express-session은 session을 관리해주기 위해 필요한 플러그인이다.
+// 쿠키를 이용하기 위해서는 express-session으로 설정을 해줘야 한다.
+
 const app = express(); // 가져온 express를 실행해서 서버를 만듬
 
 // app.set()은 application의 몇몇 설정을 할 때 사용하는 함수이다.
