@@ -5,12 +5,17 @@ import morgan from "morgan";
 import helmet from "helmet";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
+import passport from "passport";
 import userRouter from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";
 import globalRouter from "./routers/globalRouter";
 import routes from "./routes"; // routes.js에서 export default(내보내기 기본값)를 routes라는 상수로 지정했기 때문에 import해오는 기본적인 값은 routes라는 상수안에 있는 값이 됨.
 import { localsMiddleware } from "./middlewares";
-import passport from "passport";
+
+// 아래에서 passport를 미들웨어로 쓰기위해 여기에 import해왔다.
+// passport.initialize()과 passport.session()을 쓰기 위해서
+// app.use(passport)를 실행하면 passport.js에 있는 모든 전략을 자동으로 찾는다.
+import "./passport";
 
 const app = express(); // 가져온 express를 실행해서 서버를 만듬
 
@@ -42,14 +47,13 @@ app.use("/static", express.static("static"));
 
 // passport관련 함수들은 라우트들을 정의한 곳보다 위쪽에 먼저 선언되 있어야 한다.
 // 또한 cookieParser()보다는 뒤에 위치해야 한다.
-
-// 위에서 실행된 cookieParser로부터 쿠키가 쭉 여기까지 내려와서
-// passport를 초기화시켜준다.
+// passport.initialize(): passport를 초기화해줌.
+// 위에서 실행된 cookieParser로부터 쿠키가 쭉 여기까지 내려와서 passport를 초기화시켜준다.
 // passport는 쿠키를 들여다봐서 그 쿠키 정보에 해당되는 사용자를 찾아준다.
 // 찾은 사용자에 대한 정보를 req객체에 user프로퍼티에 전달해준다.
 app.use(passport.initialize());
 
-// passport가 session이라는 것을 저장해준다.
+// passport.session(): passport가 session이라는 것을 저장해준다.
 app.use(passport.session());
 
 // app.use()를 통해 기본 라우팅 설정

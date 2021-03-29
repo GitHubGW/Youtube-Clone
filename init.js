@@ -4,10 +4,10 @@ import "./db";
 import dotenv from "dotenv";
 import app from "./app";
 
-// models/Video모델을 사용하기 위해 import해왔다. 
-// import해오게 되면 mongoose는 해당 모델을 인지해서 등록한다. 
+// models/Video모델을 사용하기 위해 import해왔다.
+// import해오게 되면 mongoose는 해당 모델을 인지해서 등록한다.
 // import해주는 순간 스키마가 등록(model 메소드가 호출)되어서 앞으로 DB 작업을 할 때 스키마에 맞춰 검사한다.
-import "./models/Video"; 
+import "./models/Video";
 import "./models/User";
 import "./models/Comment";
 

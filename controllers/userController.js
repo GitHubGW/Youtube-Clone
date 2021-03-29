@@ -6,8 +6,9 @@ import User from "../models/User";
 export const getJoin = (req, res) => {
   return res.render("join", { pageTitle: "Join" });
 };
+
 export const postJoin = async (req, res, next) => {
-  console.log(req.body); // bodyParser가 없으면 req객체안에 있는 값들을 가져오지 못한다. (req.body를 해도 undefined가 뜸)
+  // console.log(req.body); // bodyParser가 없으면 req객체안에 있는 값들을 가져오지 못한다. (req.body를 해도 undefined가 뜸)
   // const {body} = req는 const body = req.body와 같은 의미이다.
   const {
     body: { name, email, password, verifyPassword },
@@ -58,17 +59,17 @@ export const postJoin = async (req, res, next) => {
 export const getLogin = (req, res) => {
   return res.render("login", { pageTitle: "Login" });
 };
-export const postLogin = (req, res) => {
-  // passport.authenticate('local')을 통해 passport에게 local전략(strategy)으로 인증하라고 알려준다. (local전략은 passport-local 모듈을 통해 설치되었다.)
-  // authenticate()함수는 LocalStrategy에서 사용되는 함수를 생성하고 ()괄호 안에 세부 옵션을 설정할 수 있다.
-  // local전략은 사용자 아이디(이 강의에서는 email로 바꿈), 비밀번호 두 개를 검사해서 로그인 인증을 하는 전략이다.
-  // 만약 페이스북이나 구글, 카카오등의 다른 서비스를 이용한다면 local자리에 다른 전략이 들어갈 것이다.
-  // successRedirect는 성공했을 때 리다이렉트할 라우트 경로이고 failureRedirect는 실패했을 때 리다이렉트할 라우트 경로이다.
-  return passport.authenticate("local", {
-    successRedirect: routes.home,
-    failureRedirect: routes.login,
-  });
-};
+
+// postLogin변수에 passport.authenticate()를 실행한 값을 넣는다.
+// passport.authenticate('local')을 통해 passport에게 local전략(strategy)으로 인증하라고 알려준다. (local전략은 passport-local 모듈을 통해 설치되었다.)
+// authenticate()함수는 LocalStrategy에서 사용되는 함수를 생성하고 ()괄호 안에 세부 옵션을 설정할 수 있다.
+// local전략은 사용자 아이디(이 강의에서는 email로 바꿈), 비밀번호 두 개를 검사해서 로그인 인증을 하는 전략이다.
+// 만약 페이스북이나 구글, 카카오등의 다른 서비스를 이용한다면 local자리에 다른 전략이 들어갈 것이다.
+// successRedirect는 성공했을 때 리다이렉트할 라우트 경로이고 failureRedirect는 실패했을 때 리다이렉트할 라우트 경로이다.
+export const postLogin = passport.authenticate("local", {
+  successRedirect: routes.home,
+  failureRedirect: routes.login,
+});
 
 export const logout = (req, res) => {
   return res.redirect(routes.home);
