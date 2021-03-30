@@ -1,5 +1,9 @@
 import routes from "./routes";
-import multer from "multer"; // multer미들웨어를 사용하기 위해 가져옴
+
+// multer는 우리가 파일을 업로드했을 때 그 업로드한 파일을 받아서 데이터베이스에 저장하고 우리에게 file URL을 반환해주는 역할을 하는 미들웨어이다.
+// 우리는 파일을 업로드하면 파일의 이름을 통해 해당 파일을 로드해오는게 아니라 해당 파일의 URL을 통해 로드해오게 된다. 
+// multer미들웨어를 사용하기 위해 가져옴
+import multer from "multer"; 
 
 // 가져온 multer 모듈을 실행시킨 후, input을 이용해서 파일을 업로드 하면 multer가 그 파일을 변환해서 저장할 폴더를 설정한다.
 const upload = multer({ dest: "uploads/videos/" });

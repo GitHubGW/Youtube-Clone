@@ -41,6 +41,8 @@ const routes = {
   upload: UPLOAD,
   videoDetail: (id) => {
     if (id) {
+      // 주의!! 만약 /videos/${id}에서 맨 앞에 /를 쓰지 않으면 주소가 /videos/videos/6062a777b18f4b66b8598967 이런식으로 찍히게 되서 정상적인 videoDetail 경로가 나오지 않게 된다.
+      // 그래서 videos앞에 꼭 /를 붙여야 /videos/6062a777b18f4b66b8598967 이렇게 정상적으로 경로가 설정되게 된다. (아마도 앞에 /를 붙이지 않으면 기존 /videos 라우터를 유지한채 뒤에 경로가 추가되는 것 같다.)
       return `/videos/${id}`;
     } else {
       return VIDEOS_DETAIL;
