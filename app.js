@@ -41,8 +41,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan("dev")); // morgan은 nodeJS에서 로그 관리를 하기 위한 미들웨어이다.
 app.use(localsMiddleware);
-// /uploads 라우트로 req 요청이 오면 express.static("uploads")를 통해 express의 기본 static파일 경로를 uploads폴더로 설정한다.
-// 설정하게 되면 uploads폴더 안에 있는 파일을 보내주게 된다.
+
+// uploads 라우트로 req 요청이 오면 express.static("uploads")를 통해 express의 기본 static파일 경로를 uploads폴더로 설정한다.
+// 설정하게 되면 upload 라우트로 들어왔을 때 uploads폴더 안에 있는 파일을 보내주게 된다.
+// 쉽게 말해 uploads 경로로 들어오면 uploads폴더 안에 파일을 실행시키라는 의미임
 app.use("/uploads", express.static("uploads"));
 
 // static라우트를 만들고 static라우트로 들어오려 하면 static폴더를 보여주게 된다.

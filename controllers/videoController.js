@@ -140,8 +140,8 @@ export const postEditVideo = async (req, res) => {
   try {
     // findOneAndUpdate()메소드를 통해 비디오 모델에서 해당 조건에 해당되는 비디오를 찾아서 업데이트 시켜주는 메소드이다.
     // findOneAndUpdate(조건, 업데이트, 옵션, 콜백)는 여러 인자들을 받을 수 있다. 첫 번째 인자는 조건에 해당 되는 값을 찾고, 두 번쨰 인자는 업데이트 할 값을 넣는다.
-    // _id라고 한 이유는 우리가 비디오를 업로드하면 MongoDB가 고유의 id값을 할당해주는데 그 때 id가 아니라 정확하게는 _id라는 이름으로 할당해준다. (이건 그냥 콘솔로그 찍어보면 나옴)
-    // 그래서 해당 모델이 가지고 있는 _id 값과 req.params.id 값이 일치하는 조건의 비디오를 찾아서 그 비디오의 title과 descripption의 값을 req.body.title, req.body.description의 값으로 업데이트 하라는 의미이다.
+    // _id라고 한 이유는 MongoDB가 모델을 생성할 때 고유의 id값을 할당해주는데 그 때 id가 아니라 정확하게는 _id라는 이름으로 할당해준다. (이건 그냥 콘솔로그 찍어보면 나옴)
+    // 그래서 데이터베이스의 모델들 중에 id값과 _id값이 일치하는 조건의 비디오를 하나 찾아서 그 비디오의 title과 descripption의 값을 req.body.title, req.body.description의 값으로 업데이트 하라는 의미이다.
     await Video.findOneAndUpdate({ _id: id }, { title, description });
     res.redirect(routes.videoDetail(id));
   } catch (error) {
