@@ -49,4 +49,7 @@ show collections: 컬렉션(모델) 리스트를 확인
 db.컬렉션명.remove({}): 해당 컬렉션(모델)을 삭제 ( ex: db.videos.remove({}) )
 db.컬렉션명.find({}): 해당 컬렉션(모델)이 가지고 있는 데이터들을 찾아서 보여줌 ( ex: db.users.find({}) )
 
+MongoDB GUI Plugin(Mongoku)
+https://github.com/huggingface/Mongoku
+
 */

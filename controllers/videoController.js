@@ -45,7 +45,7 @@ export const search = async (req, res) => {
     // videos라는 빈 배열을 만들고 우리가 검색창에 어떤 단어를 통해 비디오를 검색했을 때 그 단어가 들어가는 비디오를 찾아내서 배열에 넣어준다.
     // Video모델안에서 find()메소드를 이용해서 비디오를 찾는다.
     // 찾을 때는 title로 찾고 찾으려는 제목이 내가 검색한 단어와 완전히 동일할 필요는 없다. 검색한 단어를 포함하는 모든 비디오들을 찾아오게끔 코드를 짜야한다.
-    // 그러러면 mongoose의 regex를 이용해서 단순히 find를 이용해서 찾지말고 regular expression(정규식)을 이용해서 $regex로 찾으라고 해줘야 한다.
+    // 그러러면 mongoose의 regex를 이용해서 단순히 find를 이용해서 찾지말고 regular expression(정규 표현식)을 이용해서 $regex로 찾으라고 해줘야 한다.
     // 그리고 $options를 통해 한 가지 옵션을 추가해 준다. 옵션 내용은 대소문자 구분을 하지 않겠다는 명령이다. ( i는 insensitive의 약자로 덜 민감하다는 걸 의미한다.(덜 민감하게 대소문자 구분을 하지 않음) )
     videos = await Video.find({ title: { $regex: searchingBy, $options: "i" } });
   } catch (error) {
