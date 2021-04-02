@@ -1,9 +1,9 @@
 import routes from "./routes";
 
 // multer는 우리가 파일을 업로드했을 때 그 업로드한 파일을 받아서 데이터베이스에 저장하고 우리에게 file URL을 반환해주는 역할을 하는 미들웨어이다.
-// 우리는 파일을 업로드하면 파일의 이름을 통해 해당 파일을 로드해오는게 아니라 해당 파일의 URL을 통해 로드해오게 된다. 
+// 우리는 파일을 업로드하면 파일의 이름을 통해 해당 파일을 로드해오는게 아니라 해당 파일의 URL을 통해 로드해오게 된다.
 // multer미들웨어를 사용하기 위해 가져옴
-import multer from "multer"; 
+import multer from "multer";
 
 // 가져온 multer 모듈을 실행시킨 후, input을 이용해서 파일을 업로드 하면 multer가 그 파일을 변환해서 저장할 폴더를 설정한다.
 const upload = multer({ dest: "uploads/videos/" });
@@ -15,6 +15,9 @@ export const localsMiddleware = (req, res, next) => {
   res.locals.siteName = "Youtube";
   res.locals.routes = routes; // routes.js를 템플릿 엔진(pug)에서 사용하기 위해 로컬 변수를 전역 변수로 만들어주는 미들웨어에서 가져와서 선언해줌
   res.locals.user = req.user || {}; // passport가 사용자를 로그인 시킬 때 req객체안에 user프로퍼티에 사용자에 대한 정보를 전달해준다.
+
+  // console.log("req.user", req.user);
+
   // next()는 다음 미들웨어를 호출하는 메소드이다.
   // 미들웨어는 끝나면 항상 next()를 써줘야 다음 함수나 동작으로 넘어간다. (필수)
   next();

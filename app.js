@@ -18,6 +18,7 @@ import { localsMiddleware } from "./middlewares";
 import "./passport";
 
 // express-session은 session을 관리해주기 위해 필요한 플러그인이다.
+// session 데이터는 쿠키에 저장되지 않고 서버 측에 저장된다. (쿠키에는 오로지 세션 아이디만 저장된다.)
 // 쿠키를 이용하기 위해서는 express-session으로 설정을 해줘야 한다.
 
 const app = express(); // 가져온 express를 실행해서 서버를 만듬
@@ -53,9 +54,10 @@ app.use("/static", express.static("static"));
 // passport관련 함수들은 라우트들을 정의한 곳보다 위쪽에 먼저 선언되 있어야 한다.
 // 또한 cookieParser()보다는 뒤에 위치해야 한다.
 // passport.initialize(): passport를 초기화해줌.
-// 위에서 실행된 cookieParser로부터 쿠키가 쭉 여기까지 내려와서 passport를 초기화시켜준다.
-// passport는 쿠키를 들여다봐서 그 쿠키 정보에 해당되는 사용자를 찾아준다.
-// 찾은 사용자에 대한 정보를 req객체에 user프로퍼티에 전달해준다.
+// 위에서 실행된 cookieParser로부터 쿠키가 쭉 여기까지 내려와서 passport는 초기화된다.
+// 그 후 passport는 쿠키를 들여다봐서 그 쿠키 정보에 해당되는 사용자를 찾아준다.
+// 그리고 passport는 자기가 찾은 쿠키 정보를 req객체에 user로 전달해준다.(req.user)
+// 정리하자면 passport는 쿠키를 들여다보고 쿠키 정보를 받아서 받은 정보에 해당하는 데이터를 req객체에게 전달해준다.
 app.use(passport.initialize());
 
 // passport.session(): passport가 session이라는 것을 저장해준다.
