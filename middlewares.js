@@ -18,8 +18,6 @@ export const localsMiddleware = (req, res, next) => {
   // req.user값이 없다면 null을 반환한다.
   res.locals.user = req.user || null;
 
-  console.log("req.user", req.user);
-
   // next()는 다음 미들웨어를 호출하는 메소드이다.
   // 미들웨어는 끝나면 항상 next()를 써줘야 다음 함수나 동작으로 넘어간다. (필수)
   next();

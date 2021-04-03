@@ -3,6 +3,7 @@
 // passport-local 모듈은 username과 password를 쓰는 사용자 인증 방식(strategy)을 의미한다. (passport-local은 유저와 패스워드 필드를 사용자가 지정한 모델에 추가해준다.)
 import passport from "passport";
 import GitHubStrategy from "passport-github";
+import routes from "./routes";
 import { githubLoginCallback } from "./controllers/userController";
 import User from "./models/User";
 
@@ -20,13 +21,17 @@ passport.use(User.createStrategy());
 // 2. 패스포트를 이용해 깃허브 전략(Strategy)을 등록하고 설정해준다. (깃허브 전략은 passport-github 패키지를 설치해서 사용할 수 있다.)
 passport.use(
   // GitHubStrategy 전략을 만들 때 clientID, clientSecret, callbackURL등의 값들을 넣어줘야 한다.
-  new GitHubStrategy({
-    clientID: process.env.GITHUB_CLIENT_ID,
-    clientSecret: process.env.GITHUB_CLIENT_SECRET,
-    callbackURL: "http://localhost:4000/auth/github/callback",
-  }),
-  // 아래 함수는 사용자가 깃허브 인증이 끝나고 돌아왔을 때 실행되는 콜백함수이다.
-  githubLoginCallback
+  // 깃허브 페이지에 갔다가 인증이 완료되면 콜백URL로 돌아오면서 사용자 정보를 같이 가지고 온다.
+  new GitHubStrategy(
+    {
+      clientID: process.env.GITHUB_CLIENT_ID,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET,
+      // 깃허브 인증이 완료되면 콜백되면서 설정한 URL주소로 되돌려 보내진다. (인증이 성공적으로 되었다는 의미는 로그인 되었다는 의미로 볼 수 있다.)
+      callbackURL: `http://localhost:4000${routes.githubCallback}`,
+    },
+    // 아래 함수는 사용자가 깃허브 인증이 끝나고 돌아왔을 때 실행되는 콜백함수이다.
+    githubLoginCallback
+  )
 );
 
 // passport.serializeUser()와 passport.deserializeUser()를 통해 Passport가 사용자 인증을 처리할 수 있도록 설정한다.

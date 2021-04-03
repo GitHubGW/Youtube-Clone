@@ -20,6 +20,10 @@ const VIDEOS_DETAIL = "/:id";
 const EDIT_VIDEO = "/:id/edit";
 const DELETE_VIDEO = "/:id/delete";
 
+// GitHub Route
+const GITHUB = "/auth/github";
+const GITHUB_CALLBACK = "/auth/github/callback";
+
 // Routes Object(라우터들을 모아놓은 객체)
 const routes = {
   home: HOME,
@@ -62,6 +66,8 @@ const routes = {
       return DELETE_VIDEO;
     }
   },
+  github: GITHUB,
+  githubCallback: GITHUB_CALLBACK,
 };
 
 export default routes;

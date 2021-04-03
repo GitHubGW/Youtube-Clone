@@ -71,13 +71,24 @@ export const postLogin = passport.authenticate("local", {
   failureRedirect: routes.login,
 });
 
+// 패스포트를 이용해 깃허브 전략을 인증한다. (전에 passport.authenticate("local")을 했던 것과 비슷하다.)
 export const githubLogin = passport.authenticate("github");
 
+// 깃허브에서 인증 후 콜백 URL경로에 왔을 때 실행되는 콜백 함수이다.
+// accessToken, refreshToken, profile, cb의 인자를 쓸 수 있다.
+// accessToken에는 접근 가능한 토큰을 보여준다.
+// profile에는 사용자에 대한 정보들이 담겨져 있는 객체이다.
+// cb는 verified 함수가 담겨져 있다.
 export const githubLoginCallback = (accessToken, refreshToken, profile, cb) => {
   console.log(accessToken, refreshToken, profile, cb);
 };
 
+export const postGithubLogin = (req, res) => {
+  res.redirect(routes.home);
+};
+
 export const logout = (req, res) => {
+  // 패스포트를 이용해 간단하게 로그아웃 기능을 사용할 수 있다. (쿠키, 세션 등등을 모두 알아서 처리해준다.)
   req.logout();
   return res.redirect(routes.home);
 };
