@@ -10,7 +10,7 @@ header.header
     div.header__column
       ul
         //- 로그인이 안 됐을 때
-        if !user.isAuthenticated 
+        if !user
           li
             a(href=routes.join) Join
           li 
