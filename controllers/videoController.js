@@ -15,8 +15,8 @@ export const home = async (req, res) => {
     // 가져온 비디오들을 정렬하기 위해 sort()메소드를 사용했다.
     // sort({_id:-1}) 는 _id를 기준으로 정렬한다는 의미이고 뒤에 -1을 붙여서 나중에 올린 비디오가 맨 앞에 오도록 역순으로 정렬했다. (1은 순서대로, -1은 역순을 의미함)
     // sort()를 이용해서 _id가 아닌 title이나 다른 여러 요소들을 기준으로 정렬할 수도 있다.
-    // 주의할 점! DB에서 데이터를 찾아올 때까지 await해줘야 한다. 여기서 await를 해주지 않으면 자바스크립트가 기다리지 않고 다음 구문으로 넘어가버리고 그렇게 되면 오류가 난다. 
-    // (DB에서 데이터를 찾을 때는 반드시 async await처리를 해주기!) 
+    // 주의할 점! DB에서 데이터를 찾아올 때까지 await해줘야 한다. 여기서 await를 해주지 않으면 자바스크립트가 기다리지 않고 다음 구문으로 넘어가버리고 그렇게 되면 오류가 난다.
+    // (DB에서 데이터를 찾을 때는 반드시 async await처리를 해주기!)
     const videos = await Video.find({}).sort({ _id: -1 });
     // console.log("videos:", videos);
 
@@ -111,7 +111,7 @@ export const videoDetail = async (req, res) => {
     // Video모델에서 findById()메소드를 통해 req.parms.id값과 매칭하는 파일을 찾는다. 찾은 값을 통해 해당 비디오 파일을 찾을 수 있다.
     // Video모델의 스키마 안에서는 id값을 선언하지 않았지만 비디오가 업로드되는 시점에 각각의 비디오에게 MongoDB가 자동으로 고유의 id값을 주게 되고 그 id값을 통해 여기서 req.params.id와 일치하는 비디오를 가져올 수 있는 것이다.
     const video = await Video.findById(id);
-    console.log("✅ video:", video);
+    // console.log("✅ video:", video);
     res.render("videoDetail", { pageTitle: video.title, video });
   } catch (error) {
     console.log(error);
@@ -126,7 +126,7 @@ export const getEditVideo = async (req, res) => {
 
   try {
     const video = await Video.findById(id);
-    console.log("✅ video: ", video);
+    // console.log("✅ video: ", video);
     res.render("editVideo", { pageTitle: `Edit: ${video.title}`, video });
   } catch (error) {
     res.redirect(routes.home);

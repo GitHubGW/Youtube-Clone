@@ -2,7 +2,6 @@ extends layouts/main.pug
 
 block content
   .video-detail__container
-    h1 videoDetail pug
     .video__player
       //- video src에는 videoDetail함수로부터 받은 video객체 안에 있는 fileUrl의 값을 할당한다. video.fileUrl은 Video모델에 있는 fileUrl의 값을 가져온 것이다.
       //- 앞에 video.fileUrl앞에 /를 하나 더 붙인 이유는 가져오는 비디오 파일들이 서버로부터 가져온 파일이기 때문이다. 

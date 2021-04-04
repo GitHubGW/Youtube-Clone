@@ -71,6 +71,7 @@ export const postLogin = passport.authenticate("local", {
   failureRedirect: routes.login,
 });
 
+// GitHub OAuth
 // 패스포트를 이용해 깃허브 전략을 인증한다. (전에 passport.authenticate("local")을 했던 것과 비슷하다.)
 export const githubLogin = passport.authenticate("github");
 
@@ -78,12 +79,64 @@ export const githubLogin = passport.authenticate("github");
 // accessToken, refreshToken, profile, cb의 인자를 쓸 수 있다.
 // accessToken에는 접근 가능한 토큰을 보여준다.
 // profile에는 사용자에 대한 정보들이 담겨져 있는 객체이다.
-// cb는 verified 함수가 담겨져 있다.
-export const githubLoginCallback = (accessToken, refreshToken, profile, cb) => {
-  console.log(accessToken, refreshToken, profile, cb);
+// cb는 패스포트에서 제공하는 콜백함수이다. 인증에 성공한 상황에서 최종적으로 호출이 되야 하는 함수이다. (최종적으로 return해줘야 함.)
+// 그리고 이 cb함수는 error가 있는지 user가 있는지 알려줘야 한다.
+// 기타: (accessToken, refreshToken, profile, cb) 여기에서 사용하지 않는 파라미터가 있다면 (_, __, profile, cb)로 쓸 수도 있다. (또 다른 스타일)
+export const githubLoginCallback = async (accessToken, refreshToken, profile, cb) => {
+  // console.log(accessToken, refreshToken, profile, cb);
+
+  // profile안에 _json객체 안에 있는 필요한 정보들을 가져옴(아이디, 아바타 url, 이름, 이메일)
+  // avatar_url를 카멜케이스인 avatarUrl로 바꿔줬다.
+  const {
+    _json: { id, avatar_url: avatarUrl, name, email },
+  } = profile;
+
+  try {
+    // 위에서 가져온 정보 중에 email을 가지고 User모델에 있는 이메일과 같은 데이터를 찾는다.
+    // 깃허브에서 가져온 이메일과 User모델이 가지고 있는 이메일이 동일한지 확인함
+    const user = await User.findOne({
+      email,
+    });
+    // console.log(user);
+
+    // 만약 깃허브에서 가져온 이메일과 User모델이 가지고 있는 이메일이 동일한 사람이 있다면
+    // 그 사람의 githubId를 깃허브에서 가져온 id값으로 갱신하고 user.save()메소드를 이용해서 User모델을 업데이트 해준다.
+    // 마지막으로 이메일이 동일한 사용자를 찾았다면 패스포트는 return cb(null, user)를 통해 cb함수를 호출한다.
+    // cb함수의 첫 번째 인자에는 에러가 있다면 error를 없다면 null을 넣어주고 두 번째 인자에는 찾은 user값을 넣어준다. (이 user값은 쿠키에 저장되게 된다.)
+    if (user) {
+      user.githubId = id;
+      user.save();
+      return cb(null, user);
+    } else {
+      // 만약 깃허브에서 가져온 이메일과 User모델이 가지고 있는 이메일이 동일한 사람을 찾지 못했다면
+      // User모델에 하나의 스키마(도큐먼트)를 생성한다.
+      // 마지막으로 이메일이 동일한 사용자를 찾지 못했다면 return cb(null, newUser)를 통해 cb함수를 호출하고 두 번째 인자로 newUser를 넘겨준다.
+      const newUser = await User.create({
+        email,
+        name,
+        githubId: id,
+        avatarUrl,
+      });
+      return cb(null, newUser);
+    }
+  } catch (error) {
+    // cb함수가 error를 리턴하면 패스포트는 user가 없고 에러가 있다고 인식하고 끝낸다.
+    return cb(error);
+  }
 };
 
 export const postGithubLogin = (req, res) => {
+  res.redirect(routes.home);
+};
+
+// Facebook OAuth
+export const facebookLogin = passport.authenticate("facebook");
+
+export const facebookLoginCallback = (accessToken, refreshToken, profile, cb) => {
+  console.log(accessToken, refreshToken, profile, cb);
+};
+
+export const postFacebookLogin = (req, res) => {
   res.redirect(routes.home);
 };
 
@@ -94,7 +147,21 @@ export const logout = (req, res) => {
 };
 
 // User Controller
-export const users = (req, res) => res.render("users", { pageTitle: "Users" });
-export const userDetail = (req, res) => res.render("userDetail", { pageTitle: "userDetail" });
+export const getMe = (req, res) => res.render("userDetail", { pageTitle: "Me", user: req.user }); // user에 req.user의 값을 전달함(req.user는 현재 로그인한 사용자에 대한 정보임)
+export const userDetail = async (req, res) => {
+  const {
+    params: { id },
+  } = req;
+  console.log(id);
+
+  try {
+    // User.findById(id)를 통해 req.params.id의 값에 해당하는 데이터를 User모델에서 찾는데 만약 여기서 에러가 생기면 catch문으로 가게 된다.
+    const user = await User.findById(id);
+    res.render("userDetail", { pageTitle: "userDetail", user });
+  } catch (error) {
+    // console.log(error);
+    res.redirect(routes.home);
+  }
+};
 export const editProfile = (req, res) => res.render("editProfile", { pageTitle: "editProfile" });
 export const changePassword = (req, res) => res.render("changePassword", { pageTitle: "changePassword" });

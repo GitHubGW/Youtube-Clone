@@ -12,6 +12,7 @@ const USERS = "/users";
 const USER_DETAIL = "/:id"; // express에서는 url에 콜론(:)을 넣어주면 해당 부분에 변하는 값이 들어간다는 것을 앎(id에는 어떠한 값도 들어갈 수 있음) ex)/users/1, /users/2 etc..
 const EDIT_PROFILE = "/edit-profile";
 const CHANGE_PASSWORD = "/change-password";
+const ME = "/me";
 
 // Videos Route
 const VIDEOS = "/videos";
@@ -23,6 +24,10 @@ const DELETE_VIDEO = "/:id/delete";
 // GitHub Route
 const GITHUB = "/auth/github";
 const GITHUB_CALLBACK = "/auth/github/callback";
+
+// Facebook Route
+const FACEBOOK = "/auth/facebook";
+const FACEBOOK_CALLBACK = "/auth/facebook/callback";
 
 // Routes Object(라우터들을 모아놓은 객체)
 const routes = {
@@ -41,6 +46,7 @@ const routes = {
   },
   editProfile: EDIT_PROFILE,
   changePassword: CHANGE_PASSWORD,
+  me: ME,
   videos: VIDEOS,
   upload: UPLOAD,
   videoDetail: (id) => {
@@ -68,6 +74,8 @@ const routes = {
   },
   github: GITHUB,
   githubCallback: GITHUB_CALLBACK,
+  facebook: FACEBOOK,
+  facebookCallback: FACEBOOK_CALLBACK,
 };
 
 export default routes;

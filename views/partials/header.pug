@@ -10,7 +10,7 @@ header.header
     div.header__column
       ul
         //- 로그인이 안 됐을 때
-        if !user
+        if !loggedUser
           li
             a(href=routes.join) Join
           li 
@@ -20,7 +20,7 @@ header.header
           li 
             a(href=`${routes.videos}${routes.upload}`) Upload 
           li 
-            a(href=routes.userDetail(user.id)) Profile
+            a(href=routes.me) Profile
           li 
             a(href=routes.logout) Logout
           

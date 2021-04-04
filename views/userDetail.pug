@@ -1,4 +1,7 @@
 extends layouts/main.pug
 
 block content
-  h1 userDetail pug
+  .user-profile 
+    .user-profile__header
+      img.avatar(src=user.avatarUrl, alt="User Avatar")
+      h4.profile__username=user.name
