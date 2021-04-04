@@ -29,6 +29,10 @@ const GITHUB_CALLBACK = "/auth/github/callback";
 const FACEBOOK = "/auth/facebook";
 const FACEBOOK_CALLBACK = "/auth/facebook/callback";
 
+// Kakao Route
+const KAKAO = "/auth/kakao";
+const KAKAO_CALLBACK = "/auth/kakao/callback";
+
 // Routes Object(라우터들을 모아놓은 객체)
 const routes = {
   home: HOME,
@@ -76,6 +80,8 @@ const routes = {
   githubCallback: GITHUB_CALLBACK,
   facebook: FACEBOOK,
   facebookCallback: FACEBOOK_CALLBACK,
+  kakao: KAKAO,
+  kakaoCallback: KAKAO_CALLBACK,
 };
 
 export default routes;

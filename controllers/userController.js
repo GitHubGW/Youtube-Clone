@@ -140,6 +140,17 @@ export const postFacebookLogin = (req, res) => {
   res.redirect(routes.home);
 };
 
+// Kakao OAuth
+export const kakaoLogin = passport.authenticate("kakao");
+
+export const kakaoLoginCallback = (accessToken, refreshToken, profile, cb) => {
+  console.log(accessToken, refreshToken, profile, cb);
+};
+
+export const postKakaoLogin = (req, res) => {
+  res.redirect(routes.home);
+};
+
 export const logout = (req, res) => {
   // 패스포트를 이용해 간단하게 로그아웃 기능을 사용할 수 있다. (쿠키, 세션 등등을 모두 알아서 처리해준다.)
   req.logout();

@@ -1,7 +1,7 @@
 import express from "express";
 import passport from "passport";
 import { home, search } from "../controllers/videoController";
-import { getJoin, postJoin, getLogin, postLogin, logout, githubLogin, postGithubLogin, getMe, facebookLogin, postFacebookLogin } from "../controllers/userController";
+import { getJoin, postJoin, getLogin, postLogin, logout, githubLogin, postGithubLogin, getMe, facebookLogin, postFacebookLogin, kakaoLogin, postKakaoLogin } from "../controllers/userController";
 import { onlyPublic, onlyPrivate } from "../middlewares";
 import routes from "../routes";
 
@@ -18,6 +18,7 @@ globalRouter.post(routes.login, onlyPublic, postLogin);
 
 globalRouter.get(routes.logout, onlyPrivate, logout);
 
+// GitHub
 // github라우트로 들어왔을 때 githublogin을 실행함
 globalRouter.get(routes.github, githubLogin);
 
@@ -26,6 +27,12 @@ globalRouter.get(routes.githubCallback, passport.authenticate("github", { failur
 
 globalRouter.get(routes.me, getMe);
 
+// Facebook
 globalRouter.get(routes.facebook, facebookLogin);
 globalRouter.get(routes.facebookCallback, passport.authenticate("facebook", { failureRedirect: "/login" }), postFacebookLogin);
+
+// Kakao
+globalRouter.get(routes.kakao, kakaoLogin);
+globalRouter.get(routes.kakaoCallback, passport.authenticate("kakao", { failureRedirect: "/login" }), postKakaoLogin);
+
 export default globalRouter;

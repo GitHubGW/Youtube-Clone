@@ -4,8 +4,9 @@
 import passport from "passport";
 import GitHubStrategy from "passport-github";
 import FacebookStrategy from "passport-facebook";
+import KakaoStrategy from "passport-kakao";
 import routes from "./routes";
-import { githubLoginCallback, facebookLoginCallback } from "./controllers/userController";
+import { githubLoginCallback, facebookLoginCallback, kakaoLoginCallback } from "./controllers/userController";
 import User from "./models/User";
 
 // passport.use()를 통해 passport에게 strategy를 사용하라고 지정한다.
@@ -47,6 +48,16 @@ passport.use(
       callbackURL: `http://localhost:4000${routes.facebookCallback}`,
     },
     facebookLoginCallback
+  )
+);
+
+passport.use(
+  new KakaoStrategy(
+    {
+      clientID: process.env.KAKAO_ID,
+      callbackURL: `http://localhost:4000${routes.kakaoCallback}`,
+    },
+    kakaoLoginCallback
   )
 );
 
