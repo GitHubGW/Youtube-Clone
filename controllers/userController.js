@@ -88,7 +88,7 @@ export const githubLoginCallback = async (accessToken, refreshToken, profile, cb
   // profile안에 _json객체 안에 있는 필요한 정보들을 가져옴(아이디, 아바타 url, 이름, 이메일)
   // avatar_url를 카멜케이스인 avatarUrl로 바꿔줬다.
   const {
-    _json: { id, avatar_url: avatarUrl, name, email },
+    _json: { id, name, email, avatar_url: avatarUrl },
   } = profile;
 
   try {
