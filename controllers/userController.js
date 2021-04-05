@@ -174,5 +174,33 @@ export const userDetail = async (req, res) => {
     res.redirect(routes.home);
   }
 };
-export const editProfile = (req, res) => res.render("editProfile", { pageTitle: "editProfile" });
+
+export const getEditProfile = (req, res) => res.render("editProfile", { pageTitle: "editProfile" });
+
+export const postEditProfile = async (req, res) => {
+  const {
+    user: { _id },
+    body: { name, email },
+    file,
+  } = req;
+  // console.log(name, email, file);
+  // console.log(req.user._id);
+  console.log("💚", req.user);
+  try {
+    await User.findByIdAndUpdate(_id, {
+      name,
+      email,
+
+      // 삼항연산자를 사용해서 조건문을 처리함-->  조건 ? "참":"거짓"
+      // 만약 유저가 avatarUrl에 파일을 추가하지려 할 때 파일을 추가하지 않으면 avataUrl를 중복해서 쓰길 원하지 않는다. 그래서 현재 있는 avataUrl을 준다.
+      // avatarUrl에 아바타를 넣으려고 할 때 req.file이 없다면(아바타 사진이 아예 없다면) 기존 avatarUrl을 넣고 있다면 req.file.path의 값을 넣는다.
+      // 사용자 로그인 인증이 성공하고 나면 req객체안에는 항상 user가 있다. (사용자 정보를 담고 있는 객체)
+      avatarUrl: file ? file.path : req.user.avatarUrl,
+    });
+    res.redirect(routes.me);
+  } catch (error) {
+    res.render("editProfile", { pageTitle: "Edit Profile" });
+  }
+};
+
 export const changePassword = (req, res) => res.render("changePassword", { pageTitle: "changePassword" });

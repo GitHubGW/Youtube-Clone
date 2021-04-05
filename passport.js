@@ -79,7 +79,12 @@ passport.serializeUser((user, done) => done(null, user));
 // passport.deserializeUser(): 패스포트를 이용해 세션에 저장된 아이디를 이용해서 사용자 정보를 가져옴
 // 사용자가 페이지를 돌아다닐 때마다 사용자에 대한 정보를 req.user로 받아서 가져온다. (이제 어떤 페이지를 가던지간에 누가 무슨 요청을 하고 있는지 세션 정보를 통해 알 수 있다.)
 // passport.deserializeUser(User.deserializeUser());
-passport.deserializeUser((user, done) => done(null, user));
+// passport.deserializeUser((user, done) => done(null, user));
+passport.deserializeUser((id, done) => {
+  User.findById(id, (err, user) => {
+    done(err, user);
+  });
+});
 
 // Passport는 웹 사이트에서 인증을 설정하고 처리하기 위한 플러그인이다.
 // Passport는 쿠키를 생성하고, 브라우저에 저장시켜주고, 유저에게 해당 쿠키를 줄 것이다.

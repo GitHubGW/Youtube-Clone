@@ -5,7 +5,8 @@ import multer from "multer";
 import routes from "./routes";
 
 // 가져온 multer 모듈을 실행시킨 후, input을 이용해서 파일을 업로드 하면 multer가 그 파일을 변환해서 저장할 폴더를 설정한다.
-const upload = multer({ dest: "uploads/videos/" });
+const multerVideo = multer({ dest: "uploads/videos/" });
+const multerAvatar = multer({ dest: "uploads/avatars/" });
 
 // 로컬 변수를 전역 변수로 만들어주는 미들웨어 함수(전역 변수가 되면 템플릿 엔진인 pug에서 해당 변수를 가져와서 쓸 수 있다)
 export const localsMiddleware = (req, res, next) => {
@@ -46,6 +47,7 @@ export const onlyPrivate = (req, res, next) => {
 };
 
 // single()메소드는 오직 하나의 파일만 업로드한다는 의미이다.
-// single()메소드 안에 들어올 값은 form에 우리가 파일을 업로드 하는 input태그가 가지고 있는 name속성 값을 의미한다. (ex: name="videoFile")
-// upload.single('avater')처럼 함수를 집어넣으면 multer미들웨어가 파일의 URL을 반환해준다.
-export const uploadVideo = upload.single("videoFile");
+// multerVideo.single("videoFile")의 의미는 form에 input태그중에 name값이 videoFile인 태그에서 파일을 업로드 했을 때 해당 파일을 변환해서 위에서 설정한 dest 경로에 저장한다는 의미이다.
+// multerVideo.single()괄호 안에 함수를 집어넣으면 multer미들웨어가 파일의 URL을 반환해준다.
+export const uploadVideo = multerVideo.single("videoFile");
+export const uploadAvatar = multerAvatar.single("avatar");
