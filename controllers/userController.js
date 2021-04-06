@@ -112,10 +112,10 @@ export const githubLoginCallback = async (accessToken, refreshToken, profile, cb
       // User모델에 하나의 스키마(도큐먼트)를 생성한다.
       // 마지막으로 이메일이 동일한 사용자를 찾지 못했다면 return cb(null, newUser)를 통해 cb함수를 호출하고 두 번째 인자로 newUser를 넘겨준다.
       const newUser = await User.create({
-        email,
         name,
-        githubId: id,
+        email,
         avatarUrl,
+        githubId: id,
       });
       return cb(null, newUser);
     }
@@ -129,22 +129,36 @@ export const postGithubLogin = (req, res) => {
   res.redirect(routes.home);
 };
 
-// Facebook OAuth
-export const facebookLogin = passport.authenticate("facebook");
-
-export const facebookLoginCallback = (accessToken, refreshToken, profile, cb) => {
-  console.log(accessToken, refreshToken, profile, cb);
-};
-
-export const postFacebookLogin = (req, res) => {
-  res.redirect(routes.home);
-};
-
 // Kakao OAuth
 export const kakaoLogin = passport.authenticate("kakao");
 
-export const kakaoLoginCallback = (accessToken, refreshToken, profile, cb) => {
-  console.log(accessToken, refreshToken, profile, cb);
+export const kakaoLoginCallback = async (accessToken, refreshToken, profile, cb) => {
+  // console.log(accessToken, refreshToken, profile, cb);
+
+  const { _raw: raw } = profile;
+  const parsedRaw = JSON.parse(raw);
+
+  try {
+    const user = await User.findOne({
+      email: parsedRaw.kakao_account.email,
+    });
+
+    if (user) {
+      user.kakaoId = parsedRaw.id;
+      user.save();
+      return cb(null, user);
+    } else {
+      const newUser = await User.create({
+        name: parsedRaw.properties.nickname,
+        email: parsedRaw.kakao_account.email,
+        avatarUrl: parsedRaw.kakao_account.profile.profile_image_url,
+        kakaoId: parsedRaw.id,
+      });
+      return cb(null, newUser);
+    }
+  } catch (error) {
+    return cb(error);
+  }
 };
 
 export const postKakaoLogin = (req, res) => {
@@ -183,9 +197,7 @@ export const postEditProfile = async (req, res) => {
     body: { name, email },
     file,
   } = req;
-  // console.log(name, email, file);
-  // console.log(req.user._id);
-  console.log("💚", req.user);
+
   try {
     await User.findByIdAndUpdate(_id, {
       name,
@@ -199,8 +211,32 @@ export const postEditProfile = async (req, res) => {
     });
     res.redirect(routes.me);
   } catch (error) {
-    res.render("editProfile", { pageTitle: "Edit Profile" });
+    res.redirect(routes.editProfile);
   }
 };
 
-export const changePassword = (req, res) => res.render("changePassword", { pageTitle: "changePassword" });
+export const getChangePassword = (req, res) => res.render("changePassword", { pageTitle: "changePassword" });
+
+export const postChangePassword = async (req, res) => {
+  const {
+    body: { oldPassword, newPassword, verifyNewPassword },
+  } = req;
+
+  try {
+    // 새 비밀번호와 새 비밀번호 확인이 안 맞을 때 실행한다.
+    if (newPassword !== verifyNewPassword) {
+      // res.status(400)을 하는 이유는 서버로부터 오류(404)라고 알려주기 위함이다.
+      res.status(400);
+      return res.redirect(`/users/${routes.changePassword}`);
+    } else {
+      // 새 비밀번호와 새 비밀번호 확인이 같다면 실행한다.
+      // changePassword()를 통해 oldPassword(오래된 비밀번호)를 newPassword(새로운 비밀번호)로 바꾼다.
+      // changePassword()는 Passport-Local Mongoose가 가지고 있는 API중 하나로 비밀번호를 바꿀 떄 사용한다.
+      await req.user.changePassword(oldPassword, newPassword);
+      res.redirect(routes.me);
+    }
+  } catch (error) {
+    res.status(400);
+    res.redirect(`/users/${routes.changePassword}`);
+  }
+};

@@ -81,9 +81,14 @@ export const postUpload = async (req, res) => {
     fileUrl: path,
     title: videoTitle,
     description,
+    creator: req.user.id, // 비디오를 생성할 떄 req.user.id를 이용해서 비디오를 생성함.
   });
-  console.log(newVideo);
-  console.log(newVideo.id);
+
+  // req.user.videos에 위에서 만든 newVideo안에 있는 id를 넣음
+  req.user.videos.push(newVideo._id);
+
+  // 데이터를 넣고 나서는 save()메소드를 통해 데이터를 항상 저장해줘야 한다.
+  req.user.save();
 
   // 파일을 업로드하게 되면 multer가 req.file 안에 그 파일에 대한 정보들을 보여준다. (ex: 오리지널 파일 이름, 위치, multer가 저장하는 파일 이름, *path(위치) 등등)
   // console.log("body: ", body, "file: ", file);
@@ -110,8 +115,9 @@ export const videoDetail = async (req, res) => {
   try {
     // Video모델에서 findById()메소드를 통해 req.parms.id값과 매칭하는 파일을 찾는다. 찾은 값을 통해 해당 비디오 파일을 찾을 수 있다.
     // Video모델의 스키마 안에서는 id값을 선언하지 않았지만 비디오가 업로드되는 시점에 각각의 비디오에게 MongoDB가 자동으로 고유의 id값을 주게 되고 그 id값을 통해 여기서 req.params.id와 일치하는 비디오를 가져올 수 있는 것이다.
-    const video = await Video.findById(id);
-    // console.log("✅ video:", video);
+    // populate()는 객체를 데려오는 메소드이다. (populate는 객체 id타입에만 쓸 수 있다.)
+    const video = await Video.findById(id).populate("creator");
+    console.log("✅ video:", video);
     res.render("videoDetail", { pageTitle: video.title, video });
   } catch (error) {
     console.log(error);

@@ -3,10 +3,9 @@
 // passport-local 모듈은 username과 password를 쓰는 사용자 인증 방식(strategy)을 의미한다. (passport-local은 유저와 패스워드 필드를 사용자가 지정한 모델에 추가해준다.)
 import passport from "passport";
 import GitHubStrategy from "passport-github";
-import FacebookStrategy from "passport-facebook";
 import KakaoStrategy from "passport-kakao";
 import routes from "./routes";
-import { githubLoginCallback, facebookLoginCallback, kakaoLoginCallback } from "./controllers/userController";
+import { githubLoginCallback, kakaoLoginCallback } from "./controllers/userController";
 import User from "./models/User";
 
 // passport.use()를 통해 passport에게 strategy를 사용하라고 지정한다.
@@ -37,17 +36,6 @@ passport.use(
     },
     // 아래 함수는 사용자가 깃허브 인증이 끝나고 돌아왔을 때 실행되는 콜백함수이다.
     githubLoginCallback
-  )
-);
-
-passport.use(
-  new FacebookStrategy(
-    {
-      clientID: process.env.FACEBOOK_APP_ID,
-      clientSecret: process.env.FACEBOOK_APP_SECRET,
-      callbackURL: `http://localhost:4000${routes.facebookCallback}`,
-    },
-    facebookLoginCallback
   )
 );
 

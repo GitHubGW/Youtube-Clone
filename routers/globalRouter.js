@@ -1,7 +1,7 @@
 import express from "express";
 import passport from "passport";
 import { home, search } from "../controllers/videoController";
-import { getJoin, postJoin, getLogin, postLogin, logout, githubLogin, postGithubLogin, getMe, facebookLogin, postFacebookLogin, kakaoLogin, postKakaoLogin } from "../controllers/userController";
+import { getJoin, postJoin, getLogin, postLogin, logout, githubLogin, postGithubLogin, getMe, kakaoLogin, postKakaoLogin } from "../controllers/userController";
 import { onlyPublic, onlyPrivate } from "../middlewares";
 import routes from "../routes";
 
@@ -28,8 +28,8 @@ globalRouter.get(routes.githubCallback, passport.authenticate("github", { failur
 globalRouter.get(routes.me, getMe);
 
 // Facebook
-globalRouter.get(routes.facebook, facebookLogin);
-globalRouter.get(routes.facebookCallback, passport.authenticate("facebook", { failureRedirect: "/login" }), postFacebookLogin);
+// globalRouter.get(routes.facebook, facebookLogin);
+// globalRouter.get(routes.facebookCallback, passport.authenticate("facebook", { failureRedirect: "/login" }), postFacebookLogin);
 
 // Kakao
 globalRouter.get(routes.kakao, kakaoLogin);

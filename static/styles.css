@@ -320,10 +320,10 @@ input[type="submit"] {
     color: white; }
     .social-login .social-login--github a:visited {
       color: white; }
-  .social-login .social-login--facebook {
+  .social-login .social-login--kakao {
     background-color: #3a5998;
     color: white; }
-    .social-login .social-login--facebook a:visited {
+    .social-login .social-login--kakao a:visited {
       color: white; }
 
 .videoBlock video {

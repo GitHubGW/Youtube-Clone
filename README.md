@@ -48,7 +48,7 @@
 ## ⚙ Features
 ### 🙎‍♂️ Users
 - [x] User Authentication
-- [x] Facebook Login / Github Login
+- [x] GitHub Login / Kakao Login
 - [x] User Profile
 - [x] Log In / Log Out
 

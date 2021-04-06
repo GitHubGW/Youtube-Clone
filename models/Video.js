@@ -22,6 +22,10 @@ const VideoSchema = new mongoose.Schema({
     type: Date,
     default: Date.now, // default로 Date.now(현재 시간)을 넣어줬다.
   },
+  creator: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
   comments: [
     {
       // 여기에는 Commnet 모델이 가지고 있는 모든 데이터 정보들을 넣는 것이 아니라 Commnent 스키마들이 생성되면서 생기는 고유 id값 하나만 넣어 주는 것이다. (고유의 id값은 id를 지정하지 않아도 자동으로 생성해준다.)
