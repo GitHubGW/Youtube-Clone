@@ -22,15 +22,15 @@ const MODE = process.env.WEBPACK_ENV;
 
 // 웹팩은 entry와 output이 있다.
 // entry는 앱의 루트 파일 경로로서 변환할 파일을 지정하고 output은 그 파일을 변환해서 최종적으로 어디에 위치할 것인지를 지정한다.
-// __dirname은 현재 실행되고 있는 프로젝트를 의미한다. 그래서 현재 프로젝트 내에서 어디든 접근 가능하도록 해주는 nodejs 전역 변수이다.
-// __dirname 은 현재 실행 중인 프로젝트
+// __dirname은 현재 실행되고 있는 현재 파일의 상위 경로(폴더)를 의미한다. 
+// 예를들어 controllers밑에 userController.js에서 __dirname을 찍어보면 Youtube-Clone/controllers로 나오게 된다.
 // __filename 은 현재 실행 중인 파일 경로
 // path.join()과 path.resolve()메소드를 통해 파일의 경로를 찾아서 지정할 수 있다.
 // path.join()은 왼쪽에서부터 경로를 읽고 path.resolve()는 오른쪽에서부터 경로를 읽어서 파일을 찾는다.
-// path.resolve(__dirname, "assets", "js", "main.js"): 현재 실행중인 프로젝트인 Youtube-Clone에서 assets/js/main.js파일을 찾아라.
+// path.resolve(__dirname, "assets", "js", "main.js"): 현재 실행중인 파일의 상위 경로(폴더)인 Youtube-Clone에서 assets/js/main.js파일을 찾아라.
 const ENTRY_FILE = path.resolve(__dirname, "assets", "js", "main.js");
 
-// path.join(__dirname, "static"): 현재 실행중인 프로젝트인 Youtube-Clone에서 static폴더를 지정함.
+// path.join(__dirname, "static"): 현재 실행중인 파일의 상위 경로(폴더)인 Youtube-Clone에서 static폴더를 지정함.
 const OUTPUT_DIR = path.join(__dirname, "static");
 
 // config파일에는 웹팩에게 설정해야 하는 것들을 지정해 준다. (웹팩은 loader를 읽을 때 아래에서 위로 읽으면서 실행한다.)
