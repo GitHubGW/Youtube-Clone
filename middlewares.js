@@ -15,7 +15,7 @@ export const localsMiddleware = (req, res, next) => {
   res.locals.siteName = "Youtube";
   res.locals.routes = routes; // routes.js를 템플릿 엔진(pug)에서 사용하기 위해 로컬 변수를 전역 변수로 만들어주는 미들웨어에서 가져와서 선언해줌
 
-  // passport가 인증을 완료하고 나면 최종적으로 사용자에 대한 정보를 req객체안에 loggedUser로 전달해준다. 그럼 req.user를 미들웨어에서 가져와서 사용할 수 있는 것이다.
+  // passport는 인증을 완료하고 사용자를 로그인 시키게 되면 자동으로 그 사용자에 대한 정보를 req객체 안에 user로 전달해준다. 그럼 req.user를 미들웨어에서 가져와서 사용할 수 있는 것이다.
   // req.user값이 없다면 null을 반환한다.
   res.locals.loggedUser = req.user || null;
 

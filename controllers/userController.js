@@ -18,20 +18,20 @@ export const postJoin = async (req, res, next) => {
     res.render("join", { pageTitle: "Join" });
   } else {
     try {
-      // 사용자를 생성한다.-> creat()함수를 이용
-      // (하나의 사용자 객체를 생성한다.-> 그냥 User({}))
-      // create()함수는 사용자를 생성하고 그 정보를 데이터베이스에 저장까지 한다.
-      // 사용자를 생성하고 기다려달라고 await를 썼다. (await를 쓰기 위해서는 위에 async가 필요함)
-      // 사용자를 생성할 때 정보는 사용자가 Join페이지에서 회원가입을 해서 req객체에 담겨져 있는 req.body.name과 req.body.email을 사용자를 생성하게 된다.
+      // creat()함수는 사용자를 생성(가입)하고 DB에 저장한다. 하지만 비밀번호 정보까지는 저장하지 않는다.
+      // 그래서 User({})를 써서 사용자 객체를 생성까지만 하고 아래에서 register()함수를 통해 사용자의 name,email과 password정보를 받아서 DB에 등록을 해준다.
+      // 또 User.create()를 통해 사용자를 생성하고 DB에 저장까지 했는데 register()함수를 또 쓰게 되면 이미 DB에 저장되어있다고 오류가 뜬다. 
+      // 사용자를 생성할 때까지 기다려달라고 await를 썼다. (await를 쓰기 위해서는 함수 앞에 async를 써줘야 한다)
+      // 사용자를 생성할 때 정보는 사용자가 Join페이지에서 회원가입을 하면서 req객체에 넣어서 보내는 req.body.name과 req.body.email을 통해 사용자를 생성하게 된다.
       // (아래 name, email은 name: name, email: email과 같은 의미이다.)
       const user = await User({
         name,
         email,
       });
 
-      // 위에서 생성한 사용자를 등록한다.-> register()함수를 이용
-      // register()함수는 주어진 password를 이용해 새로운 사용자를 등록시킨다.
-      // 위에서 생성한 user와 req.body가 가지고 있는 password를 등록한다.
+      // register()함수의 첫 번쨰 파라미터에는 user를, 두 번쨰 파라미터에는 password를 넣는다.
+      // register()함수를 이용해서 위에서 만든 user와 password를 이용해서 사용자를 등록시킨다.
+      // 여기서 user란 const user를 말하고 password는 req.body안에 있는 password를 의미한다.
       await User.register(user, password);
 
       // 회원가입을 하는 동시에 사용자를 로그인 시켜주기 위해 postJoin함수를 미들웨어로 만들었다.
