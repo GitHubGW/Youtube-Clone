@@ -5,7 +5,7 @@ import morgan from "morgan";
 import helmet from "helmet";
 import bodyParser from "body-parser";
 import passport from "passport";
-import MongoStore from "connect-mongo"; // connect-mongo라는 플러그인을 이용해서 몽고 DB 세션 저장소를 사용할 수 있다. (쉽게 말해 데이터베이스를 사용해서 세션을 저장한다는 의미이다.)
+import MongoStore from "connect-mongo";
 import session from "express-session";
 import cookieParser from "cookie-parser";
 import userRouter from "./routers/userRouter";
@@ -14,6 +14,11 @@ import globalRouter from "./routers/globalRouter";
 import routes from "./routes"; // routes.js에서 export default(내보내기 기본값)를 routes라는 상수로 지정했기 때문에 import해오는 기본적인 값은 routes라는 상수안에 있는 값이 됨.
 import { localsMiddleware } from "./middlewares";
 import mongoose from "mongoose";
+
+// import MongoStore from "connect-mongo";
+// connect-mongo는 세션을 몽고 DB와 연결해 세션의 정보를 몽고 DB에 저장하기 위해 사용하는 플러그인이다. 
+// 일반적으로 세션의 정보는 메모리에 저장되는데 그렇게 되면 서버가 날라가거나 재시작하게 됐을 때 메모리도 초기화되면서 세션 정보가 없어져 버린다.
+// 그래서 이런 문제를 방지하기 위해 세션 정보들을 데이터베이스에 연결해서 저장하기 위한 connect-mongo를 사용한다.
 
 // 아래에서 passport를 미들웨어로 쓰기위해 여기에 import해왔다. (passport.initialize()과 passport.session()을 쓰기 위해서)
 // app.use(passport)를 실행하면 passport.js에 있는 모든 전략을 자동으로 찾는다.
