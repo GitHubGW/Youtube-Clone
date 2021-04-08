@@ -15,7 +15,7 @@ import User from "./models/User";
 // 지금 여기서는 passport-local-mongoose가 제공하는 local전략(strategy)을 사용하라고 하고 있다. (local전략은 username과 password만으로 로그인하는 방식이다.)
 // 몽구스를 통해 만든 User모델을 가져와서 User.createStrategy()를 통해 User모델에게 LocalStrategy 전략(strategy)을 사용하라고 설정해준다.
 // createStrategy()는 이미 구성되어있는 passport-local의 LocalStrategy를 생성해준다.
-// createStrategy()는 passport-local-mongoose가 제공하는 local전략이기 떄문에 축약형으로 쓴 것이고 원래는 아래 new GitHubStrategy처럼 new LocalStrategy로 쓴다. 
+// createStrategy()는 passport-local-mongoose가 제공하는 local전략이기 떄문에 축약형으로 쓴 것이고 원래는 아래 new GitHubStrategy처럼 new LocalStrategy로 쓴다.
 passport.use(User.createStrategy());
 
 // Passport를 이용한 깃허브 인증 방법
@@ -51,9 +51,9 @@ passport.use(
 );
 
 // passport.serializeUser()와 passport.deserializeUser()를 통해 Passport가 사용자 인증을 처리할 수 있도록 설정한다.
-// Serialize는 쿠키에 어떤 필드(field)만을 담을 것인지 설정한다. (다시 말해 쿠키가 어떤 정보를 가질 수 있는지 지정한다. ex.아이디만 가진다던지, 아이디, 이메일 두 개를 가진다던지 등등)  
+// Serialize함수는 쿠키에 어떤 필드(field)만을 담을 것인지 설정한다. (다시 말해 쿠키가 어떤 정보를 가질 수 있는지 지정한다. ex.아이디만 가진다던지, 아이디, 이메일 두 개를 가진다던지 등등)
 // 지금 웹 브라우저에 있는 사용자의 정보중에 어떤 정보를 가질 수 있는지를 정의한다.
-// Deserialize는 가지고 있는 쿠키의 정보를 어떻게 사용자로 전환할지를 설정한다.
+// Deserialize함수는 쿠키가 가지고 있는 정보를 사용자 객체로 바꾼다. (쉽게 말해 쿠키가 가지고 있는 정보를 사용자 객체 user로 바꿔서 req안에 넣어준다. => req.user로 사용 가능)
 // passport.serializeUser(함수): 앞에 serializeUser()는 passport가 가지고 있는 함수이고 뒤에 serializeUser()는 passport-local-mongoose 모듈이 가지고 있는 shortcut(단축어)함수이다.
 // (passport에서 직접 써야할 함수를 passport-local 모듈에서 간단히 줄여서 쓴 것이라는 의미이다.)
 // 아래와 같이 하면 passport에게 오직 user.id만 쿠키에 담아서 보내도록 설정한다.
@@ -63,7 +63,7 @@ passport.use(
 // [사용자 인증 성공시 호출]
 // passport.serializeUser(): 패스포트를 이용해 사용자 정보를 세션에 아이디로 저장한다. (이렇게 id만 저장하면 세션 용량이 커지는 걸 막을 수 있다.)
 // passport.serializeUser(User.serializeUser());
-passport.serializeUser((user, done) => done(null, user));
+passport.serializeUser((user, done) => done(null, user.id));
 
 // [사용자 인증 이후 사용자 요청 시마다 호출]
 // passport.deserializeUser(): 패스포트를 이용해 세션에 저장된 아이디를 이용해서 사용자 정보를 가져옴

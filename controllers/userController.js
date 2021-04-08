@@ -13,6 +13,7 @@ export const postJoin = async (req, res, next) => {
   const {
     body: { name, email, password, verifyPassword },
   } = req;
+
   if (password !== verifyPassword) {
     res.status(400); // 비밀번호와 비밀번호 확인이 다르면 status code 400을 응답함(400은 Bad Request-요청 실패)
     res.render("join", { pageTitle: "Join" });

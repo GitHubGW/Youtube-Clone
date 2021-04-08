@@ -48,6 +48,9 @@ app.use("/uploads", express.static("uploads"));
 // static라우트를 만들고 static라우트로 들어오려 하면 static폴더를 보여주게 된다.
 app.use("/static", express.static("static"));
 
+// cookieParser는 사용자 인증에 필요한 cookie를 전달 받는다.
+app.use(cookieParser());
+
 // bodyParser미들웨어는 클라이언트가 서버에 request(req)했을 때 request객체안에 있는 정보를 가져와준다.
 // 만약 bodyParser가 없으면 req객체에 대한 정보를 가져오지 못한다. (즉, req.body를 통해 사용자가 입력한 form이나 여러 request한 정보들을 가져오지 못하고 undefined로 가져온다)
 app.use(bodyParser.json());
@@ -59,6 +62,7 @@ app.use(morgan("dev"));
 // express-session은 세션을 관리하기 위한 플러그인이자 미들웨어 함수이다.
 // session 데이터는 쿠키에 저장되지 않고 서버 측에 저장된다. (쿠키에는 오로지 세션 아이디만 저장된다.)
 // 쿠키를 이용하기 위해서는 express-session으로 설정을 해줘야 한다.
+// 기타: CookieStore라는 것이 있는데 쿠키 스토어를 사용하지 않으면 쿠키를 영구적으로 저장할 수 없다.
 
 // 과정
 // 사용자가 로그인을 하게 되면 express-session을 통해 쿠키는 암호화가 되서 express로 보내진다. (express는 세션을 이용함으로서 쿠키를 가질 수 있는 것이다.)
@@ -101,9 +105,6 @@ app.use(
 app.use(passport.initialize()); // passport를 실행시킨다.
 
 app.use(passport.session()); // passport로 하여금 세션을 저장하고 세션을 연결한다.
-
-// cookieParser는 사용자 인증에 필요한 cookie를 전달 받는다.
-app.use(cookieParser());
 
 app.use(localsMiddleware);
 
