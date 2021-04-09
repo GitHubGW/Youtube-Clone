@@ -174,6 +174,7 @@ export const logout = (req, res) => {
 
 // User Controller
 export const getMe = (req, res) => res.render("userDetail", { pageTitle: "Me", user: req.user }); // user에 req.user의 값을 전달함(req.user는 현재 로그인한 사용자에 대한 정보임)
+
 export const userDetail = async (req, res) => {
   const {
     params: { id },
