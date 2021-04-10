@@ -1,16 +1,22 @@
 extends layouts/main.pug
+include mixins/videoPlayer
 
 block content
   .video-detail__container
-    .video__player
+    //- .video__player (#9.0에서 videoPlayer mixin으로 대체함)
       //- video src에는 videoDetail함수로부터 받은 video객체 안에 있는 fileUrl의 값을 할당한다. video.fileUrl은 Video모델에 있는 fileUrl의 값을 가져온 것이다.
       //- 앞에 video.fileUrl앞에 /를 하나 더 붙인 이유는 가져오는 비디오 파일들이 서버로부터 가져온 파일이기 때문이다. 
       //- (맨 앞에 /를 붙이면 루트 경로(웹 사이트의 루트 경로)를 의미함. 붙이지 않았다면 현재 페이지에서 추가된 경로를 의미함.)
       //- 앞에 /를 붙이지 않으면 비디오 파일을 불러오지 못함(주의하기)
-      video(src=`/${video.fileUrl}`, controls="true")  
+      //- video(src=`/${video.fileUrl}`, controls="true")
+    +videoPlayer({
+      src: video.fileUrl
+    })
     .video__info
-      a(href=routes.editVideo(video._id)) 
-        button Edit Video
+      if loggedUser
+        if video.creator.id === loggedUser.id
+          a(href=routes.editVideo(video._id)) 
+            button Edit Video
       h5.video__title=video.title
       p.video__description=video.description
       //- pug안에서 if문을 사용해서 view값을 다르게 출력하게 했다. 
@@ -20,7 +26,7 @@ block content
         span.video__views #{video.views} views
       .video__author
         |Uploaded by 
-        a(href=routes.userDetail(video.creator.id))=video.creator.name
+        a(href=routes.userDetail(video.creator._id))=video.creator.name
     .video__comments 
       if video.comments.length === 1
         span.video__comment-number 1 comment

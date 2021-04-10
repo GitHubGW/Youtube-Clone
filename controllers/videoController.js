@@ -71,7 +71,7 @@ export const postUpload = async (req, res) => {
     file: { path },
   } = req;
 
-  console.log("req.file:", req.file);
+  // console.log("req.file:", req.file);
 
   // Video.create()은 비디오 도큐먼트에 새로운 도큐먼트를 생성한다는 의미이다.
   // 중요! 도큐먼트를 생성하게 되면 Video.js에서 스키마를 생성할 때 만든 형태로 도큐먼트를 만들게 되는데 거기에는 fileUrl, title, description, createdAt, views, comments등이 있다.
@@ -81,13 +81,17 @@ export const postUpload = async (req, res) => {
     fileUrl: path,
     title: videoTitle,
     description,
-    creator: req.user.id, // 비디오를 생성할 떄 req.user.id를 이용해서 비디오를 생성함.
+    creator: req.user.id, // 비디오를 생성할 때 req.user.id를 이용해서 비디오를 생성함.
   });
 
-  // req.user.videos에 위에서 만든 newVideo안에 있는 id를 넣음
+  // console.log("newVideo", newVideo);
+  // console.log("req.user", req.user);
+
+  // req.user.videos의 필드(데이터 형식)는 배열이고 위에서 만든 newVideo안에 있는 id(비디오를 만들때 받는 아이디)를 push()를 통해 로그인한 사용자(req.user)에 넣음.
+  // 넣게되면 사용자는 어떤 비디오를 업로드했는지 목록을 볼 수 있음.
   req.user.videos.push(newVideo._id);
 
-  // 데이터를 넣고 나서는 save()메소드를 통해 데이터를 항상 저장해줘야 한다.
+  // 데이터를 넣고 나서는 save()메소드를 통해 데이터를 항상 저장해줘야 한다.(DB를 업데이트 한다고 보면 된다.)
   req.user.save();
 
   // 파일을 업로드하게 되면 multer가 req.file 안에 그 파일에 대한 정보들을 보여준다. (ex: 오리지널 파일 이름, 위치, multer가 저장하는 파일 이름, *path(위치) 등등)
@@ -113,11 +117,14 @@ export const videoDetail = async (req, res) => {
 
   // try catch문을 통해 존재하는 비디오 파일 URL경로에 들어왔을 때는 비디오를 보여주고 잘못된 URL경로로 들어왔을 때는 다시 home라우터로 리다이렉트 시켜준다.
   try {
-    // Video모델에서 findById()메소드를 통해 req.parms.id값과 매칭하는 파일을 찾는다. 찾은 값을 통해 해당 비디오 파일을 찾을 수 있다.
-    // Video모델의 스키마 안에서는 id값을 선언하지 않았지만 비디오가 업로드되는 시점에 각각의 비디오에게 MongoDB가 자동으로 고유의 id값을 주게 되고 그 id값을 통해 여기서 req.params.id와 일치하는 비디오를 가져올 수 있는 것이다.
-    // populate()는 객체를 데려오는 메소드이다. (populate는 객체 id타입에만 쓸 수 있다.)
+    // Video모델에서 findById()메소드를 통해 req.params.id값과 매칭하는 파일을 찾는다. 찾은 값을 통해 해당 비디오 파일을 찾을 수 있다.
+    // Video모델의 스키마 안에서는 id값을 선언하지 않았지만 비디오가 생성되는 시점에 MongoDB가 자동으로 고유의 id값을 주게 되고 그 id값을 통해 여기서 req.params.id와 일치하는 비디오를 가져올 수 있는 것이다.
+    // Video.populate("creator")는 Video모델이 가지고 있는 creator라는 필드에 creator가 참조(ref)하고 있는 User모델을 가져온다는 의미이다.
+    // 가져오게 되면 creator에는 606d960c5bcfc82a34b73f09같은 값이 아닌 User모델이 객체형태로 들어가게 된다.
+    // populate()를 사용하려면 스키마를 정의할 때 해당 필드의 type을 mongoose.Schema.Types.ObjectId로 해줘야하고 ref(참조)에는 ObjectId를 가지고 있는 참조할 모델을 지정해줘야 한다. (여기서는 User모델을 참조함)
+    // 그래서 Video모델에서 req.params.id에 해당하는 비디오를 찾아서 그 비디오 모델에 populate를 한 모델을 최종적으로 video에 담는다는 의미이다.
     const video = await Video.findById(id).populate("creator");
-    console.log("✅ video:", video);
+    // console.log("✅ video:", video);
     res.render("videoDetail", { pageTitle: video.title, video });
   } catch (error) {
     console.log(error);
@@ -133,7 +140,14 @@ export const getEditVideo = async (req, res) => {
   try {
     const video = await Video.findById(id);
     // console.log("✅ video: ", video);
-    res.render("editVideo", { pageTitle: `Edit: ${video.title}`, video });
+
+    // creator의 아이디랑 로그인한 아이디가 같지 않으면 에러를 throw함. (로그인한 사용자가 아니라면 비디오를 Edit하지 못하게 한 번 더 보안을 강화해 줌)
+    if (video.creator !== req.user.id) {
+      // try문 안에서 Error를 throw하게 되면 자동으로 catch(error)에서 error로 가게 된다.
+      throw Error();
+    } else {
+      res.render("editVideo", { pageTitle: `Edit: ${video.title}`, video });
+    }
   } catch (error) {
     res.redirect(routes.home);
   }
@@ -163,11 +177,18 @@ export const deleteVideo = async (req, res) => {
   } = req;
 
   try {
-    // findOneAndRemove()메소드는 조건에 해당하는 데이터를 찾은 후 삭제한다 (자세한 설명은 mongoose 공식 홈페이지 Queries란에서 볼 수 있다)
-    // findOneAndRemove()를 통해 모델의 _id값이 req.params.id값인 비디오를 찾아서 완전히 DB에서까지도 삭제한다.
-    // await앞에 꼭 어떤 변수를 선언해서 값을 할당받을 필요는 없다. 그냥 일회성 처리기 때문에 변수가 필요없다.
-    await Video.findOneAndRemove({ _id: id });
-    // res.render("deleteVideo", { pageTitle: "deleteVideo" });
+    const video = await Video.findById(id);
+
+    // 비디오를 생성한 creator와 현재 로그인한 사용자가 다르면 비디오를 삭제할 수 없도록 처리함
+    if (video.creator !== req.user.id) {
+      throw Error();
+    } else {
+      // findOneAndRemove()메소드는 조건에 해당하는 데이터를 찾은 후 삭제한다 (자세한 설명은 mongoose 공식 홈페이지 Queries란에서 볼 수 있다)
+      // findOneAndRemove()를 통해 모델의 _id값이 req.params.id값인 비디오를 찾아서 완전히 DB에서까지도 삭제한다.
+      // await앞에 꼭 어떤 변수를 선언해서 값을 할당받을 필요는 없다. 그냥 일회성 처리기 때문에 변수가 필요없다.
+      await Video.findOneAndRemove({ _id: id });
+      // res.render("deleteVideo", { pageTitle: "deleteVideo" });
+    }
   } catch (error) {
     console.log(error);
   }

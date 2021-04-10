@@ -16,7 +16,17 @@
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _scss_styles_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../scss/styles.scss */ \"./assets/scss/styles.scss\");\nfunction asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }\n\nfunction _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, \"next\", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, \"throw\", err); } _next(undefined); }); }; }\n\n// main.js에 styles.scss파일을 import해준 이유는 웹팩은 하나의 entry(시작점)포인트가 있고\n// 그 시작점 파일에서 많은 파일들을 내보내는 형태의 구조로 되어있기 때문이다.\n\n\nvar something = /*#__PURE__*/function () {\n  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {\n    return regeneratorRuntime.wrap(function _callee$(_context) {\n      while (1) {\n        switch (_context.prev = _context.next) {\n          case 0:\n            console.log(\"something\");\n\n          case 1:\n          case \"end\":\n            return _context.stop();\n        }\n      }\n    }, _callee);\n  }));\n\n  return function something() {\n    return _ref.apply(this, arguments);\n  };\n}();\n\n//# sourceURL=webpack://youtube-clone/./assets/js/main.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _scss_styles_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../scss/styles.scss */ \"./assets/scss/styles.scss\");\n/* harmony import */ var _videoPlayer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./videoPlayer */ \"./assets/js/videoPlayer.js\");\n/* harmony import */ var _videoPlayer__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_videoPlayer__WEBPACK_IMPORTED_MODULE_1__);\n// main.js에 styles.scss파일을 import해준 이유는 웹팩은 하나의 entry(시작점)포인트가 있고\n// 그 시작점 파일에서 많은 파일들을 내보내는 형태의 구조로 되어있기 때문이다.\n\n\n\n//# sourceURL=webpack://youtube-clone/./assets/js/main.js?");
+
+/***/ }),
+
+/***/ "./assets/js/videoPlayer.js":
+/*!**********************************!*\
+  !*** ./assets/js/videoPlayer.js ***!
+  \**********************************/
+/***/ (function() {
+
+eval("// videoContainer-> videoPlayer\n// videoPlayer-> video 로 변경함\nvar videoPlayer = document.getElementById(\"jsVideoPlayer\");\nvar video = document.querySelector(\"#jsVideoPlayer video\");\nvar playBtn = document.getElementById(\"jsPlayButton\");\nvar volumeBtn = document.getElementById(\"jsVolumeButton\");\nvar fullScreenBtn = document.getElementById(\"jsFullScreen\"); // Play버튼을 제어하는 함수\n\nvar handlePlayClick = function handlePlayClick() {\n  // paused속성은 미디어 요소(video나 audio)가 정지상태인지 여부를 체크한다.\n  // paused속성은 Read Only라고 적혀있는데 이건 프로퍼티 값을 수정할 수 없고 오직 읽기만 가능하다는 의미이다.\n  // video(video태그)를 가져와서 paused속성을 통해 pause(정지)여부를 체크함\n  // 정지(pause) 여부에 따라 true(정지 상태) or false(재생 상태)를 반환함\n  // MDN 참조: https://developer.mozilla.org/ko/docs/Web/API/HTMLMediaElement\n  if (video.paused) {\n    // play()메소드는 미디어 요소를 재생함\n    video.play();\n    playBtn.innerHTML = \"<i class=\\\"fas fa-pause\\\"></i>\";\n  } else {\n    // pause()메소드는 미디어 요소의 재생을 일시정지함\n    video.pause();\n    playBtn.innerHTML = \"<i class=\\\"fas fa-play\\\"></i>\";\n  }\n}; // Volume버튼을 제어하는 함수\n\n\nvar handleVolumeClick = function handleVolumeClick() {\n  // console.log(video.muted);\n  // muted속성은 미디어 요소가 음소거 상태인지 여부를 체크한다.\n  // 음소거라면 true를 음소거가 아니라면 false를 반환한다.\n  // muted속성은 위에 pause와 다르게 Read Only가 아니기 때문에 프로퍼티 값을 수정할 수 있다.\n  // (muted의 값을 true, false를 줘서 바꿀 수 있다는 의미이다.)\n  if (video.muted) {\n    video.muted = false;\n    volumeBtn.innerHTML = \"<i class=\\\"fas fa-volume-up\\\"></i>\";\n  } else {\n    video.muted = true;\n    volumeBtn.innerHTML = \"<i class=\\\"fas fa-volume-mute\\\"></i>\";\n  }\n}; // Screen을 Full로 변경하는 함수\n\n\nvar goFullScreen = function goFullScreen() {\n  // 화면을 풀스크린으로 변경하는 속성은 따로 없기 때문에 EventListener를 추가하고 제거하는 방식으로 화면을 확장하고 축소해야 한다.\n  // requestFullscreen()함수를 통해 videoPlayer(video태그를 감싸는 부모태그)를 전체화면으로 꽉 채운다.\n  // 여기서 주의할 점은 video태그에 requestFullscreen()을 주면 안된다.\n  // 왜냐하면 video태그에 requestFullscreen()함수를 실행하게 되면 video태그가 전체화면으로 커지게 되면서 video태그가 기본적으로 가지고 있는 controls(재생,볼륨,전체화면 버튼 등)를 가져와 버린다.\n  // 현재 우리는 video태그가 기본적으로 가지고 있는 controls버튼들을 사용하는게 아닌 커스터마이징해서 만들고 있기 때문에 video태그의 controls를 활성화 시키면 안된다.\n  // 현재 크롬 브라우저에서는 지원하지만 강의 촬영 당시에는 requestFullscreen()함수를 완전하게 지원하지 않았다.\n  // 그래서 이런 경우에는 앞에 prefix를 써서 호출해야 한다.\n  // prefix는 브라우저마다 다른데 구글은 webkit이고 앞에 webkit을 붙여 webkitRequestFullscreen()으로 써주면 된다.\n  // webkit은 구글 크롬 브라우저가 사용하는 엔진이다. 만약 파이어폭스에서 사용하고 싶다면 webkit대신 moz를 써서 mozRequestFullscreen()으로 써줘야 한다.\n  videoPlayer.requestFullscreen();\n  fullScreenBtn.innerHTML = \"<i class=\\\"fas fa-compress\\\"></i>\";\n  fullScreenBtn.removeEventListener(\"click\", goFullScreen);\n}; // Screen을 Small로 변경하는 함수\n\n\nvar init = function init() {\n  playBtn.addEventListener(\"click\", handlePlayClick);\n  volumeBtn.addEventListener(\"click\", handleVolumeClick);\n  fullScreenBtn.addEventListener(\"click\", goFullScreen);\n}; // if문을 통해 videoPlayer가 있으면 init함수를 실행하도록 한다.\n// 왜냐하면 모든 페이지에 videoPlayer가 있는 것이 아니기 때문에 videoPlayer가 없는 페이지에서 init함수를 실행하게 되면 오류가 나기 때문이다.\n\n\nif (videoPlayer) {\n  init();\n}\n\n//# sourceURL=webpack://youtube-clone/./assets/js/videoPlayer.js?");
 
 /***/ }),
 
@@ -3218,6 +3228,35 @@ eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extr
 /******/ 	}
 /******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	!function() {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = function(module) {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				function() { return module['default']; } :
+/******/ 				function() { return module; };
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
+/******/ 		};
+/******/ 	}();
+/******/ 	
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	!function() {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = function(exports, definition) {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	}();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	!function() {
+/******/ 		__webpack_require__.o = function(obj, prop) { return Object.prototype.hasOwnProperty.call(obj, prop); }
+/******/ 	}();
+/******/ 	
 /******/ 	/* webpack/runtime/make namespace object */
 /******/ 	!function() {
 /******/ 		// define __esModule on exports

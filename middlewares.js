@@ -19,7 +19,7 @@ export const localsMiddleware = (req, res, next) => {
   // req.user값이 없다면 null을 반환한다.
   res.locals.loggedUser = req.user || null;
 
-  console.log(req.user);
+  // console.log(req.user);
 
   // next()는 다음 미들웨어를 호출하는 메소드이다.
   // 미들웨어는 끝나면 항상 next()를 써줘야 다음 함수나 동작으로 넘어간다. (필수)
@@ -46,7 +46,7 @@ export const onlyPrivate = (req, res, next) => {
   }
 };
 
-// single()메소드는 ()괄호안의 name값에 해당하는 업로드한 파일의 정보를 req.file에 받는다. 
+// single()메소드는 ()괄호안의 name값에 해당하는 업로드한 파일의 정보를 req.file에 받는다.
 // multerVideo.single("videoFile")의 의미는 form에 input태그중에 name값이 videoFile인 태그에서 파일을 업로드 했을 때 해당 파일을 변환해서 위에서 설정한 dest 경로에 저장한다는 의미이다.
 // multerVideo.single()괄호 안에 함수를 집어넣으면 multer미들웨어가 파일의 URL을 반환해준다.
 export const uploadVideo = multerVideo.single("videoFile");

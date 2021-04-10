@@ -21,7 +21,7 @@ export const postJoin = async (req, res, next) => {
     try {
       // creat()함수는 사용자를 생성(가입)하고 DB에 저장한다. 하지만 비밀번호 정보까지는 저장하지 않는다.
       // 그래서 User({})를 써서 사용자 객체를 생성까지만 하고 아래에서 register()함수를 통해 사용자의 name,email과 password정보를 받아서 DB에 등록을 해준다.
-      // 또 User.create()를 통해 사용자를 생성하고 DB에 저장까지 했는데 register()함수를 또 쓰게 되면 이미 DB에 저장되어있다고 오류가 뜬다. 
+      // 또 User.create()를 통해 사용자를 생성하고 DB에 저장까지 했는데 register()함수를 또 쓰게 되면 이미 DB에 저장되어있다고 오류가 뜬다.
       // 사용자를 생성할 때까지 기다려달라고 await를 썼다. (await를 쓰기 위해서는 함수 앞에 async를 써줘야 한다)
       // 사용자를 생성할 때 정보는 사용자가 Join페이지에서 회원가입을 하면서 req객체에 넣어서 보내는 req.body.name과 req.body.email을 통해 사용자를 생성하게 된다.
       // (아래 name, email은 name: name, email: email과 같은 의미이다.)
@@ -179,11 +179,13 @@ export const userDetail = async (req, res) => {
   const {
     params: { id },
   } = req;
-  console.log(id);
+  // console.log(id);
 
   try {
     // User.findById(id)를 통해 req.params.id의 값에 해당하는 데이터를 User모델에서 찾는데 만약 여기서 에러가 생기면 catch문으로 가게 된다.
-    const user = await User.findById(id);
+    const user = await User.findById(id).populate("videos");
+    console.log(user.videos);
+
     res.render("userDetail", { pageTitle: "userDetail", user });
   } catch (error) {
     // console.log(error);
