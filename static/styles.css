@@ -338,10 +338,13 @@ input[type="submit"] {
   margin-bottom: 10px; }
 
 .videoPlayer {
-  position: relative; }
+  position: relative;
+  cursor: pointer; }
   .videoPlayer:hover .videoPlayer__controls {
     opacity: 1; }
   .videoPlayer video {
+    width: 100%;
+    height: 100%;
     max-width: 100%; }
   .videoPlayer .videoPlayer__controls {
     opacity: 0;

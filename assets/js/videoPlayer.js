@@ -41,13 +41,24 @@ const handleVolumeClick = () => {
   }
 };
 
+// Full로 변경된 Screen을 Exit하는 함수
+const exitFullScreen = () => {
+  // exitFullScreen()은 Full스크린 되어있는 화면을 나가는 함수이다.
+  // 주의할 점은 앞에 선택자가 requestFullscreen()할 때 썼던 videoPlayer가 아닌 document라는 점이다.
+  // exitFullScreen또한 브라우저가 지원하지 않는다면 앞에 prefix를 써서 호출해야 한다.
+  document.exitFullscreen().catch((err) => Promise.resolve(err));
+  fullScreenBtn.innerHTML = `<i class="fas fa-expand"></i>`;
+  fullScreenBtn.removeEventListener("click", exitFullScreen);
+  fullScreenBtn.addEventListener("click", goFullScreen);
+};
+
 // Screen을 Full로 변경하는 함수
 const goFullScreen = () => {
   // 화면을 풀스크린으로 변경하는 속성은 따로 없기 때문에 EventListener를 추가하고 제거하는 방식으로 화면을 확장하고 축소해야 한다.
   // requestFullscreen()함수를 통해 videoPlayer(video태그를 감싸는 부모태그)를 전체화면으로 꽉 채운다.
   // 여기서 주의할 점은 video태그에 requestFullscreen()을 주면 안된다.
-  // 왜냐하면 video태그에 requestFullscreen()함수를 실행하게 되면 video태그가 전체화면으로 커지게 되면서 video태그가 기본적으로 가지고 있는 controls(재생,볼륨,전체화면 버튼 등)를 가져와 버린다.
-  // 현재 우리는 video태그가 기본적으로 가지고 있는 controls버튼들을 사용하는게 아닌 커스터마이징해서 만들고 있기 때문에 video태그의 controls를 활성화 시키면 안된다.
+  // 왜냐하면 video태그에 requestFullscreen()함수를 실행하게 되면 video태그가 전체화면으로 커지게 되면서 video태그가 기본적으로 가지고 있는 control(재생,볼륨,전체화면 버튼 등)바를 가져와 버린다.
+  // 현재 우리는 video태그가 기본적으로 가지고 있는 controls버튼들을 사용하는게 아닌 커스터마이징해서 만들고 있기 때문에 video태그의 control바를 활성화 시키면 안된다.
   // 현재 크롬 브라우저에서는 지원하지만 강의 촬영 당시에는 requestFullscreen()함수를 완전하게 지원하지 않았다.
   // 그래서 이런 경우에는 앞에 prefix를 써서 호출해야 한다.
   // prefix는 브라우저마다 다른데 구글은 webkit이고 앞에 webkit을 붙여 webkitRequestFullscreen()으로 써주면 된다.
@@ -55,14 +66,32 @@ const goFullScreen = () => {
   videoPlayer.requestFullscreen();
   fullScreenBtn.innerHTML = `<i class="fas fa-compress"></i>`;
   fullScreenBtn.removeEventListener("click", goFullScreen);
+  fullScreenBtn.addEventListener("click", exitFullScreen);
 };
 
-// Screen을 Small로 변경하는 함수
+// 현재 Screen이 전체화면인지 아닌지 체크하는 함수
+const checkScreen = () => {
+  // fullscreenElement 속성을 통해 현재 document가 전체화면인지 아닌지 체크할 수 있다.
+  // 전체화면이라면 전체화면인 태그를 반환하고 아니라면 null을 반환한다.
+  const checkFullScreen = document.fullscreenElement;
+  if (checkFullScreen === null) {
+    // 콘솔창에 Promise관련 오류가 나서 document.exitFullscreen().catch((err) => Promise.resolve(err));로 써줬음
+    // document.exitFullscreen().catch((err) => Promise.resolve(err));
+    fullScreenBtn.innerHTML = `<i class="fas fa-expand"></i>`;
+    fullScreenBtn.removeEventListener("click", exitFullScreen);
+    fullScreenBtn.addEventListener("click", goFullScreen);
+  } else {
+    videoPlayer.addEventListener("dblclick", exitFullScreen);
+    fullScreenBtn.innerHTML = `<i class="fas fa-compress"></i>`;
+  }
+};
 
 const init = () => {
   playBtn.addEventListener("click", handlePlayClick);
   volumeBtn.addEventListener("click", handleVolumeClick);
   fullScreenBtn.addEventListener("click", goFullScreen);
+  document.addEventListener("fullscreenchange", checkScreen);
+  videoPlayer.addEventListener("dblclick", goFullScreen);
 };
 
 // if문을 통해 videoPlayer가 있으면 init함수를 실행하도록 한다.
