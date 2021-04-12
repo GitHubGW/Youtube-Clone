@@ -87,8 +87,8 @@ export const postUpload = async (req, res) => {
   // console.log("newVideo", newVideo);
   // console.log("req.user", req.user);
 
-  // req.user.videos의 필드(데이터 형식)는 배열이고 위에서 만든 newVideo안에 있는 id(비디오를 만들때 받는 아이디)를 push()를 통해 로그인한 사용자(req.user)에 넣음.
-  // 넣게되면 사용자는 어떤 비디오를 업로드했는지 목록을 볼 수 있음.
+  // req.user.videos의 필드(데이터 형식)는 배열이고 위에서 만든 newVideo안에 있는 id(비디오를 만들 때 받는 아이디)를 push()를 통해 로그인한 사용자(req.user)에 넣음.
+  // 넣게되면 사용자는 어떤 비디오를 업로드 했는지 목록을 볼 수 있음.
   req.user.videos.push(newVideo._id);
 
   // 데이터를 넣고 나서는 save()메소드를 통해 데이터를 항상 저장해줘야 한다.(DB를 업데이트 한다고 보면 된다.)

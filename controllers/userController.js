@@ -208,8 +208,8 @@ export const postEditProfile = async (req, res) => {
       email,
 
       // 삼항연산자를 사용해서 조건문을 처리함-->  조건 ? "참":"거짓"
-      // 만약 유저가 avatarUrl에 파일을 추가하지려 할 때 파일을 추가하지 않으면 avataUrl를 중복해서 쓰길 원하지 않는다. 그래서 현재 있는 avataUrl을 준다.
-      // avatarUrl에 아바타를 넣으려고 할 때 req.file이 없다면(아바타 사진이 아예 없다면) 기존 avatarUrl을 넣고 있다면 req.file.path의 값을 넣는다.
+      // 만약 유저가 업로드한 file이 있다면 file.path를 통해 업로드한 아바타 이미지를 업데이트하고, 만약 file이 없다면 기존 req.user안에 avatarUrl을 가져온다. 
+      // (유저가 editProfile.pug페이지에서 input type=file을 통해 업로드하는 이미지를 말함)
       // 사용자 로그인 인증이 성공하고 나면 req객체안에는 항상 user가 있다. (사용자 정보를 담고 있는 객체)
       avatarUrl: file ? file.path : req.user.avatarUrl,
     });
@@ -230,8 +230,11 @@ export const postChangePassword = async (req, res) => {
     // 새 비밀번호와 새 비밀번호 확인이 안 맞을 때 실행한다.
     if (newPassword !== verifyNewPassword) {
       // res.status(400)을 하는 이유는 서버로부터 오류(404)라고 알려주기 위함이다.
+      // res.status(400)을 해주지 않으면 실제 서버는 오류로 받아들이지 않고 성공적이라고 받아들이기 때문이다. 
       res.status(400);
+      // 여기서 리턴을 하거나 아니면 아래에 return;을 해줘서 함수를 종료시킬 수 있다. (함수는 return을 만나면 실행을 종료함)
       return res.redirect(`/users/${routes.changePassword}`);
+
     } else {
       // 새 비밀번호와 새 비밀번호 확인이 같다면 실행한다.
       // changePassword()를 통해 oldPassword(오래된 비밀번호)를 newPassword(새로운 비밀번호)로 바꾼다.
