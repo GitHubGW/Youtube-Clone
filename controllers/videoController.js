@@ -121,6 +121,7 @@ export const videoDetail = async (req, res) => {
     // Video모델의 스키마 안에서는 id값을 선언하지 않았지만 비디오가 생성되는 시점에 MongoDB가 자동으로 고유의 id값을 주게 되고 그 id값을 통해 여기서 req.params.id와 일치하는 비디오를 가져올 수 있는 것이다.
     // Video.populate("creator")는 Video모델이 가지고 있는 creator라는 필드에 creator가 참조(ref)하고 있는 User모델을 가져온다는 의미이다.
     // 가져오게 되면 creator에는 606d960c5bcfc82a34b73f09같은 값이 아닌 User모델이 객체형태로 들어가게 된다.
+    // populate()를 쓰지 않으면 creator에는 User모델의 아이디값만 가져오지만 populate()를 쓰면 User모델을 객체화해서 전체를 가져온다. 
     // populate()를 사용하려면 스키마를 정의할 때 해당 필드의 type을 mongoose.Schema.Types.ObjectId로 해줘야하고 ref(참조)에는 ObjectId를 가지고 있는 참조할 모델을 지정해줘야 한다. (여기서는 User모델을 참조함)
     // 그래서 Video모델에서 req.params.id에 해당하는 비디오를 찾아서 그 비디오 모델에 populate를 한 모델을 최종적으로 video에 담는다는 의미이다.
     const video = await Video.findById(id).populate("creator");
