@@ -2,3 +2,4 @@
 // 그 시작점 파일에서 많은 파일들을 내보내는 형태의 구조로 되어있기 때문이다.
 import "../scss/styles.scss";
 import "./videoPlayer";
+import "./videoRecorder";
