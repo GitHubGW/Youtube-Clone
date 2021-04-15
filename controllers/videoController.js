@@ -195,3 +195,30 @@ export const deleteVideo = async (req, res) => {
   }
   res.redirect(routes.home);
 };
+
+// postRegisterView함수는 누군가가 routes.registerView 경로로 접속했을 때 postRegisterView가 실행되면 비디오를 찾아서 해당 비디오의 views를 1올린다. (조회수 올리는 함수)  
+// postRegisterView는 위에서 만든 다른 함수들과 다르게 랜더링을 하지 않고 그냥 오직 데이터베이스의 정보만 변경하는 함수이다. (오직 서버와 통신을 하는 함수이다.)
+// routes.registerView 경로는 오직 데이터베이스를 변경하기 위한 API 주소이다. 
+export const postRegisterView = async (req, res) => {
+
+  const {
+    params: { id }
+  } = req;
+
+  try{
+    // id로 비디오 모델에서 비디오를 찾는다.
+    const video = await Video.findById(id);
+
+    // 찾고난 후에 video안에 views 필드에 +1을 해서 값을 하나 올린 후 save()메서드를 통해 저장한다. 
+    video.views += 1;
+    video.save();
+    res.status(200);
+  }catch(error){
+    // 만약 에러가 있다면 브라우저에게 status코드 400을 응답함(브라우저는 status코드를 보고 현재 연결이 성공인지 실패인지 판별함)
+    // 400은 응답실패를 의미한다.
+    res.status(400);
+  }finally{
+    // res.end를 통해 응답을 종료함
+    res.end();
+  }
+}

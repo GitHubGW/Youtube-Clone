@@ -11,9 +11,9 @@ import cookieParser from "cookie-parser";
 import userRouter from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";
 import globalRouter from "./routers/globalRouter";
+import apiRouter from "./routers/apiRouter";
 import routes from "./routes"; // routes.js에서 export default(내보내기 기본값)를 routes라는 상수로 지정했기 때문에 import해오는 기본적인 값은 routes라는 상수안에 있는 값이 됨.
 import { localsMiddleware } from "./middlewares";
-import mongoose from "mongoose";
 
 // import MongoStore from "connect-mongo";
 // connect-mongo는 세션을 몽고 DB와 연결해 세션의 정보를 몽고 DB에 저장하기 위해 사용하는 플러그인이다. 
@@ -116,6 +116,7 @@ app.use(localsMiddleware);
 app.use(routes.home, globalRouter);
 app.use(routes.users, userRouter);
 app.use(routes.videos, videoRouter);
+app.use(routes.api, apiRouter);
 
 // export default를 쓰면 app을 기본적으로 export한다는 의미이고, 변수 앞에 export를 붙여서 const export app를 쓰면 해당 변수만 export한다는 의미이다.
 // const app을 다른 곳에서 불러와서 쓸 수 있도록 export함

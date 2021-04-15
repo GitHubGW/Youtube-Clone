@@ -5,43 +5,73 @@ const videoPreview = document.getElementById('jsVideoPreview');
 let streamObject;
 let videoRecorder;
 
+// handleVideoData는 실행되면서 event를 파라미터로 받고 event에는 Blob객체가 온다.
+// Blob은 파일이라고 보면 된다.
 const handleVideoData = (event)=>{
-  console.log(event.data);
-}
+  
+  // event.data에는 Blob객체에 대한 데이터 파일의 정보를 담고 있다. 
+  // Blob객체 안에서 data프로퍼티를 가져온 후 videoFile로 이름을 변경함. 
+  const {
+    data: videoFile
+  } = event;
+  // console.log(event);
 
-const startRecording = (stream)=>{
-  console.log(streamObject);
-  // MediaRecorder객체는 미디어를 녹화하기 위해 사용하는 객체이고 미디어를 녹화하기 위해서는 MediaStream(stream)객체를 받아야 한다.
-  // new MediaRecorder(streamObject): streamObject를 이용해서 MediaRecorder객체를 생성함
-  const videoRecorder = new MediaRecorder(streamObject);
+  // createElement()를 통해 a태그를 생성하고 그 a태그의 href를 설정한다. 
+  const link = document.createElement('a');
 
-  // dataavailable 이벤트는 MediaRecorder가 사용되기 위해 애플리케이션에 미디어 데이터를 제공 할 때 시작됩니다.
-  // MediaRecorder는 기본적으로 한번에 모든 것을 저장한다. (전체 파일을 한번에 저장한다는 의미이다) 
-  // 그래서 dataavailable 이벤트는 녹화가 끝났을 때 호출이 일어나면서 전체 파일을 얻을 수 있다. 
-  // videoRecorder.ondataavailable = handleVideoData;
-  videoRecorder.addEventListener('dataavailable', handleVideoData);
+  // 그리고 그 a태그의 href는 URL.createObjectURL(videoFile)가 된다.
+  // URL.createObjectURL(videoFile)를 통해 videoFile(event.data)객체로부터 URL을 가져와서 href로 설정해준다. (videoFile에 파일이 있음)
+  link.href=URL.createObjectURL(videoFile);
 
-  // videoRecorder.start(): start메서드를 이용해서 녹화를 시작함(녹화를 시작하면 state상태가 recording으로 바뀐다.)
-  // start()안에 숫자 값을 주면 ~초마다 한번씩 반복실행을 하게 만들 수 있다. 
-  // 그런데 우리가 녹화를 하고 있는건 비트이다. 문제는 우리는 이 비트를 접근할 수 있지만 막상 그걸로 뭔가를 하고 있진 않다. 
-  // 그래서 이 비트를 어디론가 보내야 한다. dataavailable
-  videoRecorder.start(1000);
+  // download속성을 이용해 다운로드할 파일의 기본 이름과 확장자를 지정한다.(webm은 비디오 파일의 확장자중 하나이다.)
+  // link.download = "sample.mp4";
+  link.download = "sample.webm";
 
-  // console.log(videoRecorder);
-  recordBtn.addEventListener('click',stopRecording);
+  // 그리고 위에서 만든 a태그(link)를 body에 추가한다.
+  document.body.appendChild(link);
 
-  // setTimeout(()=>{
-  //   videoRecorder.stop();
-  // },5000)
+  // click메소드를 이용해서 클릭했을 때 실제 클릭한 것과 같은 동작을 일으킨다. (실제 클릭은 아니고 가짜로 클릭한 것임)
+  link.click();
 }
 
 const stopRecording = ()=>{
+  // videoRecorder.stop(): stop메서드를 이용해서 녹화를 중지함
   videoRecorder.stop();
   recordBtn.removeEventListener('click', stopRecording);
   recordBtn.addEventListener('click', getVideo);
   recordBtn.innerHTML = "Start Recording";
 
 }
+
+const startRecording = (stream)=>{
+  // console.log("✅",streamObject);
+  // MediaRecorder객체는 미디어를 녹화하기 위해 사용하는 객체이고 미디어를 녹화하기 위해서는 MediaStream(stream)객체를 받아야 한다.
+  // new MediaRecorder(streamObject): streamObject를 이용해서 MediaRecorder객체를 생성함
+  videoRecorder = new MediaRecorder(streamObject);
+
+  // videoRecorder.start(): start메서드를 이용해서 녹화를 시작함(녹화를 시작하면 state상태가 recording으로 바뀐다.)
+  // start()안에 숫자 값을 주면 ~초마다 한번씩 반복실행을 하게 만들 수 있다. 
+  // 그런데 우리가 녹화를 하고 있는건 비트이다. 문제는 우리는 이 비트를 접근할 수 있지만 막상 그걸로 뭔가를 하고 있진 않다. 
+  // 그래서 이 비트를 어디론가 보내야 한다. dataavailable
+  videoRecorder.start();
+
+  // dataavailable 이벤트는 MediaRecorder가 사용되기 위해 애플리케이션에 미디어 데이터를 제공 할 때 시작됩니다.
+  // MediaRecorder는 기본적으로 한번에 모든 것을 저장한다. (전체 파일을 한번에 저장한다는 의미이다) 
+  // 그래서 dataavailable 이벤트는 녹화가 끝났을 때(레코딩이 다 끝났을 때) 호출이 일어나면서 데이터(전체 파일)를 얻을 수 있다. 
+  // handleVideoData는 실행되면서 event를 파라미터로 받고 event에는 Blob객체가 온다. 
+  // Blob은 0과 1로 구성된 파일이다. 
+  // videoRecorder.ondataavailable = handleVideoData;
+  videoRecorder.addEventListener('dataavailable', handleVideoData);
+
+  // console.log(videoRecorder);
+  recordBtn.addEventListener('click', stopRecording);
+
+  // setTimeout(()=>{
+  //   videoRecorder.stop();
+  // },5000)
+}
+
+
 
 // 미디어 디바이스에 대한 mdn 링크: https://developer.mozilla.org/ko/docs/Web/API/MediaDevices
 // MediaDevices(미디어 디바이스) 인터페이스는 카메라, 마이크, 공유 화면 등 현재 연결된 미디어 입력 장치로 접근과 접근 방법을 제공하는 것이다.

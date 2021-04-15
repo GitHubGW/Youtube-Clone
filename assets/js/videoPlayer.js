@@ -1,3 +1,6 @@
+// axios는 http request요청을 바꿔주는 라이브러리이다.
+import axios from "axios";
+
 // videoContainer-> videoPlayer
 // videoPlayer-> video 로 변경함
 const videoPlayer = document.getElementById("jsVideoPlayer");
@@ -8,6 +11,19 @@ const fullScreenBtn = document.getElementById("jsFullScreen");
 const currentTime = document.getElementById("currentTime");
 const totalTime = document.getElementById("totalTime");
 const volumeRange = document.getElementById("jsVolume");
+
+
+
+const registerView = () => {
+  // fetch()는 ()괄호안에 URL로 API를 요청하는 메서드이다. 
+  // fetch()를 할 때 await를 해줘도 되지만 여기서는 단순히 조회수(view)를 올리기 위한 요청을 하는 함수이기 때문에 굳이 await를 해서 처리가 끝날 때까지 기다릴 필요는 없다. 
+  // 만약 get이 아닌 post로 request를 보내려면 아래와 같이 method를 뒤에 지정해줘야 한다. 
+  // fetch("/api/:id/view", {method: "POST"});
+
+
+
+  
+}
 
 // Play버튼을 제어하는 함수
 const handlePlayClick = () => {
