@@ -12,18 +12,20 @@ const currentTime = document.getElementById("currentTime");
 const totalTime = document.getElementById("totalTime");
 const volumeRange = document.getElementById("jsVolume");
 
-
-
 const registerView = () => {
-  // fetch()는 ()괄호안에 URL로 API를 요청하는 메서드이다. 
-  // fetch()를 할 때 await를 해줘도 되지만 여기서는 단순히 조회수(view)를 올리기 위한 요청을 하는 함수이기 때문에 굳이 await를 해서 처리가 끝날 때까지 기다릴 필요는 없다. 
-  // 만약 get이 아닌 post로 request를 보내려면 아래와 같이 method를 뒤에 지정해줘야 한다. 
+  // window.location.href를 통해 URL주소를 가져와서 split()메서드를 이용해서 배열로 쪼갠다.
+  // split()메서드는 괄호안에 들어가는 문자열을 기준으로 쪼개서 배열로 만든다.
+  // 그럼 ["http://localhost:4000", "6075dd85eea05a1350e0d0c0"] 이런식으로 들어가게 되는데 [1]을 뒤에 써서 배열 2번째 값을 가져온다.
+  const videoId = window.location.href.split("/videos/")[1];
+  // console.log(videoId);
+
+  // fetch()는 ()괄호안에 URL로 API를 요청하는 메서드이다. (get이나 post로 req한다.)
+  // fetch()를 할 때 await를 해줘도 되지만 여기서는 단순히 조회수(view)를 올리기 위한 요청을 하는 함수이기 때문에 굳이 await를 해서 처리가 끝날 때까지 기다릴 필요는 없다.
+  // 만약 get이 아닌 post로 request를 보내려면 아래와 같이 method를 뒤에 지정해줘야 한다.
+  // DB를 변경할 필요가 없으면 get으로, DB를 변경해야 한다면 post로 req해야한다.
   // fetch("/api/:id/view", {method: "POST"});
-
-
-
-  
-}
+  fetch(`/api/${videoId}/view`, { method: "POST" });
+};
 
 // Play버튼을 제어하는 함수
 const handlePlayClick = () => {
@@ -159,6 +161,9 @@ const setTotalTime = () => {
 };
 
 const handleEnded = () => {
+  // 미디어 재생이 끝나면 위에서 만든 registerView함수를 실행시켜서 조회수(view)를 1올린다.
+  registerView();
+
   // console.log(video.ended);
   if (video.ended === true) {
     // currentTime속성에 값을 주게 되면 미디어는 그 값에 해당하는 재생시간으로 변경한다. 예를들어 0으로 주게 되면 currentTime을 0초로 돌린다는 의미이다.
