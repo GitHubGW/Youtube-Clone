@@ -1,6 +1,3 @@
-// axios는 http request요청을 바꿔주는 라이브러리이다.
-import axios from "axios";
-
 // videoContainer-> videoPlayer
 // videoPlayer-> video 로 변경함
 const videoPlayer = document.getElementById("jsVideoPlayer");

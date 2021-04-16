@@ -29,8 +29,19 @@ block content
         a(href=routes.userDetail(video.creator._id))=video.creator.name
     .video__comments 
       if video.comments.length === 1
-        span.video__comment-number 1 comment
+        span.video__comment-number
+          span#jsCommentNumber 1 
+          |comment
       else
         //- #{video.comments.length}에서 #{}은 pug에서 넘겨받은 변수를 가져올 떄 사용한다. (보통 =나 #{}을 주로 쓴다.)
         //- ex) h1=name,   h1 #{name}  둘 다 가능하지만 뒤에 텍스트를 써줘야할 때는 #{}로 쓰는게 좋다.
-        span.video__comment-number #{video.comments.length} comments
+        span.video__comment-number
+          span#jsCommentNumber=video.comments.length
+          |comments
+      form.add_comment#jsAddComment(action="") 
+        input(type="text" placeholder="Add a comment" name="comment")
+      ul.video__comments-list#jsCommentList
+        //- reverse()는 배열의 메서드중 하나로 배열을 거꾸로 뒤집을 때 사용한다.
+        each comment in video.comments.reverse()
+          li
+            span #{comment.text}

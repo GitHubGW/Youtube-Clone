@@ -1,5 +1,6 @@
 import routes from "../routes";
 import Video from "../models/Video"; // Video.js에서 Video모델을 가져옴
+import Comment from "../models/Comment";
 
 // Global Controller
 // res.render()함수는 설정된 views폴더에서 자동으로 템플릿 파일을 찾아서 랜더링한다.
@@ -124,8 +125,9 @@ export const videoDetail = async (req, res) => {
     // populate()를 쓰지 않으면 creator에는 User모델의 아이디값만 가져오지만 populate()를 쓰면 User모델을 객체화해서 전체를 가져온다. 
     // populate()를 사용하려면 스키마를 정의할 때 해당 필드의 type을 mongoose.Schema.Types.ObjectId로 해줘야하고 ref(참조)에는 ObjectId를 가지고 있는 참조할 모델을 지정해줘야 한다. (여기서는 User모델을 참조함)
     // 그래서 Video모델에서 req.params.id에 해당하는 비디오를 찾아서 그 비디오 모델에 populate를 한 모델을 최종적으로 video에 담는다는 의미이다.
-    const video = await Video.findById(id).populate("creator");
+    const video = await Video.findById(id).populate("creator").populate("comments");
     // console.log("✅ video:", video);
+    // console.log("✅ video.comments:", video.comments);
     res.render("videoDetail", { pageTitle: video.title, video });
   } catch (error) {
     console.log(error);
@@ -220,5 +222,34 @@ export const postRegisterView = async (req, res) => {
   }finally{
     // res.end를 통해 응답을 종료함
     res.end();
+  }
+}
+
+// 댓글을 추가하는 기능을 하는 함수이다. 
+export const postAddComment = async (req, res)=>{
+  const {
+    params: { id },
+    body: { comment }, //body안에 comment는 videoDetail에 form안에 name이 comment인 input에서 req한 값을 의미한다.
+    user
+  } = req;
+
+  try{
+    const video = await Video.findById(id);
+
+    // Comment.create(): Comment모델에 스키마를 생성함(댓글을 추가한다는 의미)
+    const newComment = await Comment.create({
+      text: comment,
+      creator: user.id
+    });
+
+    // 위에서 추가한 Comment모델의 id값을 video모델이 가지고 있는 comment필드에 추가함
+    video.comments.push(newComment._id);
+    video.save();
+    res.status(200);
+  }catch(error){
+    res.status(400);
+  }finally{
+    res.end();
+
   }
 }
