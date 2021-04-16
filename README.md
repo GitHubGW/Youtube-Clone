@@ -39,21 +39,26 @@
 - [x] Databases & Models
 - [x] Database Queries
 - [x] Model Relationships
-- [ ] Database Hooks
-- [ ] WebPack Module Building
-- [ ] REST API Development
-- [ ] Server and Database Deployment
-- [ ] AJAX & AWS
+- [x] Database Hooks
+- [x] WebPack Module Building
+- [x] REST API Development
+- [x] Server and Database Deployment
+- [x] AJAX & AWS
 
 ## ⚙ Features
 ### 🙎‍♂️ Users
+- [x] Join
+- [x] Log In / Log Out
+- [x] User Profile
+- [x] Edit Profile
+- [x] Change Password
 - [x] User Authentication
 - [x] GitHub Login / Kakao Login
-- [x] User Profile
-- [x] Log In / Log Out
+
 
 ### 📺 Videos
 - [x] Video Upload
+- [x] Video Delete
 - [x] Video Recording
 - [x] Search Video
 - [x] View Count
