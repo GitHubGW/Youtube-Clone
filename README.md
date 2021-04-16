@@ -61,8 +61,11 @@
 - [x] Video Delete
 - [x] Video Recording
 - [x] Search Video
+- [ ] Custom Video Player
 - [x] View Count
 - [x] AJAX Comments
+- [ ] Delete Comments
+
 
 ## 🚀 Deployment
 - [ ] Heroku
