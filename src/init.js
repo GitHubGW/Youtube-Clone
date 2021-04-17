@@ -1,3 +1,4 @@
+import "@babel/polyfill";
 // db.js에서 export하지 않고도 import해올 수 있는 이유는 파일 내부의 함수나 변수를 가져온 것이 아니라 그냥 db파일 자체를 가져왔기 때문이다.
 // db.js파일을 가져오면 그 파일안에 내용들이 자동으로 실행되기 때문에 DB가 실행되는 것이다.
 import "./db";
