@@ -1,5 +1,6 @@
 // const express = require('express'); // require를 통해 express를 가져옴
 // 위에 require대신에 자바스크립트 최신 문법인 import를 사용해서도 express에서 가져올 수 있다. (단 import를 사용하기 위해서는 Babel이 필요함)
+import "@babel/polyfill";
 import express from "express";
 import morgan from "morgan";
 import helmet from "helmet";
@@ -8,6 +9,7 @@ import passport from "passport";
 import MongoStore from "connect-mongo";
 import session from "express-session";
 import cookieParser from "cookie-parser";
+import path from "path";
 import userRouter from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";
 import globalRouter from "./routers/globalRouter";
@@ -38,15 +40,22 @@ app.set("view engine", "pug");
 
 // express에서 사용할 뷰 엔진의 경로를 설정함(기본값은 views폴더).
 // 기본값으로 쓸 때는 설정해줄 필요없고 views폴더가 아닌 다른 폴더로 설정할 때 두 번째 경로를 변경해주면 된다.
-app.set("views", "./views");
+// app.set("views", "./views");
+
+// 경로를 찾을 때 사용하는 path모듈을 가져와서 path.join()을 통해 뷰 엔진의 경로를 다시 재 설정해줌.
+// __dirname은 현재 실행되고 있는 파일의 상위 경로(폴더)를 의미한다.
+app.set("views", path.join(__dirname, "views"));
 
 // uploads 라우트로 req 요청이 오면 express.static("uploads")를 통해 express의 기본 static파일 경로를 uploads폴더로 설정한다.
 // 설정하게 되면 upload 라우트로 들어왔을 때 uploads폴더 안에 있는 파일을 보내주게 된다.
 // 쉽게 말해 uploads 경로로 들어오면 uploads폴더 안에 파일을 실행시키라는 의미임
-app.use("/uploads", express.static("uploads"));
+// 나중에 AWS S3를 생성한 후에는 거기에 비디오 파일과 아바타 파일 등을 저장하기 때문에 더 이상 아래 uploads가 필요하지 않아서 주석 처리했음.
+// app.use("/uploads", express.static("uploads"));
 
 // static라우트를 만들고 static라우트로 들어오려 하면 static폴더를 보여주게 된다.
-app.use("/static", express.static("static"));
+// app.use("/static", express.static("static"));
+
+app.use("/static", express.static(path.join(__dirname, "static")));
 
 // cookieParser는 사용자 인증에 필요한 cookie를 전달 받는다.
 app.use(cookieParser());
