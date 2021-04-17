@@ -16,7 +16,7 @@ import routes from "./routes"; // routes.js에서 export default(내보내기 �
 import { localsMiddleware } from "./middlewares";
 
 // import MongoStore from "connect-mongo";
-// connect-mongo는 세션을 몽고 DB와 연결해 세션의 정보를 몽고 DB에 저장하기 위해 사용하는 플러그인이다. 
+// connect-mongo는 세션을 몽고 DB와 연결해 세션의 정보를 몽고 DB에 저장하기 위해 사용하는 플러그인이다.
 // 일반적으로 세션의 정보는 메모리에 저장되는데 그렇게 되면 서버가 날라가거나 재시작하게 됐을 때 메모리도 초기화되면서 세션 정보가 없어져 버린다.
 // 그래서 이런 문제를 방지하기 위해 세션 정보들을 데이터베이스에 연결해서 저장하기 위한 connect-mongo를 사용한다.
 
@@ -89,7 +89,7 @@ app.use(
     // 세션과 몽고디비를 연결주고, 세션에게 데이터를 MongoStore라는 저장소에 저장하라고 설정함
     // 세션과 몽고디비가 연결되게 되면 서버가 재시작된다해도 우리는 쿠키를 계속 보존할 수 있고 여전히 로그인 상태를 유지할 수 있다.
     store: MongoStore.create({
-      mongoUrl: process.env.MONGO_URL,
+      mongoUrl: process.env.MONGO_URL_PRODUCTION, // MONGO_URL로 실습하다가 마지막 배포전에 MongoDB Atlas를 실습하면서 MONGO_URL_PRODUCTION으로 바꿨음
     }),
   })
 );

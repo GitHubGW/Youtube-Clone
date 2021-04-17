@@ -7,7 +7,8 @@ dotenv.config();
 // mongoose.connect()를 통해 데이터베이스와 연결할 때 지정할 속성을 설정함
 // MongoDB URL : "mongodb://localhost:포트번호/Database이름" (포트번호는 mongod를 실행후 port에서 찾을 수 있음)
 // process.env.MONGO_URL을 통해 .env에 저장되어있는 키의 벨류값을 가져올 수 있다
-mongoose.connect(process.env.MONGO_URL, {
+// MONGO_URL로 실습하다가 마지막 배포전에 MongoDB Atlas를 실습하면서 MONGO_URL_PRODUCTION으로 바꿨음
+mongoose.connect(process.env.MONGO_URL_PRODUCTION, {
   // mongoose를 통해 mongodb에 연결하면서 환경설정을 설정해서 보낼 수 있음.
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -35,7 +36,6 @@ db.once("open", handleOpen);
 db.on("error", handleError);
 
 /*
-
 MongoDB 명령어들
 MongoDB의 명령어들을 통해 데이터베이스를 컨트롤 할 수 있다.
 
@@ -51,5 +51,4 @@ db.컬렉션명.find({}): 해당 컬렉션(모델)이 가지고 있는 데이터
 
 MongoDB GUI Plugin(Mongoku)
 https://github.com/huggingface/Mongoku
-
 */
