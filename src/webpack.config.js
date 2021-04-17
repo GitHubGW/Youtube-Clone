@@ -1,5 +1,5 @@
 // webpack.config.js는 webpack이 호출되면 가장 먼저 확인하는 설정 파일입니다.
-// 설치한 패키지 중 webpack은 파일안에서 사용하는 패키지이고 webpack-cli는 콘솔에서 사용하는 패키지이다. 
+// 설치한 패키지 중 webpack은 파일안에서 사용하는 패키지이고 webpack-cli는 콘솔에서 사용하는 패키지이다.
 // package.json에서 dev:assets 을 설정해 웹팩을 실행시키는 커맨드를 설정했다.
 // npm dev:assets를 하게 되면 웹팩은 자동으로 webpack.config.js파일을 찾아서 실행한다. (webpack.config.js 파일명은 웬만하면 수정하지 말기)
 // 기본적인 웹팩의 규칙은 exported configuartion object를 찾는 것이다.
@@ -16,13 +16,13 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 // process.env를 통해 dotenv에서 변수를 가져오듯이 package.json의 script부분에 설정한 WEBPACK_ENV의 값을 가져옴
 // 가져오는 이유는 환경변수의 값을 가져와서 웹팩에 mode 옵션을 설정해주기 위함이다.
-// mode를 설정해주는 이유는 우리가 배포를 할 때 코드를 압축하는데 개발중에는 에러를 봐야하기 때문에 코드를 압축하지 않는다. 
-// 그래서 현재 개발중인지 배포중인지 mode를 통해 알려줘야 한다. 
+// mode를 설정해주는 이유는 우리가 배포를 할 때 코드를 압축하는데 개발중에는 에러를 봐야하기 때문에 코드를 압축하지 않는다.
+// 그래서 현재 개발중인지 배포중인지 mode를 통해 알려줘야 한다.
 const MODE = process.env.WEBPACK_ENV;
 
 // 웹팩은 entry와 output이 있다.
 // entry는 앱의 루트 파일 경로로서 변환할 파일을 지정하고 output은 그 파일을 변환해서 최종적으로 어디에 위치할 것인지를 지정한다.
-// __dirname은 현재 실행되고 있는 현재 파일의 상위 경로(폴더)를 의미한다. 
+// __dirname은 현재 실행되고 있는 파일의 상위 경로(폴더)를 의미한다.
 // 예를들어 controllers밑에 userController.js에서 __dirname을 찍어보면 Youtube-Clone/controllers로 나오게 된다.
 // __filename 은 현재 실행 중인 파일 경로
 // path.join()과 path.resolve()메소드를 통해 파일의 경로를 찾아서 지정할 수 있다.
@@ -36,7 +36,6 @@ const OUTPUT_DIR = path.join(__dirname, "static");
 // config파일에는 웹팩에게 설정해야 하는 것들을 지정해 준다. (웹팩은 loader를 읽을 때 아래에서 위로 읽으면서 실행한다.)
 // entry에는 변환할 파일을, output에는 (객체형식으로)변환할 파일을 저장할 폴더의 경로나, 변환할 파일명을 filename에 입력해준다.
 const config = {
-
   // babel-polyfill은 ES6+에서 새롭게 추가된 Promise, WeakMap와 같은 내장객체나 Array.from, Object.assign와 같은 정적 메소드를 구형 브라우저에서도 작동할 수 있도록 변환해주는 도구다.
   // 쉽게 말해 ES6+에서 새롭게 추가된 객체나 메소드들을 구형 브라우저에도 작동할 수 있도록 변환해준다는 것이다.
   // babel은 ES6+의 문법을 구형 브라우저에서도 작동할 수 있도록 변환해주는 것이라면 babel-polyfill은 ES6+ 이상에서 새롭게 추가된 객체들을 구형 브라우저에서도 작동할 수 있도록 변환해주는 것이다.
@@ -65,12 +64,12 @@ const config = {
         test: /\.(scss|sass)$/, // 웹팩이 정규표현식을 통해 파일 이름을 검사해서 scss, sass파일 전부를 찾아줌.
 
         // use 안에는 사용할 플러그인이나 로더들을 정의해준다.
-        // 우리는 loader를 통해 웹팩에게 파일을 변환하고 처리하는 방법에 대해서 명령을 내리는 것이다. 
+        // 우리는 loader를 통해 웹팩에게 파일을 변환하고 처리하는 방법에 대해서 명령을 내리는 것이다.
         // 1. sass-loader로 SCSS파일을 CSS로 변환해준다.
         // 2. postcss-loader로 변환한 CSS에 브라우저 호환성 문제를 해결해준다.
         // 3. css-loader를 통해 최종적으로 변환된 CSS를 가져온다.
         // 4. MiniCssExtractPlugin.loader를 통해 변환된 CSS를 별도의 파일로 추출한다.
-        // 여기서 주의할 점은 로더(loader)는 웹팩에서 아래부터 위로 역순으로 실행한다. 
+        // 여기서 주의할 점은 로더(loader)는 웹팩에서 아래부터 위로 역순으로 실행한다.
         use: [
           {
             // 4. 그리고 마지막으로 MiniCssExtractPlugin.loader를 통해 가져온 CSS를 별도의 파일로 추출한다.
@@ -89,7 +88,6 @@ const config = {
             loader: "postcss-loader",
             options: {
               postcssOptions: {
-
                 // plugins: [[autoprefixer, { browsers: "cover 99.5%" }]]에서 browsers는 오래된 옵션이기 때문에 에러가 발생할 수 있다고 경고 하고 있다.
                 // 그래서 browser대신 overrideBrowserslist옵션으로 대체했다. (강의에서는 browser로 함)
                 plugins: [[autoprefixer, { overrideBrowserslist: "cover 99.5%" }]],
@@ -105,15 +103,14 @@ const config = {
     ],
   },
 
-  // output은 반드시 객체형태로 써줘야 한다. 
+  // output은 반드시 객체형태로 써줘야 한다.
   output: {
-
     // path에는 웹팩의 output을 설정해준다. (파일이 컴파일되고 위치할 경로)
     path: OUTPUT_DIR,
 
     // filename은 컴파일될 파일 형식을 설정한다.
     // [name].js의 의미는 어떤 이름 + .js 파일 형식을 가질 것이라고 정의해주는 것이다.
-    filename: "[name].js", 
+    filename: "[name].js",
   },
   plugins: [
     new MiniCssExtractPlugin({
