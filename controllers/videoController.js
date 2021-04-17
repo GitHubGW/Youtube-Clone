@@ -69,17 +69,19 @@ export const postUpload = async (req, res) => {
   // 밑의 코드는 ES6방식으로 객체 안에 있는 프로퍼티를 불러오는 것으로 const videoTitle = req.body.videoTitle, const path = req.file.path와 같은 의미이다. 그래서 바로 videoTitle과 path를 변수로 꺼내 쓸 수 있다.
   const {
     body: { videoTitle, description },
-    file: { path },
+    // multer는 기본적으로 뭔가를 로컬 서버에 저장할 때 req.file.path에 저장하지만 S3처럼 외부의 서버에 저장할 때는 location에 저장한다.
+    // path로 실습하다가 마지막에 AWS S3를 이용할 때 location으로 바꿈. -> 아래에 fileUrl부분도 path에서 location으로 바꿨음.
+    file: { location },
   } = req;
 
-  // console.log("req.file:", req.file);
+  console.log("req.file:", req.file);
 
   // Video.create()은 비디오 도큐먼트에 새로운 도큐먼트를 생성한다는 의미이다.
   // 중요! 도큐먼트를 생성하게 되면 Video.js에서 스키마를 생성할 때 만든 형태로 도큐먼트를 만들게 되는데 거기에는 fileUrl, title, description, createdAt, views, comments등이 있다.
   // 거기 안에 있는 fileUrl, title, descriptoin의 값을 여기서 넘겨준 것이다.
   // 그런데 스키마를 생성할 때 선언해 준 fileUrl등의 프로퍼티 외에도 _id라는 고유의 id값도 자동으로 만들어서 넘겨주게 되는데 이 id값을 통해 각각의 비디오를 구분할 수 있고 비디오를 클릭했을 때 비디오 고유의 아이디 값을 가진 라우터로 이동할 수 있다.
   const newVideo = await Video.create({
-    fileUrl: path,
+    fileUrl: location,
     title: videoTitle,
     description,
     creator: req.user.id, // 비디오를 생성할 때 req.user.id를 이용해서 비디오를 생성함.
@@ -122,7 +124,7 @@ export const videoDetail = async (req, res) => {
     // Video모델의 스키마 안에서는 id값을 선언하지 않았지만 비디오가 생성되는 시점에 MongoDB가 자동으로 고유의 id값을 주게 되고 그 id값을 통해 여기서 req.params.id와 일치하는 비디오를 가져올 수 있는 것이다.
     // Video.populate("creator")는 Video모델이 가지고 있는 creator라는 필드에 creator가 참조(ref)하고 있는 User모델을 가져온다는 의미이다.
     // 가져오게 되면 creator에는 606d960c5bcfc82a34b73f09같은 값이 아닌 User모델이 객체형태로 들어가게 된다.
-    // populate()를 쓰지 않으면 creator에는 User모델의 아이디값만 가져오지만 populate()를 쓰면 User모델을 객체화해서 전체를 가져온다. 
+    // populate()를 쓰지 않으면 creator에는 User모델의 아이디값만 가져오지만 populate()를 쓰면 User모델을 객체화해서 전체를 가져온다.
     // populate()를 사용하려면 스키마를 정의할 때 해당 필드의 type을 mongoose.Schema.Types.ObjectId로 해줘야하고 ref(참조)에는 ObjectId를 가지고 있는 참조할 모델을 지정해줘야 한다. (여기서는 User모델을 참조함)
     // 그래서 Video모델에서 req.params.id에 해당하는 비디오를 찾아서 그 비디오 모델에 populate를 한 모델을 최종적으로 video에 담는다는 의미이다.
     const video = await Video.findById(id).populate("creator").populate("comments");
@@ -198,58 +200,56 @@ export const deleteVideo = async (req, res) => {
   res.redirect(routes.home);
 };
 
-// postRegisterView함수는 누군가가 routes.registerView 경로로 접속했을 때 postRegisterView가 실행되면 비디오를 찾아서 해당 비디오의 views를 1올린다. (조회수 올리는 함수)  
+// postRegisterView함수는 누군가가 routes.registerView 경로로 접속했을 때 postRegisterView가 실행되면 비디오를 찾아서 해당 비디오의 views를 1올린다. (조회수 올리는 함수)
 // postRegisterView는 위에서 만든 다른 함수들과 다르게 랜더링을 하지 않고 그냥 오직 데이터베이스의 정보만 변경하는 함수이다. (오직 서버와 통신을 하는 함수이다.)
-// routes.registerView 경로는 오직 데이터베이스를 변경하기 위한 API 주소이다. 
+// routes.registerView 경로는 오직 데이터베이스를 변경하기 위한 API 주소이다.
 export const postRegisterView = async (req, res) => {
-
   const {
-    params: { id }
+    params: { id },
   } = req;
 
-  try{
+  try {
     // id로 비디오 모델에서 비디오를 찾는다.
     const video = await Video.findById(id);
 
-    // 찾고난 후에 video안에 views 필드에 +1을 해서 값을 하나 올린 후 save()메서드를 통해 저장한다. 
+    // 찾고난 후에 video안에 views 필드에 +1을 해서 값을 하나 올린 후 save()메서드를 통해 저장한다.
     video.views += 1;
     video.save();
     res.status(200);
-  }catch(error){
+  } catch (error) {
     // 만약 에러가 있다면 브라우저에게 status코드 400을 응답함(브라우저는 status코드를 보고 현재 연결이 성공인지 실패인지 판별함)
     // 400은 응답실패를 의미한다.
     res.status(400);
-  }finally{
+  } finally {
     // res.end를 통해 응답을 종료함
     res.end();
   }
-}
+};
 
-// 댓글을 추가하는 기능을 하는 함수이다. 
-export const postAddComment = async (req, res)=>{
+// 댓글을 추가하는 기능을 하는 함수이다.
+export const postAddComment = async (req, res) => {
   const {
     params: { id },
     body: { comment }, //body안에 comment는 videoDetail에 form안에 name이 comment인 input에서 req한 값을 의미한다.
-    user
+    user,
   } = req;
 
-  try{
+  try {
     const video = await Video.findById(id);
 
     // Comment.create(): Comment모델에 스키마를 생성함(댓글을 추가한다는 의미)
     const newComment = await Comment.create({
       text: comment,
-      creator: user.id
+      creator: user.id,
     });
 
     // 위에서 추가한 Comment모델의 id값을 video모델이 가지고 있는 comment필드에 추가함
     video.comments.push(newComment._id);
     video.save();
     res.status(200);
-  }catch(error){
+  } catch (error) {
     res.status(400);
-  }finally{
+  } finally {
     res.end();
-
   }
-}
+};

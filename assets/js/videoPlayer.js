@@ -1,5 +1,7 @@
-// videoContainer-> videoPlayer
-// videoPlayer-> video 로 변경함
+// get-blob-duration은 blob파일의 duration(지속시간)을 나타내주는 모듈이다. (우리가 여기서 사용하는 blob파일은 비디오 파일을 의미함)
+import getBlobDuration from "get-blob-duration";
+
+// 강의에 나오는 videoContainer-> videoPlayer, videoPlayer-> video 로 변경함
 const videoPlayer = document.getElementById("jsVideoPlayer");
 const video = document.querySelector("#jsVideoPlayer video");
 const playBtn = document.getElementById("jsPlayButton");
@@ -142,11 +144,30 @@ const getCurrentTime = () => {
   // console.log(video.currentTime);
 };
 
+/*
 const setTotalTime = () => {
   // duration속성은 미디어의 전체 길이를 초 단위로 반환한다.
   // console.log(video.duration);
 
   const totalTimeString = formatDate(video.duration);
+  // console.log(totalTimeString);
+
+  totalTime.innerHTML = totalTimeString;
+
+  // setInterval()을 쓰거나 아래와 같이 timeupdate를 쓸 수 있다.
+  // timeupdate는 비디오/오디오의 재생위치가 변경되었을 때를 말한다.
+  // setInterval(getCurrentTime, 100);
+  video.addEventListener("timeupdate", getCurrentTime);
+};
+*/
+
+// get-blob-duration을 사용해서 미디어의 전체 길이를 가져옴(위에 setTotalTime의 또 다른 방법)
+const setTotalTime = async () => {
+  // getBlobDuration(video.src)를 통해 video의 src속성에 지정된 비디오 파일의 duration을 가져옴
+  const duration = await getBlobDuration(video.src);
+  console.log(duration);
+
+  const totalTimeString = formatDate(duration);
   // console.log(totalTimeString);
 
   totalTime.innerHTML = totalTimeString;

@@ -2,11 +2,40 @@
 // 우리는 파일을 업로드하면 파일의 이름을 통해 해당 파일을 로드해오는게 아니라 해당 파일의 URL을 통해 로드해오게 된다.
 // multer미들웨어를 사용하기 위해 가져옴
 import multer from "multer";
+import multerS3 from "multer-s3"; // AWS S3용 multer storage 엔진이다.
+import aws from "aws-sdk"; // aws-sdk(아마존 웹 서비스 소프트웨어 개발 킷)이다.
 import routes from "./routes";
 
+// new aws.S3({})를 통해 aws객체를 생성 후 그 안에서 우리가 사용할 S3에 대한 설정을 해준다.
+const s3 = new aws.S3({
+  // AWS_ACCESS_KEY와 AWS_SECRET_ACCESS_KEY를 가져와서 accessKeyId와 secretAccessKey에 할당해준다.
+  accessKeyId: process.env.AWS_ACCESS_KEY,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  // region: "ap-northeast-2", // region을 설정해 아시아 태평양(서울) ap-northeast-2서버로 업로드한 파일을 보내게 된다.
+});
+
 // 가져온 multer 모듈을 실행시킨 후, input을 이용해서 파일을 업로드 하면 multer가 그 파일을 변환해서 저장할 폴더를 설정한다.
-const multerVideo = multer({ dest: "uploads/videos/" });
-const multerAvatar = multer({ dest: "uploads/avatars/" });
+// const multerVideo = multer({ dest: "uploads/videos/" });
+// const multerAvatar = multer({ dest: "uploads/avatars/" });
+
+// 위에 multerVideo와 multerAvatar는 로컬서버 파일을 저장할 때 사용한 방법이고 마지막 배포할 때는 AWS S3를 이용하기 때문에 multer대신 multer S3로 바꾸고 설정도 약간 바꿔줬다.
+const multerVideo = multer({
+  // multer의 storage를 multerS3로 설정 후 안에 세부 설정을 해줬다. (multer가 저장하는 스토리지(저장공간)을 설정해준 것이다.)
+  // storage에는 다양한 설정이 가능하고 기본 값은 node.js 파일 시스템이다.
+  storage: multerS3({
+    s3,
+    acl: "public-read", // acl은 access control lists로 public-read로 설정해서 일반적인 사람들이 읽기 가능하도록 설정해줬다.
+    bucket: "youtube-gw/video", // bucket에는 aws에서 생성한 bucket의 이름을 설정해준다. (뒤에 /video를 통해 bucket안에 하나의 폴더를 더 만들어주고 그 안에 비디오를 저장하겠다고 설정해준다.)
+  }),
+});
+
+const multerAvatar = multer({
+  storage: multerS3({
+    s3,
+    acl: "public-read",
+    bucket: "youtube-gw/avatar",
+  }),
+});
 
 // 로컬 변수를 전역 변수로 만들어주는 미들웨어 함수(전역 변수가 되면 템플릿 엔진인 pug에서 해당 변수를 가져와서 쓸 수 있다)
 export const localsMiddleware = (req, res, next) => {
