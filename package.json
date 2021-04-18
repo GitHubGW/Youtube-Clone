@@ -66,7 +66,7 @@
     "build:server": "babel src --out-dir build --ignore src/assets --ignore src/static --ignore src/webpack.config.js",
     "copyAll": "xcopy src\\static build\\static /d /e /h /c /y /i && xcopy src\\views build\\views /d /e /h /c /y /i",
     "build": "npm run build:server && npm run build:assets && npm run copyAll",
-    "prebuild": "rd /s build",
+    "prebuild": "rimraf build",
     "start": "node build/init.js"
   },
   "browserslist": [
