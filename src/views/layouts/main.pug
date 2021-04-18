@@ -6,11 +6,16 @@ html
     link(rel="stylesheet", href="/static/styles.css")
     title #{pageTitle} | #{siteName}
   body
-    include ../partials/header.pug
+    if messages.error 
+      span=messages.error
+    else if messages.info 
+      span=messages.info
+    else if messages.success 
+      span=messages.success
 
+    include ../partials/header.pug
     main
       block content
-      
     include ../partials/footer.pug
 
     script(type="module" src="/static/main.js") 

@@ -10,6 +10,7 @@ import MongoStore from "connect-mongo";
 import session from "express-session";
 import cookieParser from "cookie-parser";
 import path from "path";
+import flash from "express-flash";
 import userRouter from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";
 import globalRouter from "./routers/globalRouter";
@@ -67,6 +68,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // morgan은 nodeJS에서 로그 관리를 하기 위한 미들웨어이다. (application에서 발생하는 모든 일을 기록한다.)
 app.use(morgan("dev"));
+
+// flash()를 통해 express-flash를 실행한다.(로컬 메세지를 띄울 수 있도록 설정해준다. 여기서 로컬이란 middlewares.js에서 선언한 변수들처럼 전역 변수 형태를 의미한다.)
+// express-flash란 사용자에게 일종의 알림 역할을 하는 메세지를 보낼 수 있게 해주는 모듈이다.
+app.use(flash());
 
 // express-session은 세션을 관리하기 위한 플러그인이자 미들웨어 함수이다.
 // session 데이터는 쿠키에 저장되지 않고 서버 측에 저장된다. (쿠키에는 오로지 세션 아이디만 저장된다.)
