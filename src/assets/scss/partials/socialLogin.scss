@@ -9,26 +9,30 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    &:not(:last-child) {
-      margin-bottom: 15px;
+    padding: 8px 0;
+    a{
+      display: flex;
+      align-items: center;
+      font-size: 15px;
     }
     span {
-      margin-right: 10px;
+      margin-right: 7px;
       font-size: 20px;
     }
   }
   .social-login--github {
     background-color: $black;
     color: white;
+    margin-bottom: 10px;
     a:visited{
       color: white;
     }
   }
   .social-login--kakao {
-    background-color: #3a5998;
-    color: white;
+    background-color: $yellow;
+    color: $black;
     a:visited{
-      color: white;
+      color: $black;
     }
   }
 }
