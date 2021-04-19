@@ -1,14 +1,30 @@
-.home-videos {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(180px, 1fr));
-  grid-gap: 12px;
-  .videoBlock:first-child,
-  .videoBlock:nth-child(2) {
-    grid-column: span 2;
+.home-container{
+  display: flex;
+  .home-menu{
+    border: 5px solid red;
+    flex:2;
+    height: 100vh;
+    .division-line{
+      width: 100%;
+      height: 1px;
+      background-color: #e7e7e7;
+    }
+    .home-menu-item{
+      i{
+        color:#777;
+      }
+      span{
+        color: black;
+      }
+    }
+    .home-menu-main {
+      
+    }
   }
-  .videoBlock:nth-child(3),
-  .videoBlock:nth-child(4),
-  .videoBlock:nth-child(5) {
-    // grid-column: span 3;
+  .home-videos {
+    border: 5px solid blue;
+    flex:8;
+    height: 100vh;
+
   }
 }
