@@ -2,25 +2,31 @@ header.header
   .header__wrapper
     //- div.header__column에서 div는 생략하고 .header__column만 사용가능(div태그만 생략가능)
     div.header__column
-      a(href=routes.home)
+      a(href=routes.home class="youtube__title")
         i.fab.fa-youtube
+        |YouTube
     div.header__column
-      form(action=routes.search, method="get")
-        input(type="text", name="term", placeholder="Search for Term.")
+      form(action=routes.search, method="get" class="search__form")
+        input(type="text", name="term", placeholder="검색")
+        i.fas.fa-search
     div.header__column
       ul
         //- 로그인이 안 됐을 때
         if !loggedUser
-          li
-            a(href=routes.join) Join
-          li 
-            a(href=routes.login) Login
+          li.join__btn
+            a(href=routes.join) 회원가입
+          li.login__btn
+            i.fas.fa-user-circle
+            a(href=routes.login) 로그인
         //- 로그인이 됐을 때
         else 
-          li 
-            a(href=`${routes.videos}${routes.upload}`) Upload 
-          li 
-            a(href=routes.me) Profile
-          li 
-            a(href=routes.logout) Logout
+          li.upload__btn
+            a(href=`${routes.videos}${routes.upload}`)
+              i.fas.fa-upload
+          li.profile__btn
+            a(href=routes.me)
+              i.fas.fa-user
+          li.logout__btn
+            a(href=routes.logout)
+              i.fas.fa-sign-out-alt
           
