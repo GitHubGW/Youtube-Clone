@@ -103,7 +103,7 @@ app.use(
     // 세션과 몽고디비를 연결주고, 세션에게 데이터를 MongoStore라는 저장소에 저장하라고 설정함
     // 세션과 몽고디비가 연결되게 되면 서버가 재시작된다해도 우리는 쿠키를 계속 보존할 수 있고 여전히 로그인 상태를 유지할 수 있다.
     store: MongoStore.create({
-      mongoUrl: process.env.MONGO_URL_PRODUCTION, // MONGO_URL로 실습하다가 마지막 배포전에 MongoDB Atlas를 실습하면서 MONGO_URL_PRODUCTION으로 바꿨음
+      mongoUrl: process.env.MONGO_URL, // MONGO_URL로 실습하다가 마지막 배포전에 MongoDB Atlas를 실습하면서 MONGO_URL_PRODUCTION으로 바꿨음
     }),
   })
 );
