@@ -78,12 +78,31 @@ block content
           span 의견 보내기
 
     .home-videos 
-      each item in videos
+      .home-videos-content
         //- h1 #{item.id}과 h1=item.id는 같은 의미이다.(자바스크립트 코드를 가져옴)
         //- mixin을 통해 만든 videoBlock함수를 호출함(videoBlock함수에는 객체로 인자를 전달함)
-        +videoBlock({
-          id: item.id,
-          title: item.title,
-          views: item.views,
-          videoFile: item.fileUrl,
-        })
+        each item in videos
+          +videoBlock({
+            id: item.id,
+            title: item.title,
+            views: item.views,
+            videoFile: item.fileUrl,
+          })
+          +videoBlock({
+            id: item.id,
+            title: item.title,
+            views: item.views,
+            videoFile: item.fileUrl,
+          })
+          +videoBlock({
+            id: item.id,
+            title: item.title,
+            views: item.views,
+            videoFile: item.fileUrl,
+          })
+          +videoBlock({
+            id: item.id,
+            title: item.title,
+            views: item.views,
+            videoFile: item.fileUrl,
+          })
