@@ -37,6 +37,7 @@ const multerAvatar = multer({
   }),
 });
 
+
 // 로컬 변수를 전역 변수로 만들어주는 미들웨어 함수(전역 변수가 되면 템플릿 엔진인 pug에서 해당 변수를 가져와서 쓸 수 있다)
 export const localsMiddleware = (req, res, next) => {
   // console.log("localMiddleware 실행");

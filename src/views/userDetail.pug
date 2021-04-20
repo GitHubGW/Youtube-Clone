@@ -3,23 +3,41 @@ include mixins/videoBlock.pug
 
 block content
   .user-profile 
-    .user-profile__header
-      img.u-avatar(src=user.avatarUrl)
-      h4.profile__username=user.name
-    if loggedUser
-      if user.id === loggedUser.id
-        .user-profile__btns
-          a(href=`/users${routes.editProfile}`)
-            button 프로필 수정
-          a(href=`/users${routes.changePassword}`)
-            button 비밀번호 변경
-    .uploaded-videos
-      each item in user.videos 
-        +videoBlock({
-          id: item.id,
-          title: item.title,
-          views: item.views,
-          videoFile: item.fileUrl,
-          creator: item.creator
-        })
+    .user-profile-container
+      .user-profile__header
+        .profile_avatar
+          img.u-avatar(src=user.avatarUrl)
+        .profile__username
+          h4 
+            |이름
+            h5 #{user.name}
+        .profile__email
+          h4 
+            |이메일
+            h5 #{user.email}
+        .profile__githubid
+          h4
+            |깃허브
+            h5 @#{user.githubId}
+        .profile__kakaoid
+          h4
+            |카카오
+            h5 @#{user.kakaoId}
+
+      if loggedUser
+        if user.id === loggedUser.id
+          .user-profile__btns
+            a(href=`/users${routes.editProfile}` class="edit_profile")
+              button 프로필 수정
+            a(href=`/users${routes.changePassword}` class="edit_password")
+              button 비밀번호 변경
+      .uploaded-videos
+        each item in user.videos 
+          +videoBlock({
+            id: item.id,
+            title: item.title,
+            views: item.views,
+            videoFile: item.fileUrl,
+            creator: item.creator
+          })
 
