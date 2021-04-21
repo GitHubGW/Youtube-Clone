@@ -7,7 +7,7 @@ block content
       .user-profile__header
         .profile_avatar
           if user.avatarUrl===undefined
-            img.u-avatar(src="https://www.flaticon.com/svg/vstatic/svg/149/149071.svg?token=exp=1618994649~hmac=cf1d24ec62437e8488a32a042461dcc6")
+            img.u-avatar(src="https://www.flaticon.com/svg/vstatic/svg/64/64572.svg?token=exp=1618995660~hmac=8f7a07b15c5fd69fb3ab92339f979640")
           else 
             img.u-avatar(src=user.avatarUrl)
         .profile__username
@@ -17,7 +17,7 @@ block content
         .profile__email
           h4 
             |이메일
-            h5 #{user.email}
+            h5 @#{user.email}
         .profile__githubid
           h4
             |깃허브
@@ -36,6 +36,7 @@ block content
               button 비밀번호 변경
       .uploaded-videos
         each item in user.videos 
+          h2 #{user}
           +videoBlock({
             id: item.id,
             title: item.title,
