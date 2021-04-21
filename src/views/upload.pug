@@ -6,8 +6,7 @@ block content
     .record-container#jsRecorderContainer
       video#jsVideoPreview
       .form__input
-        button#jsRecordBtn
-          i.fa.fa-edit
+        button.recordBtn#jsRecordBtn Start Recording
 
     //- multer미들웨어를 사용하려면 form에 enctype속성을 설정해줘야 한다.
     //- enctype는 폼 데이터가 서버로 제출될 때 해당 데이터가 인코딩되는 방법을 명시한다.(enctype은 method 속성 값이 “post”인 경우에만 사용할 수 있다.)
@@ -18,7 +17,7 @@ block content
         input(type="file", name="videoFile", id="videoFile" required=true accept="video/*")
         i.fas.fa-file-video 
       .form__input
-        input(type="text", name="videoTitle", placeholder="제목" required=true)
+        input(type="text", name="videoTitle", placeholder="Video Title" required=true)
         i.fa.fa-edit
-      textarea(name="description" placeholder="설명") 
-      input(type="submit", value="업로드")
+      textarea(name="description" placeholder="Description") 
+      input(type="submit", value="Upload")

@@ -1,6 +1,7 @@
 import routes from "../routes";
 import Video from "../models/Video"; // Video.js에서 Video모델을 가져옴
 import Comment from "../models/Comment";
+import User from "../models/User";
 
 // Global Controller
 // res.render()함수는 설정된 views폴더에서 자동으로 템플릿 파일을 찾아서 랜더링한다.

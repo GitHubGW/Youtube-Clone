@@ -190,11 +190,11 @@ export const logout = (req, res) => {
 };
 
 // User Controller
-export const getMe = (req, res) => {
-  console.log("getMe",req.user);
-  console.log("getMe2",req.user.videos);
-  res.render("userDetail", { pageTitle: "Me", user: req.user }); // user에 req.user의 값을 전달함(req.user는 현재 로그인한 사용자에 대한 정보임)
-}
+export const getMe = async (req, res) => {
+  const user = await User.findById(req.user.id).populate("videos");
+
+  res.render("userDetail", { pageTitle: "My Profile", user }); // user에 req.user의 값을 전달함(req.user는 현재 로그인한 사용자에 대한 정보임)
+};
 export const userDetail = async (req, res) => {
   const {
     params: { id },
@@ -204,7 +204,7 @@ export const userDetail = async (req, res) => {
   try {
     // User.findById(id)를 통해 req.params.id의 값에 해당하는 데이터를 User모델에서 찾는데 만약 여기서 에러가 생기면 catch문으로 가게 된다.
     const user = await User.findById(id).populate("videos");
-    // console.log(user.videos);
+
     res.render("userDetail", { pageTitle: "userDetail", user });
   } catch (error) {
     req.flash("error", "User not found");

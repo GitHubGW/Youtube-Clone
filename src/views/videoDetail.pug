@@ -3,45 +3,53 @@ include mixins/videoPlayer
 
 block content
   .video-detail__container
-    //- .video__player (#9.0에서 videoPlayer mixin으로 대체함)
+    .video-detail__main
+      //- .video__player (#9.0에서 videoPlayer mixin으로 대체함)
       //- video src에는 videoDetail함수로부터 받은 video객체 안에 있는 fileUrl의 값을 할당한다. video.fileUrl은 Video모델에 있는 fileUrl의 값을 가져온 것이다.
       //- 앞에 video.fileUrl앞에 /를 하나 더 붙인 이유는 가져오는 비디오 파일들이 서버로부터 가져온 파일이기 때문이다. 
       //- (맨 앞에 /를 붙이면 루트 경로(웹 사이트의 루트 경로)를 의미함. 붙이지 않았다면 현재 페이지에서 추가된 경로를 의미함.)
       //- 앞에 /를 붙이지 않으면 비디오 파일을 불러오지 못함(주의하기)
       //- video(src=`/${video.fileUrl}`, controls="true")
-    +videoPlayer({
-      src: video.fileUrl
-    })
-    .video__info
-      if loggedUser
-        if video.creator.id === loggedUser.id
-          a(href=routes.editVideo(video._id)) 
-            button Edit Video
-      h5.video__title=video.title
-      p.video__description=video.description
-      //- pug안에서 if문을 사용해서 view값을 다르게 출력하게 했다. 
-      if video.views === 1
-        span.video__views 1 view
-      else 
-        span.video__views #{video.views} views
-      .video__author
-        |Uploaded by 
-        a(href=routes.userDetail(video.creator._id))=video.creator.name
-    .video__comments 
-      if video.comments.length === 1
-        span.video__comment-number
-          span#jsCommentNumber 1 
-          |comment
-      else
-        //- #{video.comments.length}에서 #{}은 pug에서 넘겨받은 변수를 가져올 떄 사용한다. (보통 =나 #{}을 주로 쓴다.)
-        //- ex) h1=name,   h1 #{name}  둘 다 가능하지만 뒤에 텍스트를 써줘야할 때는 #{}로 쓰는게 좋다.
-        span.video__comment-number
-          span#jsCommentNumber=video.comments.length
-          |comments
-      form.add_comment#jsAddComment(action="") 
-        input(type="text" placeholder="Add a comment" name="comment")
-      ul.video__comments-list#jsCommentList
-        //- reverse()는 배열의 메서드중 하나로 배열을 거꾸로 뒤집을 때 사용한다.
-        each comment in video.comments.reverse()
-          li
-            span #{comment.text}
+      +videoPlayer({
+        src: video.fileUrl
+      })
+
+      .video__info
+        if loggedUser
+          if video.creator.id === loggedUser.id
+            a(href=routes.editVideo(video._id)) 
+              button Edit Video
+        h5.video__title=video.title
+        .video__viewDate
+          if video.views === 1
+            span.video__views 1 view
+          else 
+            span.video__views #{video.views} views
+          em •
+          span.video__date #{video.createdAt.getFullYear()}-#{`${video.createdAt.getMonth()+1}` < 10 ? `0${video.createdAt.getMonth()+1}` : `${video.createdAt.getMonth()+1}`}-#{`${video.createdAt.getDate()}` < 10 ? `0${video.createdAt.getDate()}` : `${video.createdAt.getDate()}`}
+        .division-line
+        .video__author
+          .video__author__avatar
+            img(src=video.creator.avatarUrl)
+          a(href=routes.userDetail(video.creator._id))=video.creator.name
+          
+      .video__comments 
+        if video.comments.length === 1
+          span.video__comment-number
+            span#jsCommentNumber 1 
+            |comment
+        else
+          //- #{video.comments.length}에서 #{}은 pug에서 넘겨받은 변수를 가져올 떄 사용한다. (보통 =나 #{}을 주로 쓴다.)
+          //- ex) h1=name,   h1 #{name}  둘 다 가능하지만 뒤에 텍스트를 써줘야할 때는 #{}로 쓰는게 좋다.
+          span.video__comment-number
+            span#jsCommentNumber=video.comments.length
+            |comments
+        form.add_comment#jsAddComment(action="") 
+          input(type="text" placeholder="Add a comment" name="comment")
+        ul.video__comments-list#jsCommentList
+          //- reverse()는 배열의 메서드중 하나로 배열을 거꾸로 뒤집을 때 사용한다.
+          each comment in video.comments.reverse()
+            li
+              span #{comment.text}
+
+    .video-detail__aside

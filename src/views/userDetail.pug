@@ -1,47 +1,52 @@
 extends layouts/main.pug
-include mixins/videoBlock.pug
+include mixins/thumbnailBlock.pug
 
 block content
   .user-profile 
     .user-profile-container
       .user-profile__header
-        .profile_avatar
+        .profile__avatar
           if user.avatarUrl===undefined
-            img.u-avatar(src="https://www.flaticon.com/svg/vstatic/svg/64/64572.svg?token=exp=1618995660~hmac=8f7a07b15c5fd69fb3ab92339f979640")
+            img.u-avatar(src="https://www.flaticon.com/svg/vstatic/svg/64/64572.svg?token=exp=1619004413~hmac=aaa04ae467c3551f41d43055230775b3")
           else 
             img.u-avatar(src=user.avatarUrl)
-        .profile__username
-          h4 
-            |이름
-            h5 #{user.name}
-        .profile__email
-          h4 
-            |이메일
-            h5 @#{user.email}
-        .profile__githubid
-          h4
-            |깃허브
-            h5 @#{user.githubId}
-        .profile__kakaoid
-          h4
-            |카카오
-            h5 @#{user.kakaoId}
+        .profile__userinfo
+          .profile__username
+            h4 
+              |Name
+              h5 - #{user.name}
+          .profile__email
+            h4 
+              |Email
+              h5 - #{user.email}
+          .profile__githubid
+            h4
+              |GitHub
+              h5 - #{user.githubId}
+          .profile__kakaoid
+            h4
+              |Kakao
+              h5 - #{user.kakaoId}
 
       if loggedUser
         if user.id === loggedUser.id
           .user-profile__btns
             a(href=`/users${routes.editProfile}` class="edit_profile")
-              button 프로필 수정
+              button Edit Profile
             a(href=`/users${routes.changePassword}` class="edit_password")
-              button 비밀번호 변경
-      .uploaded-videos
-        each item in user.videos 
-          h2 #{user}
-          +videoBlock({
-            id: item.id,
-            title: item.title,
-            views: item.views,
-            videoFile: item.fileUrl,
-            creator: item.creator
-          })
+              button Change Password
+
+      if user.videos.length > 0
+        .uploaded-videos
+          h2 #{user.name}'s Video
+          .uploaded-videos-container
+            each item in user.videos 
+              +thumbnailBlock({
+                id: item.id,
+                title: item.title,
+                views: item.views,
+                videoFile: item.fileUrl,
+                creator: item.creator,
+                description: item.description
+              })
 

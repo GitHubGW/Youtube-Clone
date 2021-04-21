@@ -1,0 +1,12 @@
+mixin thumbnailBlock(video)
+  .thumbnailBlock
+    a(href=routes.videoDetail(video.id))
+      video.thumbnailBlock__thumbnail(src=video.videoFile, controls=false)
+      .thumbnail__container
+        .thumbnailBlock__main
+          h3.thumbnailBlock__title #{video.title}
+          h4.thumbnailBlock__description #{video.description}
+        if video.view === 1
+          h6.thumbnailBlock__views 1 view 
+        else 
+          h6.thumbnailBlock__views #{video.view} views

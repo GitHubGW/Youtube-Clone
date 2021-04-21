@@ -1,0 +1,42 @@
+.thumbnailBlock {
+  border-top: 1px solid #ddd;
+  padding: 15px 0;
+  a{
+    display: flex;
+    width: 100%;
+    video {
+      max-width: 100%;
+      width: 180px;
+      overflow: hidden;
+      border-radius: 5px;
+    }
+    .thumbnail__container{
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      margin-left: 18px;
+      .thumbnailBlock__main{
+
+        .thumbnailBlock__title {
+          color: $black;
+          font-size: 17px;
+          margin-bottom: 10px;
+        }
+        .thumbnailBlock__description{
+          color: gray;
+          font-size: 13px;
+        }
+      }
+      .thumbnailBlock__views{
+        color: $dark-red;
+      }
+    }
+    
+    
+  }
+  &:last-child{
+    border-bottom: 1px solid #ddd;
+  }
+  
+  
+}

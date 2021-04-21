@@ -11,26 +11,29 @@ header.header
         |YouTube
     div.header__column
       form(action=routes.search, method="get" class="search__form")
-        input(type="text", name="term", placeholder="검색")
+        input(type="text", name="term", placeholder="Search")
         i.fas.fa-search
     div.header__column
       ul
         //- 로그인이 안 됐을 때
         if !loggedUser
           li.join__btn
-            a(href=routes.join) 회원가입
+            a(href=routes.join) JOIN
           li.login__btn
             i.fas.fa-user-circle
-            a(href=routes.login) 로그인
+            a(href=routes.login) SIGN IN
         //- 로그인이 됐을 때
         else 
           li.upload__btn
             a(href=`${routes.videos}${routes.upload}`)
               i.fas.fa-upload
+              |Upload
           li.profile__btn
             a(href=routes.me)
               i.fas.fa-user
+              |Profile
           li.logout__btn
             a(href=routes.logout)
               i.fas.fa-sign-out-alt
+              |Sign out
           

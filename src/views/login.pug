@@ -4,10 +4,10 @@ block content
   .form-container 
      form(action=routes.login, method="post")
        .form__input
-          input(type="email", name="email", placeholder="이메일", required=true)
+          input(type="email", name="email", placeholder="Email", required=true)
           i.fa.fa-envelope
        .form__input
-          input(type="password", name="password", placeholder="비밀번호", required=true)
+          input(type="password", name="password", placeholder="Password", required=true)
           i.fas.fa-unlock
-       input(type="submit", value="로그인")
+       input(type="submit", value="SIGN IN")
      include partials/socialLogin
