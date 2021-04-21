@@ -6,7 +6,10 @@ block content
     .user-profile-container
       .user-profile__header
         .profile_avatar
-          img.u-avatar(src=user.avatarUrl)
+          if user.avatarUrl===undefined
+            img.u-avatar(src="https://www.flaticon.com/svg/vstatic/svg/149/149071.svg?token=exp=1618994649~hmac=cf1d24ec62437e8488a32a042461dcc6")
+          else 
+            img.u-avatar(src=user.avatarUrl)
         .profile__username
           h4 
             |이름

@@ -6,10 +6,10 @@
   flex-direction: column;
   margin-top: 60px;
   .user-profile-container{
-    width: 300px;
+    width: 320px;
     background-color: #fff;
     border-radius: 10px;
-    padding: 20px;
+    padding: 35px;
     .user-profile__header {
       display: flex;
       flex-direction: column;
@@ -21,7 +21,7 @@
         width: 90px;
         height: 90px;
         border-radius: 50%;
-        margin-bottom: 15px;
+        margin-bottom: 22px;
       }
       .profile__username {
         
@@ -41,15 +41,15 @@
     }
     .user-profile__header > div{
       margin-bottom: 6px;
-      width: 150px;
+      width: 200px;
       h4{
         margin-bottom: 5px;
-        font-size: 12px;
+        font-size: 14px;
         font-weight: bold;
       }
       h5{
         margin-bottom: 8px;
-        font-size: 11px;
+        font-size: 12px;
       }
     }
     .user-profile__btns {
@@ -58,7 +58,7 @@
       align-items: center;
       a.edit_profile {
         display: inline-block;
-        width: 150px;
+        width: 200px;
         margin-bottom: 8px;
         button{
           background-color: $red;
@@ -68,7 +68,7 @@
       }
       a.edit_password{
         display: inline-block;
-        width: 150px;
+        width: 200px;
         button{
           background-color: white;
           font-size: 12px;

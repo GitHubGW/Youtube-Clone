@@ -87,7 +87,7 @@ const getVideo = async () => {
     // getUserMedia()안에는 설정을 줄 수 있다. -> audio: true, video: true를 통해 오디오와 비디오의 접근 권한을 물어보도록 한다. 
     const stream = await navigator.mediaDevices.getUserMedia({
       audio: true,
-      video: { width: 1280, height: 720 } // true말고 { width: 1280, height: 720 } 이렇게 따로 값을 지정해 줄 수도 있다.
+      video: { width: 1280, height: 520 } // true말고 { width: 1280, height: 720 } 이렇게 따로 값을 지정해 줄 수도 있다.
     });
     // console.log(stream);
 

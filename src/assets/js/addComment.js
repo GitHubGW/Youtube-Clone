@@ -5,10 +5,6 @@ const addCommentForm = document.getElementById('jsAddComment');
 const commentList = document.getElementById('jsCommentList');
 const commentNumber = document.getElementById('jsCommentNumber');
 
-
-
-
-
 // 가짜 댓글 작성시 comments의 숫자를 늘리는 함수
 const increaseNumber = () => {
   // 댓글을 작성했을 때 댓글의 갯수를 알려주는 commentNumber를 가져와서 parseInt를 통해 정수로 변환해준 후 다시 commentNumber에 넣어 댓글 갯수 값을 업데이트해준다. 

@@ -1,7 +1,7 @@
 .header {
   background-color: white;
   .header__wrapper {
-    padding: 10px 0px;
+    padding: 17px 0px;
     width: 100%;
     margin: 0 auto;
     max-width: 1400px;
@@ -9,6 +9,9 @@
     grid-template-columns: 1fr 1.5fr 1fr;
     align-items: center;
     .header__column {
+      &:first-child{
+        padding-left: 18px;
+      }
       .youtube__title{
         display: flex;
         align-items: center;
@@ -17,6 +20,26 @@
         letter-spacing: -2.5px;
         font-weight: 600;
         color: black;
+        .header__align {
+          position: relative;
+          margin-right: 35px;
+          height: 10px;
+          span{
+            position: absolute;
+            width: 18px;
+            height:2px;
+            background-color: #606060;
+            &:nth-child(1){
+              top: 0;
+            }
+            &:nth-child(2){
+              top: 50%;
+            }
+            &:nth-child(3){
+              top: 100%;
+            } 
+          }
+        }
         .fa-youtube {
           color: red;
           font-size: 27px;

@@ -5,7 +5,9 @@ block content
   .form-container
     .record-container#jsRecorderContainer
       video#jsVideoPreview
-      button#jsRecordBtn 녹화 시작
+      .form__input
+        button#jsRecordBtn
+          i.fa.fa-edit
 
     //- multer미들웨어를 사용하려면 form에 enctype속성을 설정해줘야 한다.
     //- enctype는 폼 데이터가 서버로 제출될 때 해당 데이터가 인코딩되는 방법을 명시한다.(enctype은 method 속성 값이 “post”인 경우에만 사용할 수 있다.)
