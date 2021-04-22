@@ -2,15 +2,92 @@ extends layouts/main.pug
 include mixins/videoBlock.pug
 
 block content
-  .search_header 
-    h3 You are searching #{searchingBy}
-  .search_videos
-    if videos.length===0
-      h5 No Videos Found
-    each item in videos
-      +videoBlock({
-        title: item.title,
-        views: item.views,
-        videoFile: item.videoFile,
-        id: item.id
-      })
+  .search__container
+    .home-menu 
+      ul.home-menu-main 
+        li.home-menu-item
+          i.fas.fa-home
+          span Home
+        li.home-menu-item
+          i.fas.fa-compass
+          span Explore
+        li.home-menu-item
+          i.fab.fa-youtube-square
+          span Subscriptions
+      .division-line
+
+      ul.home-menu-personal 
+        li.home-menu-item
+          i.fas.fa-archive
+          span Library
+        li.home-menu-item
+          i.fas.fa-history
+          span History
+        li.home-menu-item
+          i.fas.fa-clock
+          span Watch later
+        li.home-menu-item
+          i.fas.fa-thumbs-up
+          span Liked videos
+      .division-line
+
+      h3 SUBSCRIPTIONS
+      ul.home-menu-subscription 
+        li.home-menu-item
+          i.fas.fa-archive
+          span Nomad Coders
+        li.home-menu-item
+          i.fas.fa-plus-circle
+          span Show more
+      .division-line
+
+      h3 MORE FROM YOUTUBE
+      ul.home-menu-seemore 
+        li.home-menu-item
+          i.fab.fa-youtube
+          span YouTube Premium
+        li.home-menu-item
+          i.fas.fa-film
+          span Movies
+        li.home-menu-item
+          i.fas.fa-gamepad
+          span Gaming
+        li.home-menu-item
+          i.fas.fa-rss
+          span Live
+        li.home-menu-item
+          i.fas.fa-lightbulb
+          span Learning
+        li.home-menu-item
+          i.fas.fa-trophy
+          span Sports
+      .division-line
+
+      ul.home-menu-setting 
+        li.home-menu-item
+          i.fas.fa-cog
+          span Setting
+        li.home-menu-item
+          i.fas.fa-flag
+          span Report history
+        li.home-menu-item
+          i.fas.fa-question-circle
+          span Help
+        li.home-menu-item
+          i.fas.fa-exclamation-circle
+          span Send feedback
+
+    .search_main 
+      .search_main__result
+        i.fas.fa-search
+        |Searching for #{searchingBy}
+      .search_main__content
+        if videos.length===0
+          h5 No Videos Found
+        each item in videos
+          +videoBlock({
+            title: item.title,
+            views: item.views,
+            videoFile: item.videoFile,
+            id: item.id
+          })

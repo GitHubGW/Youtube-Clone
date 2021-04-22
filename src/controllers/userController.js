@@ -17,7 +17,7 @@ export const postJoin = async (req, res, next) => {
   if (password !== verifyPassword) {
     // 비밀번호와 확인 비밀번호가 같지 않다면 req.flash()를 통해 express-flash를 이용해서 에러 메세지를 띄운다.
     // flash()에서 첫 번째 인자로는 메세지의 유형을 설정하고 두 번째 인자로는 메세지의 내용을 설정해준다.
-    req.flash("error", "Passwords don't match");
+    req.flash("error", "Passwords don't match!");
     res.status(400); // 비밀번호와 비밀번호 확인이 다르면 status code 400을 응답함(400은 Bad Request-요청 실패)
     res.render("join", { pageTitle: "Join" });
   } else {
@@ -76,16 +76,16 @@ export const postLogin = passport.authenticate("local", {
   // successFlash속성은 성공했을 때 띄울 flash 메시지를 설정해준다. (success로 하게 되면 passport가 자동으로 flash 메시지의 type을 sucess로 정해준다.)
   // 즉 pug에서 messages.success를 통해 여기에서 지정한 메세지를 가져올 수 있는 것이다.
   // failureFlash속성은 실패했을 때 띄울 flash 메세지를 설정해준다.
-  successFlash: "Welcome",
-  failureFlash: "Can't Login. Check Email or Password",
+  successFlash: "Welcome to YouTube!",
+  failureFlash: "Can't Login. Check Email or Password!",
 });
 
 // GitHub OAuth
 // 패스포트를 이용해 깃허브 전략을 인증한다. (전에 passport.authenticate("local")을 했던 것과 비슷하다.)
 // github로그인에 성공하거나 실패했을 때 띄울 flash를 설정해줬다.
 export const githubLogin = passport.authenticate("github", {
-  successFlash: "Welcome",
-  failureFlash: "Can't Login. Check Email or Password",
+  successFlash: "Welcome to YouTube!",
+  failureFlash: "Can't Login. Check Email or Password!",
 });
 
 // 깃허브에서 인증 후 콜백 URL경로에 왔을 때 실행되는 콜백 함수이다.
@@ -139,13 +139,14 @@ export const githubLoginCallback = async (accessToken, refreshToken, profile, cb
 };
 
 export const postGithubLogin = (req, res) => {
+  req.flash("success", "Welcome to YouTube!");
   res.redirect(routes.home);
 };
 
 // Kakao OAuth
 export const kakaoLogin = passport.authenticate("kakao", {
-  successFlash: "Welcome",
-  failureFlash: "Can't Login. Check Email or Password",
+  successFlash: "Welcome to YouTube!",
+  failureFlash: "Can't Login. Check Email or Password!",
 });
 
 export const kakaoLoginCallback = async (accessToken, refreshToken, profile, cb) => {
@@ -178,11 +179,12 @@ export const kakaoLoginCallback = async (accessToken, refreshToken, profile, cb)
 };
 
 export const postKakaoLogin = (req, res) => {
+  req.flash("success", "Welcome to YouTube!");
   res.redirect(routes.home);
 };
 
 export const logout = (req, res) => {
-  req.flash("info", "Logged out, See you later!");
+  req.flash("info", "Logged out, See you again!");
 
   // 패스포트를 이용해 간단하게 로그아웃 기능을 사용할 수 있다. (쿠키, 세션 등등을 모두 알아서 처리해준다.)
   req.logout();
@@ -207,7 +209,7 @@ export const userDetail = async (req, res) => {
 
     res.render("userDetail", { pageTitle: "userDetail", user });
   } catch (error) {
-    req.flash("error", "User not found");
+    req.flash("error", "User not found!");
     // console.log(error);
     res.redirect(routes.home);
   }
@@ -234,10 +236,10 @@ export const postEditProfile = async (req, res) => {
       // AWS S3를 이용할 때 file.path에서 file.location으로 변경해줬음.
       avatarUrl: file ? file.location : req.user.avatarUrl,
     });
-    req.flash("success", "Profile Updated");
+    req.flash("success", "Profile Updated!");
     res.redirect(routes.me);
   } catch (error) {
-    req.flash("error", "Can't Update Profile");
+    req.flash("error", "Can't Update Profile!");
     res.redirect(routes.editProfile);
   }
 };
@@ -252,7 +254,7 @@ export const postChangePassword = async (req, res) => {
   try {
     // 새 비밀번호와 새 비밀번호 확인이 안 맞을 때 실행한다.
     if (newPassword !== verifyNewPassword) {
-      req.flash("error", "Passwords don't match");
+      req.flash("error", "Passwords don't match!");
       // res.status(400)을 하는 이유는 서버로부터 오류(404)라고 알려주기 위함이다.
       // res.status(400)을 해주지 않으면 실제 서버는 오류로 받아들이지 않고 성공적이라고 받아들이기 때문이다.
       res.status(400);
@@ -263,11 +265,11 @@ export const postChangePassword = async (req, res) => {
       // changePassword()를 통해 oldPassword(오래된 비밀번호)를 newPassword(새로운 비밀번호)로 바꾼다.
       // changePassword()는 Passport-Local Mongoose가 가지고 있는 API중 하나로 비밀번호를 바꿀 떄 사용한다.
       await req.user.changePassword(oldPassword, newPassword);
+      req.flash("success", "Password Changed!");
       res.redirect(routes.me);
     }
   } catch (error) {
-    req.flash("error", "Can't Change Password");
-
+    req.flash("error", "Can't Change Password!");
     res.status(400);
     res.redirect(`/users/${routes.changePassword}`);
   }

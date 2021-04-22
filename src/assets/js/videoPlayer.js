@@ -10,7 +10,7 @@ const fullScreenBtn = document.getElementById("jsFullScreen");
 const currentTime = document.getElementById("currentTime");
 const totalTime = document.getElementById("totalTime");
 const volumeRange = document.getElementById("jsVolume");
-const videoControls = document.querySelector('.videoPlayer__controls');
+const videoControls = document.querySelector(".videoPlayer__controls");
 
 let timeDelay = 1;
 
@@ -246,6 +246,7 @@ const handleShow = () => {
 };
 
 const init = () => {
+  handlePlayClick();
   playBtn.addEventListener("click", handlePlayClick);
   volumeBtn.addEventListener("click", handleVolumeClick);
   fullScreenBtn.addEventListener("click", goFullScreen);

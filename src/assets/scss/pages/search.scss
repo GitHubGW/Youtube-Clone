@@ -1,4 +1,4 @@
-.home-container{
+.search__container{
   display: flex;
   .home-menu{
     background:white;
@@ -34,21 +34,31 @@
       }
     }
   }
-  .home-videos {
+  .search_main{
+    flex: 8.3;
     padding: 20px 50px;
-    padding-right: 0;
-    box-sizing: border-box;
-    flex:8.3;
-    .home-videos-content{
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      .videoBlock{
-        width: 100%;
-        max-width: 270px;
-        margin-bottom: 40px;
+    .search_main__result{
+      border-bottom: 1px solid #ddd;
+      padding-top: 10px;
+      padding-bottom: 18px;
+      font-size: 18px;
+      font-weight: 400;
+      i{
+        margin-right: 10px;
+        font-size: 17px;
       }
     }
-
+    .search_main__content{
+      h5{
+        padding-top: 27px;
+        font-size: 18px;
+        font-weight: bold;
+        color: $black;
+      }
+      .videoBlock{
+        border: 5px solid red;
+        width: 300px;
+      }
+    }
   }
 }

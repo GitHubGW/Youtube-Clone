@@ -10,8 +10,12 @@
       max-width: 100%;
       margin-top: 15px;
       button {
-        width: 100px;
-        margin-bottom: 25px;
+        width: 130px;
+        margin-top: 5px;
+        margin-bottom: 20px;
+        background-color: $dark-red;
+        color: white;
+        padding: 10px 0;
       }
       .video__author {
         display: flex;

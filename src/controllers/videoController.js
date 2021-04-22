@@ -74,8 +74,7 @@ export const postUpload = async (req, res) => {
     // path로 실습하다가 마지막에 AWS S3를 이용할 때 location으로 바꿈. -> 아래에 fileUrl부분도 path에서 location으로 바꿨음.
     file: { path },
   } = req;
-
-  console.log("req.file:", req.file);
+  // console.log("req.file:", req.file);
 
   // Video.create()은 비디오 도큐먼트에 새로운 도큐먼트를 생성한다는 의미이다.
   // 중요! 도큐먼트를 생성하게 되면 Video.js에서 스키마를 생성할 때 만든 형태로 도큐먼트를 만들게 되는데 거기에는 fileUrl, title, description, createdAt, views, comments등이 있다.
@@ -104,6 +103,8 @@ export const postUpload = async (req, res) => {
   // 중요! 비디오를 업로드하고 나서 우리가 필요한 것은 비디오 파일의 이름이 아니라 파일의 위치이다.
   // 그 이유는 비디오 파일 자체는 서버에 있고 우리는 서버로부터 비디오 파일의 URL이나 위치 정보를 통해 비디오를 가져오기 때문이다.
   // res.redirect(routes.videoDetail(1));
+
+  req.flash("success", "Video Uploaded!");
 
   // res.redirect()를 통해 위에서 비디오 도큐먼트를 생성하면서 할당받은 고유의 id값을 넘겨준다.
   res.redirect(routes.videoDetail(newVideo.id));
@@ -145,10 +146,9 @@ export const getEditVideo = async (req, res) => {
 
   try {
     const video = await Video.findById(id);
-    // console.log("✅ video: ", video);
 
     // creator의 아이디랑 로그인한 아이디가 같지 않으면 에러를 throw함. (로그인한 사용자가 아니라면 비디오를 Edit하지 못하게 한 번 더 보안을 강화해 줌)
-    if (video.creator !== req.user.id) {
+    if (String(video.creator) !== String(req.user.id)) {
       // try문 안에서 Error를 throw하게 되면 자동으로 catch(error)에서 error로 가게 된다.
       throw Error();
     } else {
@@ -171,6 +171,7 @@ export const postEditVideo = async (req, res) => {
     // _id라고 한 이유는 MongoDB가 모델을 생성할 때 고유의 id값을 할당해주는데 그 때 id가 아니라 정확하게는 _id라는 이름으로 할당해준다. (이건 그냥 콘솔로그 찍어보면 나옴)
     // 그래서 데이터베이스의 모델들 중에 id값과 _id값이 일치하는 조건의 비디오를 하나 찾아서 그 비디오의 title과 descripption의 값을 req.body.title, req.body.description의 값으로 업데이트 하라는 의미이다.
     await Video.findOneAndUpdate({ _id: id }, { title, description });
+    req.flash("success", "Video Updated!");
     res.redirect(routes.videoDetail(id));
   } catch (error) {
     res.redirect(routes.home);
@@ -186,9 +187,11 @@ export const deleteVideo = async (req, res) => {
     const video = await Video.findById(id);
 
     // 비디오를 생성한 creator와 현재 로그인한 사용자가 다르면 비디오를 삭제할 수 없도록 처리함
-    if (video.creator !== req.user.id) {
+    if (String(video.creator) !== String(req.user.id)) {
       throw Error();
     } else {
+      req.flash("info", "Video Deleted!");
+
       // findOneAndRemove()메소드는 조건에 해당하는 데이터를 찾은 후 삭제한다 (자세한 설명은 mongoose 공식 홈페이지 Queries란에서 볼 수 있다)
       // findOneAndRemove()를 통해 모델의 _id값이 req.params.id값인 비디오를 찾아서 완전히 DB에서까지도 삭제한다.
       // await앞에 꼭 어떤 변수를 선언해서 값을 할당받을 필요는 없다. 그냥 일회성 처리기 때문에 변수가 필요없다.

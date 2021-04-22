@@ -1,0 +1,40 @@
+.flash-message__container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9;
+  padding: 18px;
+  text-align: center;
+  animation: flashAnimation 1.8s ease-in-out forwards;
+  opacity: 0.9;
+  &.error {
+    background-color: #ff4d4d;
+  }
+  &.success {
+    background-color: #2ed573;
+  }
+  &.info {
+    background-color: #f9ca24;
+  }
+  .flash-message__text {
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+  }
+}
+
+@keyframes flashAnimation {
+  0% {
+    transform: translateY(-80px);
+  }
+  10% {
+    transform: translateY(0px);
+  }
+  90% {
+    transform: translateY(0px);
+  }
+  100% {
+    transform: translateY(-80px);
+  }
+}

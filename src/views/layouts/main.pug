@@ -1,3 +1,5 @@
+include ../mixins/message
+
 doctype html
 html
   head
@@ -5,14 +7,23 @@ html
     link(rel="stylesheet", href="https://use.fontawesome.com/releases/v5.15.2/css/all.css")
     link(href="https://fonts.googleapis.com/css2?family=Anton&display=swap")
     link(rel="stylesheet", href="/static/styles.css")
-    title #{pageTitle} | #{siteName}
+    title #{pageTitle} - #{siteName}
   body
     if messages.error 
-      span=messages.error
+      +message({
+        type:"error",
+        text:messages.error
+      })
     else if messages.info 
-      span=messages.info
+      +message({
+        type:"info",
+        text:messages.info
+      })
     else if messages.success 
-      span=messages.success
+      +message({
+        type:"success",
+        text:messages.success
+      })
 
     include ../partials/header.pug
     main

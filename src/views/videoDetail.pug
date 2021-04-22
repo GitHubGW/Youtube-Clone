@@ -15,10 +15,7 @@ block content
       })
 
       .video__info
-        if loggedUser
-          if video.creator.id === loggedUser.id
-            a(href=routes.editVideo(video._id)) 
-              button Edit Video
+
         h5.video__title=video.title
         .video__viewDate
           if video.views === 1
@@ -27,12 +24,18 @@ block content
             span.video__views #{video.views} views
           em •
           span.video__date #{video.createdAt.getFullYear()}-#{`${video.createdAt.getMonth()+1}` < 10 ? `0${video.createdAt.getMonth()+1}` : `${video.createdAt.getMonth()+1}`}-#{`${video.createdAt.getDate()}` < 10 ? `0${video.createdAt.getDate()}` : `${video.createdAt.getDate()}`}
+        if loggedUser
+          if video.creator.id === loggedUser.id
+            a(href=routes.editVideo(video._id)) 
+              button Edit Video
+
         .division-line
+
         .video__author
           .video__author__avatar
             img(src=video.creator.avatarUrl)
           a(href=routes.userDetail(video.creator._id))=video.creator.name
-          
+
       .video__comments 
         if video.comments.length === 1
           span.video__comment-number
