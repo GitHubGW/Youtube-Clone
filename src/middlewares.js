@@ -15,9 +15,10 @@ const s3 = new aws.S3({
 });
 
 // 가져온 multer 모듈을 실행시킨 후, input을 이용해서 파일을 업로드 하면 multer가 그 파일을 변환해서 저장할 폴더를 설정한다.
-// const multerVideo = multer({ dest: "uploads/videos/" });
-// const multerAvatar = multer({ dest: "uploads/avatars/" });
+const multerVideo = multer({ dest: "uploads/videos/" });
+const multerAvatar = multer({ dest: "uploads/avatars/" });
 
+/*
 // 위에 multerVideo와 multerAvatar는 로컬서버 파일을 저장할 때 사용한 방법이고 마지막 배포할 때는 AWS S3를 이용하기 때문에 multer대신 multer S3로 바꾸고 설정도 약간 바꿔줬다.
 const multerVideo = multer({
   // multer의 storage를 multerS3로 설정 후 안에 세부 설정을 해줬다. (multer가 저장하는 스토리지(저장공간)을 설정해준 것이다.)
@@ -36,7 +37,7 @@ const multerAvatar = multer({
     bucket: "youtube-gw/avatar",
   }),
 });
-
+*/
 
 // 로컬 변수를 전역 변수로 만들어주는 미들웨어 함수(전역 변수가 되면 템플릿 엔진인 pug에서 해당 변수를 가져와서 쓸 수 있다)
 export const localsMiddleware = (req, res, next) => {

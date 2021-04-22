@@ -72,7 +72,7 @@ export const postUpload = async (req, res) => {
     body: { videoTitle, description },
     // multer는 기본적으로 뭔가를 로컬 서버에 저장할 때 req.file.path에 저장하지만 S3처럼 외부의 서버에 저장할 때는 location에 저장한다.
     // path로 실습하다가 마지막에 AWS S3를 이용할 때 location으로 바꿈. -> 아래에 fileUrl부분도 path에서 location으로 바꿨음.
-    file: { location },
+    file: { path },
   } = req;
 
   console.log("req.file:", req.file);
@@ -82,7 +82,7 @@ export const postUpload = async (req, res) => {
   // 거기 안에 있는 fileUrl, title, descriptoin의 값을 여기서 넘겨준 것이다.
   // 그런데 스키마를 생성할 때 선언해 준 fileUrl등의 프로퍼티 외에도 _id라는 고유의 id값도 자동으로 만들어서 넘겨주게 되는데 이 id값을 통해 각각의 비디오를 구분할 수 있고 비디오를 클릭했을 때 비디오 고유의 아이디 값을 가진 라우터로 이동할 수 있다.
   const newVideo = await Video.create({
-    fileUrl: location,
+    fileUrl: path,
     title: videoTitle,
     description,
     creator: req.user.id, // 비디오를 생성할 때 req.user.id를 이용해서 비디오를 생성함.

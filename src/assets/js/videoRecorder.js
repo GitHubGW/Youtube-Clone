@@ -21,8 +21,8 @@ const handleVideoData = (event) => {
   link.href = URL.createObjectURL(videoFile);
 
   // download속성을 이용해 다운로드할 파일의 기본 이름과 확장자를 지정한다.(webm은 비디오 파일의 확장자중 하나이다.)
-  // link.download = "sample.mp4";
-  link.download = "sample.webm";
+  // link.download = "sample.webm";
+  link.download = `Video ${new Date().getFullYear()}-${new Date().getMonth()+1 < 10 ? `0${new Date().getMonth()+1}` : new Date().getMonth()+1 }-${new Date().getDate() < 10 ? `0${new Date().getDate()}` : new Date().getDate()}-${new Date().getHours() < 10 ? `0${new Date().getHours()}` : new Date().getHours()}-${new Date().getMinutes() < 10 ? `0${new Date().getMinutes()}` : new Date().getMinutes()}-${new Date().getSeconds() < 10 ? `0${new Date().getSeconds()}` : new Date().getSeconds()}.mp4`;
 
   // 그리고 위에서 만든 a태그(link)를 body에 추가한다.
   document.body.appendChild(link);

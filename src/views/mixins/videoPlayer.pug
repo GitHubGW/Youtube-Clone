@@ -2,17 +2,22 @@ mixin videoPlayer(video={})
   .videoPlayer#jsVideoPlayer
     video(src=video.src) 
     .videoPlayer__controls 
-      .videoPlayer__columns
-        input(type="range" min="0" max="1" step="0.01" value="0.6").videoPlayer__volume#jsVolume
-        span#jsVolumeButton
-          i.fas.fa-volume-up
-        span
-          span#currentTime 00:00:00
-          span / 
-          span#totalTime 00:00:00
+
       .videoPlayer__columns
         span#jsPlayButton
           i.fas.fa-play
+
+      .videoPlayer__columns
+        span
+          span#currentTime 00:00:00 
+          span / 
+          span#totalTime 00:00:00 
+
+      .videoPlayer__columns.videoPlayer__volume__container
+        input(type="range" min="0" max="1" step="0.01" value="0.6").videoPlayer__volume#jsVolume
+        span#jsVolumeButton
+          i.fas.fa-volume-up
+
       .videoPlayer__columns
         span#jsFullScreen
           i.fas.fa-expand

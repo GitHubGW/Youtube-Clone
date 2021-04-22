@@ -1,7 +1,11 @@
 extends layouts/main.pug
 
 block content
-  .form-container 
+  .form-container
+     .youtube__maintitle
+      i.fab.fa-youtube
+      |YouTube
+
      form(action=routes.join, method="post")
        .form__input
           input(type="text", name="name", placeholder="Name", required=true)

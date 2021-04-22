@@ -10,6 +10,9 @@ const fullScreenBtn = document.getElementById("jsFullScreen");
 const currentTime = document.getElementById("currentTime");
 const totalTime = document.getElementById("totalTime");
 const volumeRange = document.getElementById("jsVolume");
+const videoControls = document.querySelector('.videoPlayer__controls');
+
+let timeDelay = 1;
 
 const registerView = () => {
   // window.location.href를 통해 URL주소를 가져와서 split()메서드를 이용해서 배열로 쪼갠다.
@@ -211,6 +214,37 @@ const handleDrag = (event) => {
   }
 };
 
+const checkSpacebar = (e) => {
+  console.log(e.keyCode);
+  if (Number(e.keyCode) === 32) {
+    if (video.paused === true) {
+      video.play();
+      playBtn.innerHTML = `<i class="fas fa-pause"></i>`;
+    } else {
+      video.pause();
+      playBtn.innerHTML = `<i class="fas fa-play"></i>`;
+    }
+  }
+};
+
+const handleHide = () => {
+  if (timeDelay === 5) {
+    videoControls.style.opacity = 0;
+    document.body.style.cursor = "none";
+    // document.exitPointerLock();
+    timeDelay = 1;
+  }
+  timeDelay += 1;
+};
+
+const handleShow = () => {
+  videoControls.style.opacity = 1;
+  document.body.style.cursor = "auto";
+  // document.requestPointerLock();
+  timeDelay = 1;
+  clearInterval(handleHide);
+};
+
 const init = () => {
   playBtn.addEventListener("click", handlePlayClick);
   volumeBtn.addEventListener("click", handleVolumeClick);
@@ -221,6 +255,9 @@ const init = () => {
   setTotalTime();
   video.addEventListener("ended", handleEnded); // ended: 미디어 요소가 끝에 도달해서 재생 또는 스트리밍이 중지됐을 때 발생하는 이벤트이다.
   volumeRange.addEventListener("input", handleDrag);
+  document.addEventListener("keydown", checkSpacebar);
+  // videoPlayer.addEventListener("mousemove", handleShow);
+  // setInterval(handleHide, 1000);
 };
 
 // if문을 통해 videoPlayer가 있으면 init함수를 실행하도록 한다.

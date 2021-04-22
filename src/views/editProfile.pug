@@ -2,6 +2,9 @@ extends layouts/main.pug
 
 block content
   .form-container 
+    .youtube__maintitle
+      i.fab.fa-youtube
+      |Youtube
     form(action=`/users/${routes.editProfile}`, method="post", enctype="multipart/form-data")
       .fileUpload.form__input
           input(type="file", name="avatar", id="avatar" accept="image/*")

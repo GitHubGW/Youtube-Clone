@@ -51,7 +51,7 @@ app.set("views", path.join(__dirname, "views"));
 // 설정하게 되면 upload 라우트로 들어왔을 때 uploads폴더 안에 있는 파일을 보내주게 된다.
 // 쉽게 말해 uploads 경로로 들어오면 uploads폴더 안에 파일을 실행시키라는 의미임
 // 나중에 AWS S3를 생성한 후에는 거기에 비디오 파일과 아바타 파일 등을 저장하기 때문에 더 이상 아래 uploads가 필요하지 않아서 주석 처리했음.
-// app.use("/uploads", express.static("uploads"));
+app.use("/uploads", express.static("uploads"));
 
 // static라우트를 만들고 static라우트로 들어오려 하면 static폴더를 보여주게 된다.
 // app.use("/static", express.static("static"));

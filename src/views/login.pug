@@ -2,6 +2,9 @@ extends layouts/main.pug
 
 block content
   .form-container 
+     .youtube__maintitle
+      i.fab.fa-youtube
+      |YouTube
      form(action=routes.login, method="post")
        .form__input
           input(type="email", name="email", placeholder="Email", required=true)
