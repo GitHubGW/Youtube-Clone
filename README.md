@@ -68,9 +68,9 @@
 
 
 ## 🚀 Deployment
-- [ ] Heroku
-- [ ] S3 Upload
-- [ ] Mongo Atlas
+- [x] Heroku
+- [x] S3 Upload
+- [x] Mongo Atlas
 
 ## 📑 Pages
 - [x] Home
