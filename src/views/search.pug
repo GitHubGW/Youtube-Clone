@@ -1,5 +1,6 @@
 extends layouts/main.pug
 include mixins/videoBlock.pug
+include mixins/searchBlock
 
 block content
   .search__container
@@ -84,10 +85,13 @@ block content
       .search_main__content
         if videos.length===0
           h5 No Videos Found
-        each item in videos
-          +videoBlock({
+        each item in videos 
+          +searchBlock({
             title: item.title,
             views: item.views,
-            videoFile: item.videoFile,
-            id: item.id
+            fileUrl: item.fileUrl,
+            id: item.id,
+            createdAt: item.createdAt,
+            description: item.description,
+            creator: item.creator
           })

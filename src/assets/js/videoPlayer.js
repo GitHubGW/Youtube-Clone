@@ -215,7 +215,7 @@ const handleDrag = (event) => {
 };
 
 const checkSpacebar = (e) => {
-  console.log(e.keyCode);
+  // console.log(e.keyCode);
   if (Number(e.keyCode) === 32) {
     if (video.paused === true) {
       video.play();

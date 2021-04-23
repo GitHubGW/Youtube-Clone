@@ -1,6 +1,6 @@
 mixin videoPlayer(video={})
   .videoPlayer#jsVideoPlayer
-    video(src=video.src, loop="loop") 
+    video(src=video.src, controls=false loop="loop") 
     .videoPlayer__controls 
 
       .videoPlayer__columns

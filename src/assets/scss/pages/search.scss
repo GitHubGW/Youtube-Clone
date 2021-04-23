@@ -41,7 +41,7 @@
       border-bottom: 1px solid #ddd;
       padding-top: 10px;
       padding-bottom: 18px;
-      font-size: 18px;
+      font-size: 20px;
       font-weight: 400;
       i{
         margin-right: 10px;
@@ -49,15 +49,64 @@
       }
     }
     .search_main__content{
+      padding-top: 20px;
       h5{
-        padding-top: 27px;
-        font-size: 18px;
-        font-weight: bold;
-        color: $black;
+        font-weight: 400;
+        font-size: 16px;
       }
-      .videoBlock{
-        border: 5px solid red;
-        width: 300px;
+      .videoSearch{
+        display: flex;
+        .videoSearch__video{
+          a{
+            video{
+              width: 300px;
+            }
+          }
+        }
+        .videoSearch__content{
+          a,
+          a:visited{
+            color: black;
+          }
+          width: 100%;
+          padding-left: 18px;
+          padding-top: 2px;
+          .videoSearch__title{
+            font-size: 21px;
+          }
+          .videoSearch__viewDate{
+            display: flex;
+            color: gray;
+            font-size: 13px;
+            margin-top: 12px;
+            margin-bottom: 16px;
+            em{
+              margin:0 5px;
+              color: gray;
+            }
+          }
+          .videoSearch__creator{
+            a{
+              display: flex;
+              align-items: center;
+              img{
+                width: 25px;
+                margin-right: 6px;
+              }
+              h5{
+                color: gray;
+                font-size: 14px;
+              }
+            }
+          }
+          .videoSearch_description {
+            margin-top: 10px;
+            h5{
+              font-size: 15px;
+              color: $black;
+            }
+          }
+        }
       }
     }
   }

@@ -15,7 +15,6 @@ block content
       })
 
       .video__info
-
         h5.video__title=video.title
         .video__viewDate
           if video.views === 1
@@ -24,10 +23,10 @@ block content
             span.video__views #{video.views} views
           em •
           span.video__date #{video.createdAt.getFullYear()}-#{`${video.createdAt.getMonth()+1}` < 10 ? `0${video.createdAt.getMonth()+1}` : `${video.createdAt.getMonth()+1}`}-#{`${video.createdAt.getDate()}` < 10 ? `0${video.createdAt.getDate()}` : `${video.createdAt.getDate()}`}
-        if loggedUser
-          if video.creator.id === loggedUser.id
-            a(href=routes.editVideo(video._id)) 
-              button Edit Video
+          if loggedUser
+            if video.creator.id === loggedUser.id
+              a(href=routes.editVideo(video._id)) 
+                button Edit Video
 
         .division-line
 
@@ -36,23 +35,51 @@ block content
             img(src=video.creator.avatarUrl)
           a(href=routes.userDetail(video.creator._id))=video.creator.name
 
+        .division-line
+
       .video__comments 
         if video.comments.length === 1
           span.video__comment-number
-            span#jsCommentNumber 1 
-            |comment
+            span#jsCommentNumber 1
+            |Comment
+        else if video.comments.length === 0
+          span.video__comment-number 
+            span#jsCommentNumber 0
+            |Comment
         else
           //- #{video.comments.length}에서 #{}은 pug에서 넘겨받은 변수를 가져올 떄 사용한다. (보통 =나 #{}을 주로 쓴다.)
           //- ex) h1=name,   h1 #{name}  둘 다 가능하지만 뒤에 텍스트를 써줘야할 때는 #{}로 쓰는게 좋다.
           span.video__comment-number
             span#jsCommentNumber=video.comments.length
-            |comments
-        form.add_comment#jsAddComment(action="") 
-          input(type="text" placeholder="Add a comment" name="comment")
+            |Comments
+
+        form.add__comment#jsAddComment
+          if loggedUser===null
+            img(src="https://i.ibb.co/gFtzzwP/profile-user2.png")
+          else 
+            if loggedUser.avatarUrl
+              img(src=loggedUser.avatarUrl)
+            else 
+              img(src="https://i.ibb.co/gFtzzwP/profile-user2.png")
+          input(type="text" placeholder="Add a public comment" name="comment")
+        
         ul.video__comments-list#jsCommentList
           //- reverse()는 배열의 메서드중 하나로 배열을 거꾸로 뒤집을 때 사용한다.
           each comment in video.comments.reverse()
             li
-              span #{comment.text}
+              .comment__image
+                if loggedUser===null
+                  img(src="https://i.ibb.co/gFtzzwP/profile-user2.png")
+                else 
+                  if loggedUser.avatarUrl
+                    img(src=loggedUser.avatarUrl)
+                  else 
+                    img(src="https://i.ibb.co/gFtzzwP/profile-user2.png")
+              .comment__content
+                .comment__author 
+                  span GW
+                  span #{comment.createdAt.getFullYear()}-#{`${comment.createdAt.getMonth()+1}` < 10 ? `0${comment.createdAt.getMonth()+1}` : `${comment.createdAt.getMonth()+1}`}-#{`${comment.createdAt.getDate()}` < 10 ? `0${comment.createdAt.getDate()}` : `${comment.createdAt.getDate()}`}
+                .comment__description #{comment.text}
 
     .video-detail__aside
+    

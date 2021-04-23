@@ -15,12 +15,31 @@ const increaseNumber = () => {
 // 댓글을 작성시 가짜로 댓글을 추가하는 함수
 const addComment = (comment) => {
   const li = document.createElement('li');
-  const span = document.createElement('span');
+  const commentImage = document.createElement('div');
+  const commentImageChild = document.createElement('img');
+  const commentContent = document.createElement('div');
+  const commentAuthor = document.createElement('div');
+  const commentAuthorFirstSpan = document.createElement('span');
+  const commentAuthorSecondSpan = document.createElement('span');
+  const commentDescription = document.createElement('div');
 
-  // appendChild()메서드를 이용해서 span태그를 li태그에 추가함
-  li.appendChild(span);
+  commentImage.classList.add('comment__image');
+  commentContent.classList.add('comment__content');
+  commentAuthor.classList.add('comment__author');
+  commentDescription.classList.add('comment__description');
+  
+  // appendChild()메서드를 이용해서 li태그 안에 자식 태그들을 추가함
+  li.appendChild(commentImage);
+  li.appendChild(commentContent);
+  commentImage.appendChild(commentImageChild);
+  commentContent.appendChild(commentAuthor);
+  commentContent.appendChild(commentDescription);
+  commentAuthor.appendChild(commentAuthorFirstSpan);
+  commentAuthor.appendChild(commentAuthorSecondSpan);
 
-  span.innerHTML = comment;
+  commentAuthorFirstSpan.innerHTML = comment;
+  commentAuthorSecondSpan.innerHTML = comment;
+  commentDescription.innerHTML = comment;
 
   // prepend()메서드를 이용해서 commentList에 가장 맨 앞에 차례대로 li태그를 추가한다.
   // (댓글을 먼저 단 것이 아래로 가고 최근에 단 것이 위로 올라올 수 있도록 하기 위해 append가 아닌 prepend를 사용했다.)
@@ -43,7 +62,7 @@ const sendComment = async (comment) => {
       comment
     }
   });
-  console.log(response);
+  // console.log(response);
 
   // 만약 response.status가 200이면(axios가 성공적으로 실행됐다면) addComment(comment)함수를 실행한다. 
   if(response.status === 200){

@@ -3,9 +3,21 @@
 mixin videoBlock(video)
   .videoBlock
     a(href=routes.videoDetail(video.id))
-      video.videoBlock__thumbnail(src=video.videoFile, controls=false)
-      h4.videoBlock__title #{video.title}
-      if video.view === 1
-        h6.videoBlock__views 1 view 
-      else 
-        h6.videoBlock__views #{video.view} views
+      video.videoBlock__thumbnail(src=video.videoFile, controls=false muted="muted")
+      .videoBlock__thumbnail__content 
+        .videoBlock__thumbnail__image 
+          img(src=video.creator.avatarUrl) 
+        .videoBlock__thumbnail__main
+          h4.videoBlock__title #{video.title}
+          h5 #{video.creator.name}
+          .videoBlock__thumbnail__viewDate 
+            if video.views === 1
+              h6.videoBlock__views 1 view 
+            else if video.views === 0
+              h6.videoBlock__views 0 view
+            else 
+              h6.videoBlock__views #{video.views} views
+            em •
+            h6 #{video.createdAt.getFullYear()}-#{`${video.createdAt.getMonth()+1}` < 10 ? `0${video.createdAt.getMonth()+1}` : `${video.createdAt.getMonth()+1}`}-#{`${video.createdAt.getDate()}` < 10 ? `0${video.createdAt.getDate()}` : `${video.createdAt.getDate()}`}
+
+      

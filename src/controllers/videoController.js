@@ -19,7 +19,7 @@ export const home = async (req, res) => {
     // sort()를 이용해서 _id가 아닌 title이나 다른 여러 요소들을 기준으로 정렬할 수도 있다.
     // 주의할 점! DB에서 데이터를 찾아올 때까지 await해줘야 한다. 여기서 await를 해주지 않으면 자바스크립트가 기다리지 않고 다음 구문으로 넘어가버리고 그렇게 되면 오류가 난다.
     // (DB에서 데이터를 찾을 때는 반드시 async await처리를 해주기!)
-    const videos = await Video.find({}).sort({ _id: -1 });
+    const videos = await Video.find({}).populate("creator").sort({ _id: -1 });
     // console.log("videos:", videos);
 
     // throw 문은 사용자 정의 예외를 던질 수 있다. throw문을 만나면 현재 함수의 실행이 중지되고 (throw 이후의 명령문은 실행되지 않습니다.) 여기서 에러를 던져서 catch문에 error 파라미터로 에러를 받게 된다.
@@ -51,7 +51,9 @@ export const search = async (req, res) => {
     // 찾을 때는 title로 찾고 찾으려는 제목이 내가 검색한 단어와 완전히 동일할 필요는 없다. 검색한 단어를 포함하는 모든 비디오들을 찾아오게끔 코드를 짜야한다.
     // 그러러면 mongoose의 regex를 이용해서 단순히 find를 이용해서 찾지말고 regular expression(정규 표현식)을 이용해서 $regex로 찾으라고 해줘야 한다.
     // 그리고 $options를 통해 한 가지 옵션을 추가해 준다. 옵션 내용은 대소문자 구분을 하지 않겠다는 명령이다. ( i는 insensitive의 약자로 덜 민감하다는 걸 의미한다.(덜 민감하게 대소문자 구분을 하지 않음) )
-    videos = await Video.find({ title: { $regex: searchingBy, $options: "i" } });
+    videos = await Video.find({ title: { $regex: searchingBy, $options: "i" } }).populate("creator");
+    console.log(videos);
+
   } catch (error) {
     console.log(error);
   }
@@ -118,7 +120,10 @@ export const videoDetail = async (req, res) => {
 
   const {
     params: { id },
+    user
   } = req;
+
+  console.log(user);
 
   // try catch문을 통해 존재하는 비디오 파일 URL경로에 들어왔을 때는 비디오를 보여주고 잘못된 URL경로로 들어왔을 때는 다시 home라우터로 리다이렉트 시켜준다.
   try {
@@ -131,7 +136,7 @@ export const videoDetail = async (req, res) => {
     // 그래서 Video모델에서 req.params.id에 해당하는 비디오를 찾아서 그 비디오 모델에 populate를 한 모델을 최종적으로 video에 담는다는 의미이다.
     const video = await Video.findById(id).populate("creator").populate("comments");
     // console.log("✅ video:", video);
-    // console.log("✅ video.comments:", video.comments);
+    
     res.render("videoDetail", { pageTitle: video.title, video });
   } catch (error) {
     console.log(error);
