@@ -10,7 +10,7 @@ dotenv.config();
 // MONGO_URL로 실습하다가 마지막 배포전에 MongoDB Atlas를 실습하면서 MONGO_URL_PRODUCTION으로 바꿨음
 // process.env.PRODUCTION ? process.env.MONGO_URL_PRODUCTION : process.env.MONGO_URL: PRODUCTION환경이라면 MONGO_URL_PRODUCTION을 실행하고 아니라면 MONGO_URL을 실행함
 // (배포전에 MONGO_URL을 MONGO_URL_PRODUCTION로 고치기)
-mongoose.connect(process.env.MONGO_URL, {
+mongoose.connect(process.env.MONGO_URL_PRODUCTION, {
   // mongoose를 통해 mongodb에 연결하면서 환경설정을 설정해서 보낼 수 있음.
   useNewUrlParser: true,
   useUnifiedTopology: true,

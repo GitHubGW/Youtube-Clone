@@ -37,6 +37,7 @@ const KAKAO_CALLBACK = "/auth/kakao/callback";
 const API = "/api";
 const REGISTER_VIEW = "/:id/view";
 const ADD_COMMENT = "/:id/comment";
+const CHECK_LOGIN = "/check-login";
 
 // Routes Object(라우터들을 모아놓은 객체)
 const routes = {
@@ -89,7 +90,8 @@ const routes = {
   kakaoCallback: KAKAO_CALLBACK,
   api: API,
   registerView: REGISTER_VIEW,
-  addComment: ADD_COMMENT
+  addComment: ADD_COMMENT,
+  checkLogin: CHECK_LOGIN,
 };
 
 export default routes;

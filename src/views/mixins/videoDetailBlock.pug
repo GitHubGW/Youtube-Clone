@@ -1,0 +1,22 @@
+mixin videoDetailBlock(video)
+  .videoDetail
+    .videoDetail__video
+      a(href=routes.videoDetail(video.id))
+        video(class="detailVideo" src=video.fileUrl, controls=false, muted="muted")
+    .videoDetail__content
+      a(href=routes.videoDetail(video.id))
+        h4.videoDetail__title #{video.title}
+
+      .videoDetail__creator 
+        a(href=routes.userDetail(video.creator._id))
+          h5 #{video.creator.name}
+
+      .videoDetail__viewDate
+        if video.views === 1
+          h6.videoDetail__views 1 view 
+        else if video.views === 0
+          h6.videoDetail__views 0 view
+        else 
+          h6.videoDetail__views #{video.views} views
+        em •
+        h6 #{video.createdAt.getFullYear()}-#{`${video.createdAt.getMonth()+1}` < 10 ? `0${video.createdAt.getMonth()+1}` : `${video.createdAt.getMonth()+1}`}-#{`${video.createdAt.getDate()}` < 10 ? `0${video.createdAt.getDate()}` : `${video.createdAt.getDate()}`}

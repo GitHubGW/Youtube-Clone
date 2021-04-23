@@ -53,7 +53,6 @@ export const search = async (req, res) => {
     // 그리고 $options를 통해 한 가지 옵션을 추가해 준다. 옵션 내용은 대소문자 구분을 하지 않겠다는 명령이다. ( i는 insensitive의 약자로 덜 민감하다는 걸 의미한다.(덜 민감하게 대소문자 구분을 하지 않음) )
     videos = await Video.find({ title: { $regex: searchingBy, $options: "i" } }).populate("creator");
     console.log(videos);
-
   } catch (error) {
     console.log(error);
   }
@@ -74,7 +73,7 @@ export const postUpload = async (req, res) => {
     body: { videoTitle, description },
     // multer는 기본적으로 뭔가를 로컬 서버에 저장할 때 req.file.path에 저장하지만 S3처럼 외부의 서버에 저장할 때는 location에 저장한다.
     // path로 실습하다가 마지막에 AWS S3를 이용할 때 location으로 바꿈. -> 아래에 fileUrl부분도 path에서 location으로 바꿨음.
-    file: { path },
+    file: { location },
   } = req;
   // console.log("req.file:", req.file);
 
@@ -83,7 +82,7 @@ export const postUpload = async (req, res) => {
   // 거기 안에 있는 fileUrl, title, descriptoin의 값을 여기서 넘겨준 것이다.
   // 그런데 스키마를 생성할 때 선언해 준 fileUrl등의 프로퍼티 외에도 _id라는 고유의 id값도 자동으로 만들어서 넘겨주게 되는데 이 id값을 통해 각각의 비디오를 구분할 수 있고 비디오를 클릭했을 때 비디오 고유의 아이디 값을 가진 라우터로 이동할 수 있다.
   const newVideo = await Video.create({
-    fileUrl: path,
+    fileUrl: location,
     title: videoTitle,
     description,
     creator: req.user.id, // 비디오를 생성할 때 req.user.id를 이용해서 비디오를 생성함.
@@ -120,10 +119,10 @@ export const videoDetail = async (req, res) => {
 
   const {
     params: { id },
-    user
+    user,
   } = req;
 
-  console.log(user);
+  // console.log(user);
 
   // try catch문을 통해 존재하는 비디오 파일 URL경로에 들어왔을 때는 비디오를 보여주고 잘못된 URL경로로 들어왔을 때는 다시 home라우터로 리다이렉트 시켜준다.
   try {
@@ -136,8 +135,11 @@ export const videoDetail = async (req, res) => {
     // 그래서 Video모델에서 req.params.id에 해당하는 비디오를 찾아서 그 비디오 모델에 populate를 한 모델을 최종적으로 video에 담는다는 의미이다.
     const video = await Video.findById(id).populate("creator").populate("comments");
     // console.log("✅ video:", video);
-    
-    res.render("videoDetail", { pageTitle: video.title, video });
+
+    const videos = await Video.find({}).populate("creator").populate("comments");
+    // console.log("✅ videos:", videos);
+
+    res.render("videoDetail", { pageTitle: video.title, video, videos });
   } catch (error) {
     console.log(error);
     res.redirect(routes.home);
@@ -250,6 +252,8 @@ export const postAddComment = async (req, res) => {
     const newComment = await Comment.create({
       text: comment,
       creator: user.id,
+      name: user.name ? user.name : null,
+      avatarUrl: user.avatarUrl ? user.avatarUrl : null,
     });
 
     // 위에서 추가한 Comment모델의 id값을 video모델이 가지고 있는 comment필드에 추가함

@@ -168,7 +168,7 @@ const setTotalTime = () => {
 const setTotalTime = async () => {
   // getBlobDuration(video.src)를 통해 video의 src속성에 지정된 비디오 파일의 duration을 가져옴
   const duration = await getBlobDuration(video.src);
-  console.log(duration);
+  // console.log(duration);
 
   const totalTimeString = formatDate(duration);
   // console.log(totalTimeString);

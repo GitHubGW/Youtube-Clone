@@ -1,5 +1,6 @@
 extends layouts/main.pug
 include mixins/videoPlayer
+include mixins/videoDetailBlock
 
 block content
   .video-detail__container
@@ -68,18 +69,30 @@ block content
           each comment in video.comments.reverse()
             li
               .comment__image
-                if loggedUser===null
-                  img(src="https://i.ibb.co/gFtzzwP/profile-user2.png")
-                else 
-                  if loggedUser.avatarUrl
-                    img(src=loggedUser.avatarUrl)
-                  else 
+                if comment.avatarUrl===null
+                  a(href=routes.userDetail(comment.creator)) 
                     img(src="https://i.ibb.co/gFtzzwP/profile-user2.png")
+                else 
+                  if comment.avatarUrl
+                    a(href=routes.userDetail(comment.creator))
+                      img(src=comment.avatarUrl)
+                  else 
+                    a(href=routes.userDetail(comment.creator))
+                      img(src="https://i.ibb.co/gFtzzwP/profile-user2.png")
               .comment__content
                 .comment__author 
-                  span GW
+                  span
+                    a(href=routes.userDetail(comment.creator)) #{comment.name}
                   span #{comment.createdAt.getFullYear()}-#{`${comment.createdAt.getMonth()+1}` < 10 ? `0${comment.createdAt.getMonth()+1}` : `${comment.createdAt.getMonth()+1}`}-#{`${comment.createdAt.getDate()}` < 10 ? `0${comment.createdAt.getDate()}` : `${comment.createdAt.getDate()}`}
                 .comment__description #{comment.text}
 
     .video-detail__aside
-    
+      each item in videos
+        +videoDetailBlock({
+          title: item.title,
+          views: item.views,
+          fileUrl: item.fileUrl,
+          id: item.id,
+          createdAt: item.createdAt,
+          creator: item.creator
+        })

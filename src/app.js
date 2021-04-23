@@ -51,7 +51,7 @@ app.set("views", path.join(__dirname, "views"));
 // 설정하게 되면 upload 라우트로 들어왔을 때 uploads폴더 안에 있는 파일을 보내주게 된다.
 // 쉽게 말해 uploads 경로로 들어오면 uploads폴더 안에 파일을 실행시키라는 의미임
 // 나중에 AWS S3를 생성한 후에는 거기에 비디오 파일과 아바타 파일 등을 저장하기 때문에 더 이상 아래 uploads가 필요하지 않아서 주석 처리했음.
-app.use("/uploads", express.static("uploads"));
+// app.use("/uploads", express.static("uploads"));
 
 // static라우트를 만들고 static라우트로 들어오려 하면 static폴더를 보여주게 된다.
 // app.use("/static", express.static("static"));
@@ -103,7 +103,7 @@ app.use(
     // 세션과 몽고디비를 연결주고, 세션에게 데이터를 MongoStore라는 저장소에 저장하라고 설정함
     // 세션과 몽고디비가 연결되게 되면 서버가 재시작된다해도 우리는 쿠키를 계속 보존할 수 있고 여전히 로그인 상태를 유지할 수 있다.
     store: MongoStore.create({
-      mongoUrl: process.env.MONGO_URL, // MONGO_URL로 실습하다가 마지막 배포전에 MongoDB Atlas를 실습하면서 MONGO_URL_PRODUCTION으로 바꿨음
+      mongoUrl: process.env.MONGO_URL_PRODUCTION, // MONGO_URL로 실습하다가 마지막 배포전에 MongoDB Atlas를 실습하면서 MONGO_URL_PRODUCTION으로 바꿨음
     }),
   })
 );

@@ -274,3 +274,17 @@ export const postChangePassword = async (req, res) => {
     res.redirect(`/users/${routes.changePassword}`);
   }
 };
+
+export const postCheckLogin = (req, res) => {
+  // console.log(req.user);
+
+  if (req.user) {
+    res.json({
+      name: req.user.name,
+      avatarUrl: req.user.avatarUrl,
+    });
+  } else {
+    res.status(400);
+  }
+  res.end();
+};
