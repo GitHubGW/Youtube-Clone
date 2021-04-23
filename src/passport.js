@@ -33,7 +33,8 @@ passport.use(
       // globalRouter.get(routes.githubCallback, passport.authenticate("github", { failureRedirect: "/login" }), postGithubLogin);
       // 그래서 만약 githubLoginCallback에서 cb함수가 cb(error) 에러를 리턴하면 패스포트는 에러가 있음을 알고 /login화면으로 보내버리고
       // cb(null, user)를 리턴하면 error가 null(없음)이고 user가 있다고 인지해서 postGithubLogin함수를 실행하는 것이다.
-      callbackURL: `http://localhost:4000${routes.githubCallback}`,
+      // http://localhost:4000${routes.githubCallback} 로컬에서 할 때는 이렇게 하고 배포할 때는 아래와 같이 바꾸기
+      callbackURL: `https://youtube-gw.herokuapp.com${routes.githubCallback}`,
     },
     // 아래 함수는 사용자가 깃허브 인증이 끝나고 돌아왔을 때 실행되는 콜백함수이다.
     githubLoginCallback
@@ -44,7 +45,7 @@ passport.use(
   new KakaoStrategy(
     {
       clientID: process.env.KAKAO_ID,
-      callbackURL: `http://localhost:4000${routes.kakaoCallback}`,
+      callbackURL: `https://youtube-gw.herokuapp.com${routes.kakaoCallback}`,
     },
     kakaoLoginCallback
   )
