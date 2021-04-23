@@ -41,7 +41,7 @@ const multerAvatar = multer({
 export const localsMiddleware = (req, res, next) => {
   // console.log("localMiddleware 실행");
   // 미들웨어에서 res.end()메소드를 쓰게 되면 서버와의 연결을 종료할 수 있다.
-  res.locals.siteName = "Youtube";
+  res.locals.siteName = "YouTube";
   res.locals.routes = routes; // routes.js를 템플릿 엔진(pug)에서 사용하기 위해 로컬 변수를 전역 변수로 만들어주는 미들웨어에서 가져와서 선언해줌
 
   // passport는 인증을 완료하고 사용자를 로그인 시키게 되면 자동으로 그 사용자에 대한 정보를 req객체 안에 user로 전달해준다. 그럼 req.user를 미들웨어에서 가져와서 사용할 수 있는 것이다.

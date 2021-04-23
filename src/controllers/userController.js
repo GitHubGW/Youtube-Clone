@@ -51,6 +51,7 @@ export const postJoin = async (req, res, next) => {
       // 등록한 사용자에 대한 정보를 DB가 보여준 것이다. 여기서 salt와 hash는 패스워드를 암호화 시켜준 값들이라고 보면 된다. (두 개는 약간 다름. 자세한건 나중에 찾아보기)
     } catch (error) {
       console.log(error);
+      req.flash("error", "Please Check Email or Password!");
       res.redirect(routes.home);
     }
 
@@ -71,13 +72,13 @@ export const getLogin = (req, res) => {
 // 만약 페이스북이나 구글, 카카오등의 다른 서비스를 이용한다면 local자리에 다른 전략이 들어갈 것이다.
 // successRedirect는 성공했을 때 리다이렉트할 라우트 경로이고 failureRedirect는 실패했을 때 리다이렉트할 라우트 경로이다.
 export const postLogin = passport.authenticate("local", {
-  successRedirect: routes.home,
   failureRedirect: routes.login,
+  successRedirect: routes.home,
   // successFlash속성은 성공했을 때 띄울 flash 메시지를 설정해준다. (success로 하게 되면 passport가 자동으로 flash 메시지의 type을 sucess로 정해준다.)
   // 즉 pug에서 messages.success를 통해 여기에서 지정한 메세지를 가져올 수 있는 것이다.
   // failureFlash속성은 실패했을 때 띄울 flash 메세지를 설정해준다.
   successFlash: "Welcome to YouTube!",
-  failureFlash: "Can't Login. Check Email or Password!",
+  failureFlash: "Can't Login. Please Check Email or Password!",
 });
 
 // GitHub OAuth
@@ -85,7 +86,7 @@ export const postLogin = passport.authenticate("local", {
 // github로그인에 성공하거나 실패했을 때 띄울 flash를 설정해줬다.
 export const githubLogin = passport.authenticate("github", {
   successFlash: "Welcome to YouTube!",
-  failureFlash: "Can't Login. Check Email or Password!",
+  failureFlash: "Can't Login. Please Check Email or Password!",
 });
 
 // 깃허브에서 인증 후 콜백 URL경로에 왔을 때 실행되는 콜백 함수이다.
@@ -146,7 +147,7 @@ export const postGithubLogin = (req, res) => {
 // Kakao OAuth
 export const kakaoLogin = passport.authenticate("kakao", {
   successFlash: "Welcome to YouTube!",
-  failureFlash: "Can't Login. Check Email or Password!",
+  failureFlash: "Can't Login. Please Check Email or Password!",
 });
 
 export const kakaoLoginCallback = async (accessToken, refreshToken, profile, cb) => {
