@@ -73,16 +73,27 @@ export const postUpload = async (req, res) => {
     body: { videoTitle, description },
     // multer는 기본적으로 뭔가를 로컬 서버에 저장할 때 req.file.path에 저장하지만 S3처럼 외부의 서버에 저장할 때는 location에 저장한다.
     // path로 실습하다가 마지막에 AWS S3를 이용할 때 location으로 바꿈. -> 아래에 fileUrl부분도 path에서 location으로 바꿨음.
-    file: { location },
+    // file: { location },
+
+    // single()메소드가 아닌 fields()메소드를 쓰면 req.file이 아닌 req.files로 해당 파일의 정보를 받아온다.
+    // req.files안에 videoFile안에 location에 해당 파일의 경로가 있다.
+    // 마지막에 location: videoLocation을 통해 location의 이름을 videoLocation으로 변경해줘서 thumbnail의 location경로와 겹치지 않게 해줬다.
+    files: {
+      videoFile: [{ location: videoLocation }],
+      thumbnailFile: [{ location: thumbnailLocation }],
+    },
   } = req;
-  // console.log("req.file:", req.file);
+  console.log("✅req.files:", req.files);
+
+  // console.log("✅ location:", location);
 
   // Video.create()은 비디오 도큐먼트에 새로운 도큐먼트를 생성한다는 의미이다.
   // 중요! 도큐먼트를 생성하게 되면 Video.js에서 스키마를 생성할 때 만든 형태로 도큐먼트를 만들게 되는데 거기에는 fileUrl, title, description, createdAt, views, comments등이 있다.
   // 거기 안에 있는 fileUrl, title, descriptoin의 값을 여기서 넘겨준 것이다.
   // 그런데 스키마를 생성할 때 선언해 준 fileUrl등의 프로퍼티 외에도 _id라는 고유의 id값도 자동으로 만들어서 넘겨주게 되는데 이 id값을 통해 각각의 비디오를 구분할 수 있고 비디오를 클릭했을 때 비디오 고유의 아이디 값을 가진 라우터로 이동할 수 있다.
   const newVideo = await Video.create({
-    fileUrl: location,
+    fileUrl: videoLocation,
+    thumbnailUrl: thumbnailLocation,
     title: videoTitle,
     description,
     creator: req.user.id, // 비디오를 생성할 때 req.user.id를 이용해서 비디오를 생성함.

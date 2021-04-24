@@ -22,14 +22,14 @@
     bottom: 13px;
     width: 95%;
     background-color: rgba(0, 0, 0, 0.77);
-    padding: 13px 24px;
+    padding: 0px 24px;
     display: flex;
     align-items: center;
     font-size: 14px;
     border-radius: 7px;
     .videoPlayer__columns{
       &:first-child {
-        margin-right: auto;
+        margin-right:  18px;
         #jsPlayButton:hover i{
           transform: scale(1.2);
         } 
@@ -39,10 +39,26 @@
         
       }
       &:nth-child(2) {
+        display: flex;
+        align-items: center;
+        flex: auto;
+        .videoPlayer__range{
+          max-width: none;
+          margin-right: 15px;
+          height: 42px;
+        }
+        span{
+          display: flex;
+          align-items: center;
+          &:nth-child(2){
+            margin:0 5px;
+          }
+        }
         
       }
       &:nth-child(3) {
-        margin: 0 30px;
+        margin-left: 25px;
+        margin-right: 28px;
         width:20px;
         position: relative;
         &:hover .videoPlayer__volume,

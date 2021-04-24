@@ -78,5 +78,8 @@ export const onlyPrivate = (req, res, next) => {
 // single()메소드는 ()괄호안의 name값에 해당하는 업로드한 파일의 정보를 req.file에 받는다.
 // multerVideo.single("videoFile")의 의미는 form에 input태그중에 name값이 videoFile인 태그에서 파일을 업로드 했을 때 해당 파일을 변환해서 위에서 설정한 dest 경로에 저장한다는 의미이다.
 // multerVideo.single()괄호 안에 함수를 집어넣으면 multer미들웨어가 파일의 URL을 반환해준다.
-export const uploadVideo = multerVideo.single("videoFile");
+// export const uploadVideo = multerVideo.single("videoFile");
+
+// videoFile과 thumbnailFile 두 개를 올리기 위해 single()메소드가 아닌 fields메소드를 사용했다.
+export const uploadVideo = multerVideo.fields([{ name: "videoFile" }, { name: "thumbnailFile" }]);
 export const uploadAvatar = multerAvatar.single("avatar");

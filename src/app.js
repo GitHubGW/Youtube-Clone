@@ -57,6 +57,7 @@ app.set("views", path.join(__dirname, "views"));
 // app.use("/static", express.static("static"));
 
 app.use("/static", express.static(path.join(__dirname, "static")));
+app.use("/images", express.static(path.join(__dirname, "images")));
 
 // cookieParser는 사용자 인증에 필요한 cookie를 전달 받는다.
 app.use(cookieParser());

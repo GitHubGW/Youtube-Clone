@@ -33,6 +33,20 @@
         background-color: #eeeeee;
       }
     }
+    .home-menu-item.home-menu-item-subscription{
+      display: flex;
+      align-items: center;
+      padding-top:18px;
+      img{
+        width: 16px;
+        margin-right: 16px;
+      }
+      span{
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+    }
   }
   .home-videos {
     padding: 20px 50px;
@@ -43,11 +57,6 @@
       display: flex;
       justify-content: space-between;
       flex-wrap: wrap;
-      .videoBlock{
-        width: 100%;
-        max-width: 270px;
-        margin-bottom: 40px;
-      }
     }
 
   }

@@ -102,7 +102,7 @@ const handleSubmit = (event) => {
 
       // console.log(name, avatarUrl);
       if (avatarUrl === undefined) {
-        avatarUrl = "https://i.ibb.co/gFtzzwP/profile-user2.png";
+        avatarUrl = "/images/comment_user.png";
       }
 
       const commentInput = addCommentForm.querySelector("input");

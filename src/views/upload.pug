@@ -14,7 +14,10 @@ block content
     form(action=`${routes.videos}${routes.upload}`, method="post", enctype="multipart/form-data")
       .fileUpload.form__input
         input(type="file", name="videoFile", id="videoFile" required=true accept="video/*")
-        i.fas.fa-file-video 
+        i.fas.fa-video 
+      .fileUpload.form__input
+        input(type="file", name="thumbnailFile", id="thumbnailFile" accept="image/*")
+        i.fas.fa-photo-video
       .form__input
         input(type="text", name="videoTitle", placeholder="Video Title" required=true)
         i.fa.fa-edit

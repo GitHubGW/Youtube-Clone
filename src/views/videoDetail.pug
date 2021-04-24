@@ -19,9 +19,11 @@ block content
         h5.video__title=video.title
         .video__viewDate
           if video.views === 1
-            span.video__views 1 view
+            span.video__views 1
+            span view
           else 
-            span.video__views #{video.views} views
+            span.video__views #{video.views}
+            span views
           em •
           span.video__date #{video.createdAt.getFullYear()}-#{`${video.createdAt.getMonth()+1}` < 10 ? `0${video.createdAt.getMonth()+1}` : `${video.createdAt.getMonth()+1}`}-#{`${video.createdAt.getDate()}` < 10 ? `0${video.createdAt.getDate()}` : `${video.createdAt.getDate()}`}
           if loggedUser
@@ -56,12 +58,12 @@ block content
 
         form.add__comment#jsAddComment
           if loggedUser===null
-            img(src="https://i.ibb.co/gFtzzwP/profile-user2.png")
+            img(src="/images/comment_user.png")
           else 
             if loggedUser.avatarUrl
               img(src=loggedUser.avatarUrl)
             else 
-              img(src="https://i.ibb.co/gFtzzwP/profile-user2.png")
+              img(src="/images/comment_user.png")
           input(type="text" placeholder="Add a public comment" name="comment")
         
         ul.video__comments-list#jsCommentList
@@ -71,14 +73,14 @@ block content
               .comment__image
                 if comment.avatarUrl===null
                   a(href=routes.userDetail(comment.creator)) 
-                    img(src="https://i.ibb.co/gFtzzwP/profile-user2.png")
+                    img(src="/images/comment_user.png")
                 else 
                   if comment.avatarUrl
                     a(href=routes.userDetail(comment.creator))
                       img(src=comment.avatarUrl)
                   else 
                     a(href=routes.userDetail(comment.creator))
-                      img(src="https://i.ibb.co/gFtzzwP/profile-user2.png")
+                      img(src="/images/comment_user.png")
               .comment__content
                 .comment__author 
                   span

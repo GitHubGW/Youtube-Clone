@@ -1,9 +1,15 @@
 .videoBlock {
+  width: 270px;
+  margin-bottom: 40px;
   video {
-    width: 100%;
+    width: 270px;
+    height: 152px;
     max-width: 100%;
     overflow: hidden;
     margin-bottom: 11px;
+  }
+  video[poster]{
+    width: 100%;
   }
   .videoBlock__thumbnail__content {
     padding-right: 10px;

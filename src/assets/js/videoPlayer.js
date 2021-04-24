@@ -1,5 +1,6 @@
 // get-blob-duration은 blob파일의 duration(지속시간)을 나타내주는 모듈이다. (우리가 여기서 사용하는 blob파일은 비디오 파일을 의미함)
 import getBlobDuration from "get-blob-duration";
+import axios from "axios";
 
 // 강의에 나오는 videoContainer-> videoPlayer, videoPlayer-> video 로 변경함
 const videoPlayer = document.getElementById("jsVideoPlayer");
@@ -11,8 +12,15 @@ const currentTime = document.getElementById("currentTime");
 const totalTime = document.getElementById("totalTime");
 const volumeRange = document.getElementById("jsVolume");
 const videoControls = document.querySelector(".videoPlayer__controls");
+const videoViews = document.querySelector(".video__views");
+const timeRange = document.getElementById("jsTimeRange");
 
-let timeDelay = 1;
+// let timeDelay = 1;
+
+const increaseView = () => {
+  // console.log(videoViews);
+  videoViews.innerHTML = Number(videoViews.innerHTML) + 1;
+};
 
 const registerView = () => {
   // window.location.href를 통해 URL주소를 가져와서 split()메서드를 이용해서 배열로 쪼갠다.
@@ -26,11 +34,16 @@ const registerView = () => {
   // 만약 get이 아닌 post로 request를 보내려면 아래와 같이 method를 뒤에 지정해줘야 한다.
   // DB를 변경할 필요가 없으면 get으로, DB를 변경해야 한다면 post로 req해야한다.
   // fetch("/api/:id/view", {method: "POST"});
-  fetch(`/api/${videoId}/view`, { method: "POST" });
+  fetch(`/api/${videoId}/view`, { method: "POST" }).then((response) => {
+    // console.log(response);
+    if (response.status === 200) {
+      increaseView();
+    }
+  });
 };
 
 // Play버튼을 제어하는 함수
-const handlePlayClick = () => {
+const handlePlayClick = async () => {
   // paused속성은 미디어 요소(video나 audio)가 정지상태인지 여부를 체크한다.
   // paused속성은 Read Only라고 적혀있는데 이건 프로퍼티 값을 수정할 수 없고 오직 읽기만 가능하다는 의미이다.
   // video(video태그)를 가져와서 paused속성을 통해 pause(정지)여부를 체크함
@@ -38,12 +51,14 @@ const handlePlayClick = () => {
   // MDN 참조: https://developer.mozilla.org/ko/docs/Web/API/HTMLMediaElement
   if (video.paused) {
     // play()메소드는 미디어 요소를 재생함
-    video.play();
+    await video.play();
     playBtn.innerHTML = `<i class="fas fa-pause"></i>`;
+    intervalTimeRange();
   } else {
     // pause()메소드는 미디어 요소의 재생을 일시정지함
-    video.pause();
+    await video.pause();
     playBtn.innerHTML = `<i class="fas fa-play"></i>`;
+    clearInterval(intervalTimeRange);
   }
 };
 
@@ -142,6 +157,8 @@ const formatDate = (seconds) => {
 };
 
 const getCurrentTime = () => {
+  // console.log("getCurrentTime");
+
   // currentTime은 미디어의 현재 재생 시점을 초 단위로 반환한다.
   currentTime.innerHTML = formatDate(Math.floor(video.currentTime));
   // console.log(video.currentTime);
@@ -175,8 +192,9 @@ const setTotalTime = async () => {
 
   totalTime.innerHTML = totalTimeString;
 
-  // setInterval()을 쓰거나 아래와 같이 timeupdate를 쓸 수 있다.
-  // timeupdate는 비디오/오디오의 재생위치가 변경되었을 때를 말한다.
+  // setInterval()을 쓰거나 아래와 같이 timeupdate 이벤트를 이용할 수 있다.
+  // timeupdate이벤트는 비디오나 오디오의 재생 시간이 변경되었을 때 발생한다.
+  // (쉽게 말해 재생을 하는 동안+재생을 멈췄지만 재생 시간을 변경했을 때 모두 발생한다.)
   // setInterval(getCurrentTime, 100);
   video.addEventListener("timeupdate", getCurrentTime);
 };
@@ -227,6 +245,21 @@ const checkSpacebar = (e) => {
   }
 };
 
+const setTimeRange = () => {
+  timeRange.value = video.currentTime / video.duration;
+};
+
+const intervalTimeRange = () => {
+  setInterval(setTimeRange, 100);
+};
+
+const handletimeRange = (event) => {
+  // console.log("handletimeRange");
+  clearInterval(intervalTimeRange);
+  video.currentTime = video.duration * event.target.value;
+};
+
+/*
 const handleHide = () => {
   if (timeDelay === 5) {
     videoControls.style.opacity = 0;
@@ -244,8 +277,9 @@ const handleShow = () => {
   timeDelay = 1;
   clearInterval(handleHide);
 };
+*/
 
-const init = () => {
+const init = async () => {
   handlePlayClick();
   playBtn.addEventListener("click", handlePlayClick);
   volumeBtn.addEventListener("click", handleVolumeClick);
@@ -257,6 +291,8 @@ const init = () => {
   video.addEventListener("ended", handleEnded); // ended: 미디어 요소가 끝에 도달해서 재생 또는 스트리밍이 중지됐을 때 발생하는 이벤트이다.
   volumeRange.addEventListener("input", handleDrag);
   document.addEventListener("keydown", checkSpacebar);
+  timeRange.addEventListener("input", handletimeRange);
+  await registerView();
   // videoPlayer.addEventListener("mousemove", handleShow);
   // setInterval(handleHide, 1000);
 };
