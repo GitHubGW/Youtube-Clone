@@ -67,7 +67,7 @@
     "dev:assets": "cd src && cross-env WEBPACK_ENV=development webpack -w",
     "build:server": "babel src --out-dir build --ignore src/assets --ignore src/static --ignore src/webpack.config.js",
     "build:assets": "cd src && cross-env WEBPACK_ENV=production webpack",
-    "copyAll": "shx cp -R src/static build && shx cp -R src/views build",
+    "copyAll": "shx cp -R src/static build && shx cp -R src/views build && shx cp -R src/images build",
     "build": "npm run build:server && npm run build:assets && npm run copyAll",
     "prebuild": "rimraf build",
     "start": "node build/init.js",
