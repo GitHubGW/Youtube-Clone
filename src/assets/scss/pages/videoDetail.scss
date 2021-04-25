@@ -2,9 +2,9 @@
   display: flex;
   .video-detail__main{
     padding: 25px 55px;
-    padding-right: 27px;
+    padding-right: 20px;
     box-sizing: border-box;
-    flex: 7.3;
+    flex: 7.2;
     .video__info {
       width: 100%;
       max-width: 100%;
@@ -40,7 +40,7 @@
         
         pre{
           padding-left: 55px;
-          padding-top: 10px;
+          padding-top: 5px;
           line-height: 1.65;
           color: black;
         }
@@ -144,7 +144,7 @@
   }
 
   .video-detail__aside{
-    flex: 2.7;
+    flex: 2.8;
     padding-top: 25px;
   } 
   

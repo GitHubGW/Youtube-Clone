@@ -18,7 +18,8 @@
     padding-left: 10px;
     padding-top: 2px;
     .videoDetail__title{
-      font-size: 16px;
+      font-size: 14.4px;
+      line-height: 1.2;
     }
     .videoDetail__viewDate{
       display: flex;
@@ -30,7 +31,7 @@
         color: #606060;
       }
       h6{
-        font-size: 13px;
+        font-size: 14px;
       }
     }
     .videoDetail__creator{
@@ -43,7 +44,7 @@
         }
         h5{
           color: #606060;
-          font-size: 14px;
+          font-size: 13.7px;
           margin-top: 12px;
         }
       }

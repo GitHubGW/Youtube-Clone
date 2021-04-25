@@ -1,6 +1,10 @@
 .videoBlock {
   width: 270px;
-  margin-bottom: 40px;
+  margin-bottom: 45px;
+  transition: all 0.2s ease;
+  &:hover{
+    transform: scale(0.97);
+  }
   video {
     width: 270px;
     height: 152px;
@@ -18,32 +22,34 @@
       width: 35px;
       border-radius: 50%;
       img{
-        width: 100%;
+        width: 30px;
+        height: 30px;
         border-radius: 50%;
       }
     }
     .videoBlock__thumbnail__main{
       padding-left: 10px;
       h4{
-        font-size: 15px;
+        font-size: 14.5px;
         font-weight: 400;
         color: black;
+        line-height: 1.2;
       }
       h5{
-        color: gray;
+        color: #606060;
         font-size: 14px;
         margin-top: 13px;
-        margin-bottom: 7px;
+        margin-bottom: 3px;
       }
       .videoBlock__thumbnail__viewDate{
         display: flex;
         h6{
-          color: gray;
+          color: #606060;
           font-size: 14px;
         }
         em{
           margin: 0 5px;
-          color: gray;
+          color: #606060;
         }
       }
     }

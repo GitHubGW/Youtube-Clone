@@ -37,6 +37,7 @@ const KAKAO_CALLBACK = "/auth/kakao/callback";
 const API = "/api";
 const REGISTER_VIEW = "/:id/view";
 const ADD_COMMENT = "/:id/comment";
+const DELETE_COMMENT = "/:id/delete-comment";
 const CHECK_LOGIN = "/check-login";
 
 // Routes Object(라우터들을 모아놓은 객체)
@@ -91,6 +92,7 @@ const routes = {
   api: API,
   registerView: REGISTER_VIEW,
   addComment: ADD_COMMENT,
+  deleteComment: DELETE_COMMENT,
   checkLogin: CHECK_LOGIN,
 };
 

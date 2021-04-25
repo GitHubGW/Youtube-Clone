@@ -147,7 +147,7 @@ export const videoDetail = async (req, res) => {
     const video = await Video.findById(id).populate("creator").populate("comments");
     // console.log("✅ video:", video);
 
-    const videos = await Video.find({}).populate("creator").populate("comments");
+    const videos = await Video.find({}).populate("creator").populate("comments").sort({ _id: -1 });
     // console.log("✅ videos:", videos);
 
     res.render("videoDetail", { pageTitle: video.title, video, videos });
@@ -250,10 +250,11 @@ export const postRegisterView = async (req, res) => {
 
 // 댓글을 추가하는 기능을 하는 함수이다.
 export const postAddComment = async (req, res) => {
+  // console.log("postAddComment 실행");
   const {
-    params: { id },
+    params: { id }, // req.params.id는 videoId 값을 의미함
     body: { comment }, //body안에 comment는 videoDetail에 form안에 name이 comment인 input에서 req한 값을 의미한다.
-    user,
+    user, // req.user는 로그인한 사용자를 의미함
   } = req;
 
   try {
@@ -269,9 +270,41 @@ export const postAddComment = async (req, res) => {
 
     // 위에서 추가한 Comment모델의 id값을 video모델이 가지고 있는 comment필드에 추가함
     video.comments.push(newComment._id);
+
+    // res.json()을 이용하면 json형태로( {키 : 벨류} ) api를 요청한 곳에 response객체 안에 data프로퍼티에 아래의 json데이터를 전달해준다.
+    // json()으로 전달해주는 데이터는 위에서 만든 newComment가 가지고 있는 _id값을 id라는 이름으로 넘겨 보내준다.
+    res.json({ id: newComment._id });
+
+    // 추가한 후에는 save()를 통해 video모델의 정보를 저장해준다.
     video.save();
     res.status(200);
   } catch (error) {
+    res.status(400);
+  } finally {
+    res.end();
+  }
+};
+
+export const postDeleteComment = async (req, res) => {
+  // req.params에는 :id의 값을 가져오게 된다.
+  // req.body에는 api를 요청할 떄 data안에 객체형태로 넣어준 값이 들어오게 된다.
+  const {
+    params: { id },
+    body: { commentId },
+  } = req;
+
+  try {
+    // id를 가져와서 id에 맞는 비디오를 찾은 후 video안에 comments 안으로 들어가서
+    // remove()메소드를 이용해서 commentId에 해당하는 댓글을 1개 지운다.
+    const video = await Video.findById(id);
+    // console.log(video);
+    // console.log(commentId);
+    video.comments.remove(commentId);
+
+    video.save();
+    res.status(200);
+  } catch (error) {
+    console.log(error);
     res.status(400);
   } finally {
     res.end();

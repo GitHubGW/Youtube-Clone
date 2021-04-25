@@ -285,10 +285,11 @@ const init = async () => {
   volumeBtn.addEventListener("click", handleVolumeClick);
   fullScreenBtn.addEventListener("click", goFullScreen);
   document.addEventListener("fullscreenchange", checkScreen);
+  video.addEventListener("click", handlePlayClick);
   video.addEventListener("dblclick", goFullScreen); // dblclick: 더블클릭했을 때 발생하는 이벤트이다.
+  video.addEventListener("ended", handleEnded); // ended: 미디어 요소가 끝에 도달해서 재생 또는 스트리밍이 중지됐을 때 발생하는 이벤트이다.
   video.addEventListener("loadedmetadata", setTotalTime); // loadedmetadata: 미디어의 메타 데이터가 로드되었을 때 발생하는 이벤트이다.
   setTotalTime();
-  video.addEventListener("ended", handleEnded); // ended: 미디어 요소가 끝에 도달해서 재생 또는 스트리밍이 중지됐을 때 발생하는 이벤트이다.
   volumeRange.addEventListener("input", handleDrag);
   document.addEventListener("keydown", checkSpacebar);
   timeRange.addEventListener("input", handletimeRange);

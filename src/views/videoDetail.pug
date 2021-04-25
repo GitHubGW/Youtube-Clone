@@ -72,7 +72,7 @@ block content
         ul.video__comments-list#jsCommentList
           //- reverse()는 배열의 메서드중 하나로 배열을 거꾸로 뒤집을 때 사용한다.
           each comment in video.comments.reverse()
-            li
+            li(class="comment__item" id=comment.id)
               .comment__image
                 if comment.avatarUrl===null
                   a(href=routes.userDetail(comment.creator)) 
@@ -89,6 +89,7 @@ block content
                   span
                     a(href=routes.userDetail(comment.creator)) #{comment.name}
                   span #{comment.createdAt.getFullYear()}-#{`${comment.createdAt.getMonth()+1}` < 10 ? `0${comment.createdAt.getMonth()+1}` : `${comment.createdAt.getMonth()+1}`}-#{`${comment.createdAt.getDate()}` < 10 ? `0${comment.createdAt.getDate()}` : `${comment.createdAt.getDate()}`}
+                  button.comment__delete X
                 .comment__description #{comment.text}
 
     .video-detail__aside
