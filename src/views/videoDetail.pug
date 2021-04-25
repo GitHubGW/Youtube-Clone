@@ -38,6 +38,9 @@ block content
             img(src=video.creator.avatarUrl)
           a(href=routes.userDetail(video.creator._id))=video.creator.name
 
+        .video__description 
+          pre #{video.description}
+
         .division-line
 
       .video__comments 
@@ -94,6 +97,7 @@ block content
           title: item.title,
           views: item.views,
           fileUrl: item.fileUrl,
+          thumbnailUrl: item.thumbnailUrl,
           id: item.id,
           createdAt: item.createdAt,
           creator: item.creator

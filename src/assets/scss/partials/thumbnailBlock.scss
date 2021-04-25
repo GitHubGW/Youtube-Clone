@@ -7,6 +7,7 @@
     video {
       max-width: 100%;
       width: 180px;
+      height: 91px;
       overflow: hidden;
       border-radius: 5px;
     }
@@ -16,7 +17,7 @@
       width: 100%;
       margin-left: 18px;
       .thumbnailBlock__main{
-
+        width: 80%;
         .thumbnailBlock__title {
           color: $black;
           font-size: 17px;

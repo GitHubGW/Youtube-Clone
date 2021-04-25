@@ -5,6 +5,7 @@
     a{
       video{
         width: 200px;
+        height: 112px;
       }
     }
   }
@@ -21,12 +22,12 @@
     }
     .videoDetail__viewDate{
       display: flex;
-      color: gray;
+      color: #606060;
       font-size: 13px;  
       margin-top: 5px;
       em{
         margin:0 5px;
-        color: gray;
+        color: #606060;
       }
       h6{
         font-size: 13px;
@@ -41,7 +42,7 @@
           margin-right: 6px;
         }
         h5{
-          color: gray;
+          color: #606060;
           font-size: 14px;
           margin-top: 12px;
         }
