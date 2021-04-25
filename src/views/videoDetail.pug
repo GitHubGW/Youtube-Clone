@@ -89,7 +89,9 @@ block content
                   span
                     a(href=routes.userDetail(comment.creator)) #{comment.name}
                   span #{comment.createdAt.getFullYear()}-#{`${comment.createdAt.getMonth()+1}` < 10 ? `0${comment.createdAt.getMonth()+1}` : `${comment.createdAt.getMonth()+1}`}-#{`${comment.createdAt.getDate()}` < 10 ? `0${comment.createdAt.getDate()}` : `${comment.createdAt.getDate()}`}
-                  button.comment__delete X
+                  if loggedUser && (`${comment.creator}` === loggedUser.id)
+                    button.comment__delete
+                      i.fas.fa-times-circle
                 .comment__description #{comment.text}
 
     .video-detail__aside

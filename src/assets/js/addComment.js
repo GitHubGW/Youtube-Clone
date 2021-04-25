@@ -33,12 +33,15 @@ const addComment = (name, avatarUrl, comment, commentId) => {
   const commentAuthorSecondSpan = document.createElement("span");
   const commentDescription = document.createElement("div");
   const commentDelete = document.createElement("button");
+  const commentFontAwesome = document.createElement("i");
 
   commentImage.classList.add("comment__image");
   commentContent.classList.add("comment__content");
   commentAuthor.classList.add("comment__author");
   commentDescription.classList.add("comment__description");
   commentDelete.classList.add("comment__delete");
+  commentFontAwesome.classList.add("fas");
+  commentFontAwesome.classList.add("fa-times-circle");
 
   // appendChild()메서드를 이용해서 li태그 안에 자식 태그들을 추가함
   li.appendChild(commentImage);
@@ -49,6 +52,7 @@ const addComment = (name, avatarUrl, comment, commentId) => {
   commentAuthor.appendChild(commentAuthorFirstSpan);
   commentAuthor.appendChild(commentAuthorSecondSpan);
   commentAuthor.appendChild(commentDelete);
+  commentDelete.appendChild(commentFontAwesome);
 
   const getYear = new Date().getFullYear();
   const getMonth = Number(new Date().getMonth()) + 1;
@@ -59,7 +63,7 @@ const addComment = (name, avatarUrl, comment, commentId) => {
   commentAuthorFirstSpan.innerHTML = name;
   commentAuthorSecondSpan.innerHTML = currentTime;
   commentDescription.innerHTML = comment;
-  commentDelete.innerHTML = "X";
+
   li.id = commentId;
 
   // prepend()메서드를 이용해서 commentList에 가장 맨 앞에 차례대로 li태그를 추가한다.
@@ -111,7 +115,7 @@ const sendComment = async (name, avatarUrl, comment) => {
 // axios를 통해 api를 요청해 댓글을 삭제하는 함수
 const sendDeleteComment = async (event) => {
   // console.log("event.target", event.target);
-  const commentParent = event.target.parentNode.parentNode.parentNode;
+  const commentParent = event.target.parentNode.parentNode.parentNode.parentNode;
   const commentId = commentParent.id;
   // console.log(commentParent);
   // console.log(commentId);
@@ -126,7 +130,7 @@ const sendDeleteComment = async (event) => {
         commentId,
       },
     });
-    console.log(response);
+    // console.log(response);
 
     if (response.status === 200) {
       deleteComment(commentParent);

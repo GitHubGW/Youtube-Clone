@@ -117,19 +117,38 @@
             img{
               width: 40px;
               height: 40px;
+              border-radius: 50%;
             }
           }
           .comment__content{
             .comment__author{
               display: flex;
+              a{
+                color: black;
+                &:visited{
+                  color: black;
+                }
+              }
               span:first-child{
-                font-size: 13px;
+                font-size: 14px;
                 margin-right: 10px;
                 color: black;
               }
-              span:last-child{
+              span:nth-child(2){
                 font-size: 13px;
-                color:gray;
+                color:#606060;
+              }
+              .comment__delete{
+                width: 16px;
+                border:0;
+                outline: none;
+                padding: 0;
+                background-color: transparent;
+                box-shadow: none;
+                margin-left: 10px;
+                i{
+                  color: $black;
+                }
               }
             }
             .comment__description{
