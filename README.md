@@ -3,6 +3,9 @@
 ## 🔗 Demo
 https://youtube-gw.herokuapp.com
 
+## 🖥 Preview
+<img src="/preview/preview1.png">
+
 ## 🔥 Stack
 ### Front-end
 <img height="30" src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=HTML5&logoColor=white" /> <img height="30" src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=CSS3&logoColor=white"/> 
@@ -62,10 +65,10 @@ https://youtube-gw.herokuapp.com
 - [x] Video Delete
 - [x] Video Recording
 - [x] Search Video
-- [ ] Custom Video Player
+- [x] Custom Video Player
 - [x] View Count
 - [x] AJAX Comments
-- [ ] Delete Comments
+- [x] Delete Comments
 
 
 ## 🚀 Deployment
