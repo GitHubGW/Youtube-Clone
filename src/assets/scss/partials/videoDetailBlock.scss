@@ -1,6 +1,10 @@
 .videoDetail{
   display: flex;
   margin-bottom: 10px;
+  transition: all 0.2s ease;
+  &:hover{
+    transform: scale(0.97);
+  }
   .videoDetail__video{
     a{
       video{

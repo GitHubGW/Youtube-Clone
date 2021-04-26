@@ -1,6 +1,10 @@
 .thumbnailBlock {
   border-top: 1px solid #ddd;
   padding: 15px 0;
+  transition: all 0.2s ease;
+  &:hover{
+    transform: scale(0.97);
+  }
   a{
     display: flex;
     width: 100%;
