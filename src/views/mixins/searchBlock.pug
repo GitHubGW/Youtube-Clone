@@ -2,7 +2,7 @@ mixin searchBlock(video)
   .videoSearch 
     .videoSearch__video
       a(href=routes.videoDetail(video.id))
-        video(class="searchVideo" src=video.fileUrl, controls=false, muted="muted")
+        video(class="searchVideo" src=video.fileUrl, poster=video.thumbnailUrl, controls=false, muted="muted")
     .videoSearch__content
       a(href=routes.videoDetail(video.id))
         h4.videoSearch__title #{video.title}
