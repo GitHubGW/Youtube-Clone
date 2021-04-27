@@ -78,7 +78,7 @@ https://youtube-gw.herokuapp.com
 
 ## 🚀 Deployment
 - [x] Heroku
-- [x] S3 Upload
+- [x] Amazon S3
 - [x] Mongo Atlas
 
 ## 📑 Pages
