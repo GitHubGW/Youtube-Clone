@@ -2,7 +2,7 @@
   width: 270px;
   margin-bottom: 45px;
   transition: all 0.2s ease;
-  &:hover{
+  &:hover {
     transform: scale(0.97);
   }
   video {
@@ -12,7 +12,7 @@
     overflow: hidden;
     margin-bottom: 11px;
   }
-  video[poster]{
+  video[poster] {
     width: 100%;
   }
   .videoBlock__thumbnail__content {
@@ -21,33 +21,33 @@
     .videoBlock__thumbnail__image {
       width: 35px;
       border-radius: 50%;
-      img{
+      img {
         width: 30px;
         height: 30px;
         border-radius: 50%;
       }
     }
-    .videoBlock__thumbnail__main{
+    .videoBlock__thumbnail__main {
       padding-left: 10px;
-      h4{
+      h4 {
         font-size: 14.5px;
         font-weight: 400;
         color: black;
-        line-height: 1.2;
+        line-height: 1.3;
       }
-      h5{
+      h5 {
         color: #606060;
         font-size: 14px;
         margin-top: 13px;
         margin-bottom: 3px;
       }
-      .videoBlock__thumbnail__viewDate{
+      .videoBlock__thumbnail__viewDate {
         display: flex;
-        h6{
+        h6 {
           color: #606060;
           font-size: 14px;
         }
-        em{
+        em {
           margin: 0 5px;
           color: #606060;
         }
