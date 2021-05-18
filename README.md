@@ -4,11 +4,22 @@
 https://youtube-gw.herokuapp.com
 
 ## 🖥 Preview
-<img src="/preview/preview1.png">
+#### Home
+<img src="/preview/preview1.png">   
+
+#### Video Detail
 <img src="/preview/preview2.png">
+
+#### User Profile
 <img src="/preview/preview3.png">
+
+#### Search
 <img src="/preview/preview4.png">
+
+#### Join / Login
 <img src="/preview/preview5.png">
+
+#### Upload Video
 <img src="/preview/preview6.png">
 
 ## 🔥 Stack
