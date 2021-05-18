@@ -8,83 +8,83 @@ block content
       ul.home-menu-main 
         li.home-menu-item
           i.fas.fa-home
-          span Home
+          span 홈
         li.home-menu-item
           i.fas.fa-compass
-          span Explore
+          span 탐색
         li.home-menu-item
           i.fab.fa-youtube-square
-          span Subscriptions
+          span 구독
       .division-line
 
       ul.home-menu-personal 
         li.home-menu-item
           i.fas.fa-archive
-          span Library
+          span 보관함
         li.home-menu-item
           i.fas.fa-history
-          span History
+          span 시청 기록
         li.home-menu-item
           i.fas.fa-clock
-          span Watch later
+          span 나중에 볼 동영상
         li.home-menu-item
           i.fas.fa-thumbs-up
-          span Liked videos
+          span 좋아요 표시한 동영상
       .division-line
 
-      h3 SUBSCRIPTIONS
+      h3 구독
       ul.home-menu-subscription 
-        li.home-menu-item
-          i.fas.fa-archive
-          span Nomad Coders
+        li.home-menu-item.home-menu-item-subscription
+          img(src="/images/nomadcoder_logo.svg")
+          span 노마드코더 NomadCoders
         li.home-menu-item
           i.fas.fa-plus-circle
-          span Show more
+          span 더보기
       .division-line
 
-      h3 MORE FROM YOUTUBE
+      h3 YOUTUBE 더보기
       ul.home-menu-seemore 
         li.home-menu-item
           i.fab.fa-youtube
           span YouTube Premium
         li.home-menu-item
           i.fas.fa-film
-          span Movies
+          span 영화
         li.home-menu-item
           i.fas.fa-gamepad
-          span Gaming
+          span 게임
         li.home-menu-item
           i.fas.fa-rss
-          span Live
+          span 실시간
         li.home-menu-item
           i.fas.fa-lightbulb
-          span Learning
+          span 학습
         li.home-menu-item
           i.fas.fa-trophy
-          span Sports
+          span 스포츠
       .division-line
 
       ul.home-menu-setting 
         li.home-menu-item
           i.fas.fa-cog
-          span Setting
+          span 설정
         li.home-menu-item
           i.fas.fa-flag
-          span Report history
+          span 신고 기록
         li.home-menu-item
           i.fas.fa-question-circle
-          span Help
+          span 고객센터
         li.home-menu-item
           i.fas.fa-exclamation-circle
-          span Send feedback
+          span 의견 보내기
 
     .search_main 
       .search_main__result
         i.fas.fa-search
-        |Searching for #{searchingBy}
+        |#{searchingBy} 검색중
       .search_main__content
         if videos.length===0
-          h5 No Videos Found
+          h5 비디오를 찾을 수 없습니다.
         each item in videos 
           +searchBlock({
             title: item.title,

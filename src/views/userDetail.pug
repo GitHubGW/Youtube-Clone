@@ -32,13 +32,13 @@ block content
         if user.id === loggedUser.id
           .user-profile__btns
             a(href=`/users${routes.editProfile}` class="edit_profile")
-              button Edit Profile
+              button 프로필 수정
             a(href=`/users${routes.changePassword}` class="edit_password")
-              button Change Password
+              button 비밀번호 변경
 
       if user.videos.length > 0
         .uploaded-videos
-          h2 #{user.name}'s Video
+          h2 #{user.name}'의 비디오
           .uploaded-videos-container
             each item in user.videos 
               +thumbnailBlock({

@@ -7,10 +7,10 @@ block content
       |YouTube
     form(action=routes.editVideo(video.id), method="post")
       .form__input
-        input(type="text", name="title", placeholder="Video Title" value=video.title)
+        input(type="text", name="title", placeholder="비디오 제목" value=video.title)
         i.fa.fa-edit
-      textarea(name="description" placeholder="Description")=video.description
-      input(type="submit" value="Update Video")
+      textarea(name="description" placeholder="비디오 설명")=video.description
+      input(type="submit" value="비디오 업데이트")
     a.form-container__link(href=routes.deleteVideo(video.id)) 
-      button.delete Delete Video
+      button.delete 비디오 삭제
     

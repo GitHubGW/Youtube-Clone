@@ -9,11 +9,11 @@ mixin searchBlock(video)
 
       .videoSearch__viewDate
         if video.views === 1
-          h6.videoSearch__views 1 view 
+          h6.videoSearch__views 조회수 1 
         else if video.views === 0
-          h6.videoSearch__views 0 view
+          h6.videoSearch__views 조회수 0
         else 
-          h6.videoSearch__views #{video.views} views
+          h6.videoSearch__views 조회수 #{video.views}
         em •
         h6 #{video.createdAt.getFullYear()}-#{`${video.createdAt.getMonth()+1}` < 10 ? `0${video.createdAt.getMonth()+1}` : `${video.createdAt.getMonth()+1}`}-#{`${video.createdAt.getDate()}` < 10 ? `0${video.createdAt.getDate()}` : `${video.createdAt.getDate()}`}
       

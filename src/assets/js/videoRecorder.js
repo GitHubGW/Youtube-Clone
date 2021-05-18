@@ -22,7 +22,11 @@ const handleVideoData = (event) => {
 
   // download속성을 이용해 다운로드할 파일의 기본 이름과 확장자를 지정한다.(webm은 비디오 파일의 확장자중 하나이다.)
   // link.download = "sample.webm";
-  link.download = `Video ${new Date().getFullYear()}-${new Date().getMonth()+1 < 10 ? `0${new Date().getMonth()+1}` : new Date().getMonth()+1 }-${new Date().getDate() < 10 ? `0${new Date().getDate()}` : new Date().getDate()}-${new Date().getHours() < 10 ? `0${new Date().getHours()}` : new Date().getHours()}-${new Date().getMinutes() < 10 ? `0${new Date().getMinutes()}` : new Date().getMinutes()}-${new Date().getSeconds() < 10 ? `0${new Date().getSeconds()}` : new Date().getSeconds()}.mp4`;
+  link.download = `Video ${new Date().getFullYear()}-${new Date().getMonth() + 1 < 10 ? `0${new Date().getMonth() + 1}` : new Date().getMonth() + 1}-${
+    new Date().getDate() < 10 ? `0${new Date().getDate()}` : new Date().getDate()
+  }-${new Date().getHours() < 10 ? `0${new Date().getHours()}` : new Date().getHours()}-${new Date().getMinutes() < 10 ? `0${new Date().getMinutes()}` : new Date().getMinutes()}-${
+    new Date().getSeconds() < 10 ? `0${new Date().getSeconds()}` : new Date().getSeconds()
+  }.mp4`;
 
   // 그리고 위에서 만든 a태그(link)를 body에 추가한다.
   document.body.appendChild(link);
@@ -94,13 +98,13 @@ const getVideo = async () => {
 
     // muted속성을 통해 비디오를 음소거한다.(실제 녹화에는 녹음이 되지만 사용자가 자신의 목소리를 듣지 않게 설정함)
     videoPreview.muted = true;
-    recordBtn.innerHTML = "Stop Recording";
+    recordBtn.innerHTML = "녹화 중지";
 
     // stream값을 streamObject에 넣어서 startRecording함수의 인자로 전달함
     streamObject = stream;
     startRecording(stream);
   } catch (error) {
-    recordBtn.innerHTML = "Can't Record";
+    recordBtn.innerHTML = "녹화 불가능";
   } finally {
     // finally절은 try, catch문 중 하나가 실행된 후 실행 결과에 상관없이 항상 실행이 된다.
     recordBtn.removeEventListener("click", getVideo);

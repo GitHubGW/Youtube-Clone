@@ -7,10 +7,10 @@ block content
       |YouTube
      form(action=routes.login, method="post")
        .form__input
-          input(type="email", name="email", placeholder="Email", required=true)
+          input(type="email", name="email", placeholder="이메일", required=true)
           i.fa.fa-envelope
        .form__input
-          input(type="password", name="password", placeholder="Password", required=true)
+          input(type="password", name="password", placeholder="비밀번호", required=true)
           i.fas.fa-unlock
-       input(type="submit", value="SIGN IN")
+       input(type="submit", value="로그인")
      include partials/socialLogin
