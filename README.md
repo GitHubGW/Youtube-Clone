@@ -16,7 +16,7 @@ https://youtube-gw.herokuapp.com
 #### Profile
 <img src="/preview/4.png">
 
-#### Upload Video
+#### Upload Video / Record Video
 <img src="/preview/5.png">
 
 #### Join / Login
