@@ -32,7 +32,7 @@ https://youtube-gw.herokuapp.com
 <img height="30" src="https://img.shields.io/badge/Webpack-blue?style=for-the-badge&logo=Webpack&logoColor=white"/>
 
 ### Back-end
-<img height="30" src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=Node.js&logoColor=white"/> <img height="30" src="https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=Express&logoColor=white"/>
+<img height="30" src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=Node-dot-js&logoColor=white"/> <img height="30" src="https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=Express&logoColor=white"/>
 <img height="30" src="https://img.shields.io/badge/Mongodb-47A248?style=for-the-badge&logo=Mongodb&logoColor=white"/>
 <img height="30" src="https://img.shields.io/badge/Heroku-430098?style=for-the-badge&logo=Heroku&logoColor=white"/>
 <img height="30" src="https://img.shields.io/badge/Amazon S3-569A31?style=for-the-badge&logo=Amazon-S3&logoColor=white"/>
